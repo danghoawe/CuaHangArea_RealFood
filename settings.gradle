@@ -1,0 +1,2 @@
+rootProject.name = "CuaHangArea_RealFood"
+include ':app'
