@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="30dp"/>
+
+    <EditText
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/baseline_email_black_24dp"
+        android:id="@+id/edtEmail"
+        style="@style/Edittext_v1"
+        android:hint="@string/taiikhon"
+       />
+
+    <EditText
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/baseline_password_black_24dp"
+        android:id="@+id/edtMatKhau"
+        style="@style/Edittext_v1"
+        android:hint="@string/matkhau"
+         />
+
+    <TextView
+        android:id="@+id/txtQuenMatKhau"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:autoLink="all"
+        android:gravity="right"
+        android:linksClickable="false"
+        android:selectAllOnFocus="false"
+        android:text="@string/quenmatkhau"
+        android:textColor="@color/color_link" />
+    <Button
+        android:id="@+id/btnDangNhap"
+        style="@style/Button_v1"
+        android:text="@string/dangnhap"
+        android:textSize="16dp" />
+    <TextView
+        android:id="@+id/txtDangKy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autoLink="all"
+        android:gravity="center"
+        android:linksClickable="false"
+        android:selectAllOnFocus="false"
+        android:text="@string/dangky"
+        android:textColor="@color/color_link" />
+</LinearLayout>

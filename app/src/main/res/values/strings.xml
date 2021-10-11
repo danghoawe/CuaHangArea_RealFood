@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">CuaHangArea_RealFood</string>
+    <string name="taiikhon">Email</string>
+    <string name="hoten">Họ tên</string>
+    <string name="diaChi">Địa Chỉ</string>
+    <string name="sdt">Số điện thoại</string>
+    <string name="cmnd">Số CMND</string>
+    <string name="tencuahang">Tên Cửa Hàng</string>
+    <string name="matkhau">Mật Khẩu</string>
+    <string name="quenmatkhau">Quên mật khẩu?</string>
+    <string name="dangnhap">Đăng nhập</string>
+    <string name="rematkhau">Nhập lại Mật Khẩu</string>
+    <string name="dangky">Đăng ký</string>
 </resources>
