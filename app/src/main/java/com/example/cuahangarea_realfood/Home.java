@@ -13,8 +13,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_home);
-
-
+        this.getSupportActionBar().hide();
         // showing the back button in action bar
     }
 

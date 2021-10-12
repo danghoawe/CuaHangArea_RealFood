@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/linear1"
     tools:context=".LoginActivity">
 <ScrollView
     android:layout_width="match_parent"
@@ -13,11 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/logo" />
+
+        <TextView
+                android:textColor="@color/main_color"
+                android:layout_marginTop="10dp"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:gravity="center"
+                android:text="Đăng ký tài khoản"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         <EditText
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/baseline_email_black_24dp"
@@ -31,7 +39,12 @@
             style="@style/Edittext_v1"
             android:hint="@string/hoten"
             />
-
+        <EditText android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/baseline_credit_card_black_24dp"
+            android:id="@+id/edtIDCard"
+            style="@style/Edittext_v1"
+            android:hint="Số CMND/CCCD"
+            />
         <EditText
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/baseline_sensor_window_black_24dp"
@@ -68,12 +81,63 @@
             style="@style/Edittext_v1"
             android:hint="@string/rematkhau"
             />
+        <TextView
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xác thực tài khoản"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mặt trước"/>
+                <ImageView
+                    android:id="@+id/imgCMND_Truoc"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@drawable/baseline_photo_camera_red_500_48dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mặt sau"/>
+                <ImageView
+                    android:id="@+id/imgCMND_Sau"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@drawable/baseline_photo_camera_red_500_48dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
         <Button
             android:id="@+id/btnDangKy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="50dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/button_background_red"
             android:text="@string/dangky"
@@ -92,6 +156,7 @@
             android:selectAllOnFocus="false"
             android:text="@string/dangnhap"
             android:textColor="@color/color_link" />
+
     </LinearLayout>
 </ScrollView>
 

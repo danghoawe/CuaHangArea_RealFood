@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cuahangarea_realfood">
+    package="com.example.cuahangarea_realfood"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:usesCleartextTraffic="true"
@@ -10,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CuaHangArea_RealFood">
         <activity android:name=".Home"  android:label="Home"></activity>
-        <activity android:name=".DangKyActivity"  android:label="Đăng kí" android:parentActivityName=".LoginActivity"/>
+        <activity android:name=".DangKyActivity"  android:label="RealFood" android:parentActivityName=".LoginActivity"/>
         <activity android:name=".LoginActivity"  android:label="Đăng nhập">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,6 +19,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.com.vansuita.pickimage.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities"
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/picker_provider_paths" />
+        </provider>
     </application>
 
 </manifest>
