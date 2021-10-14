@@ -12,8 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.developer.kalert.KAlertDialog;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -24,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView txtDangKy;
     Button btnDangNhap;
     FirebaseAuth auth;
-    KAlertDialog kAlertDialog;
+
     Validate validate = new Validate();
 
     @Override
@@ -38,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-        kAlertDialog = new KAlertDialog(this);
         Context context = this;
         txtDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,24 +52,30 @@ public class LoginActivity extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                KAlertDialog kAlertDialog = new KAlertDialog(context);
+
                 if (Validated_Form()) {
                     kAlertDialog.setTitleText("Loading... ");
-                    kAlertDialog.show();
                     kAlertDialog.changeAlertType(KAlertDialog.PROGRESS_TYPE);
-                    auth.signInWithEmailAndPassword(edtEmail.getText().toString(), edtMatKhau.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    kAlertDialog.show();
+
+                    auth.signInWithEmailAndPassword(edtEmail.getText().toString(), edtMatKhau.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onSuccess(AuthResult authResult) {
-                            Intent intent = new Intent(LoginActivity.this, Home.class);
-                            kAlertDialog.dismiss();
-                            startActivity(intent);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            kAlertDialog.changeAlertType(KAlertDialog.WARNING_TYPE);
-                            kAlertDialog.setContentText(e.getMessage());
+                        public void onComplete(@NonNull  Task<AuthResult> task) {
+                            if (task.isSuccessful())
+                            {
+                                Intent intent = new Intent(LoginActivity.this, Home.class);
+                                kAlertDialog.dismiss();
+                                startActivity(intent);
+                            }
+                            else {
+                                kAlertDialog.setTitleText("Sai tài khoản hoặc mật khẩu");
+                                kAlertDialog.changeAlertType(KAlertDialog.WARNING_TYPE);
+                            }
                         }
                     });
+
                 }
             }
         });

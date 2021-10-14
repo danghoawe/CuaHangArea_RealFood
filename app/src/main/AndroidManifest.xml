@@ -10,14 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CuaHangArea_RealFood">
-        <activity android:name=".Home"  android:label="Home"></activity>
-        <activity android:name=".DangKyActivity"  android:label="RealFood" android:parentActivityName=".LoginActivity"/>
-        <activity android:name=".LoginActivity"  android:label="Đăng nhập">
+        <activity android:name=".Home"  android:label="Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".DangKyActivity"  android:label="RealFood" android:parentActivityName=".LoginActivity"/>
+        <activity android:name=".LoginActivity"  android:label="Đăng nhập">
+
         </activity>
         <provider
             android:name="androidx.core.content.FileProvider"

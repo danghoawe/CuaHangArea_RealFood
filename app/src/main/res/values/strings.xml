@@ -11,4 +11,6 @@
     <string name="dangnhap">Đăng nhập</string>
     <string name="rematkhau">Nhập lại Mật Khẩu</string>
     <string name="dangky">Đăng ký</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
