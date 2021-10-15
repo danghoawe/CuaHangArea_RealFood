@@ -3,12 +3,8 @@ package com.example.cuahangarea_realfood;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,11 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.developer.kalert.KAlertDialog;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.cuahangarea_realfood.model.CuaHang;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.vansuita.pickimage.bean.PickResult;
@@ -30,9 +24,6 @@ import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickCancel;
 import com.vansuita.pickimage.listeners.IPickResult;
-
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class DangKyActivity extends AppCompatActivity {
     EditText edtEmail,edtMatKhau,edtHoTen,edtTenCuaHang,edtDiaChi,edtSoDienThoai,edtReMatKhau,edtIDcard;

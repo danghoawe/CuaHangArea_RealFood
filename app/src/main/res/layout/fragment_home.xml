@@ -86,6 +86,7 @@
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_DanhSachSamPham"
                     style="@style/Button_Home_Cardview"
                     app:cardCornerRadius="20dp">
 
@@ -112,6 +113,7 @@
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     style="@style/Button_Home_Cardview"
+                    android:id="@+id/cardView_MaGiamGia"
                     android:backgroundTint="@color/black"
                     app:cardCornerRadius="20dp">
                     <LinearLayout
@@ -143,6 +145,7 @@
                 android:orientation="horizontal">
                 <androidx.cardview.widget.CardView
                     style="@style/Button_Home_Cardview"
+                    android:id="@+id/cardView_DanhSachDonHang"
                     app:cardCornerRadius="20dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -150,7 +153,6 @@
                         android:background="@drawable/cardview_magiamgia"
                         android:gravity="center"
                         android:orientation="vertical">
-
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="100dp"
@@ -168,6 +170,7 @@
                 <androidx.cardview.widget.CardView
                     style="@style/Button_Home_Cardview"
                     android:backgroundTint="@color/black"
+                    android:id="@+id/cardView_PhanHoiKhachHang"
                     app:cardCornerRadius="20dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -175,12 +178,10 @@
                         android:background="@drawable/cardview_danhsachsanpham"
                         android:gravity="center"
                         android:orientation="vertical">
-
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="100dp"
                             android:src="@drawable/danhgia_icon" />
-
                         <TextView
                             style="@style/Title_V2"
                             android:layout_width="wrap_content"
@@ -197,6 +198,8 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_KhuVucBep"
+
                     style="@style/Button_Home_Cardview"
                     app:cardCornerRadius="20dp">
 
@@ -222,6 +225,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_DoanhThu"
                     style="@style/Button_Home_Cardview"
                     android:backgroundTint="@color/black"
                     app:cardCornerRadius="20dp">

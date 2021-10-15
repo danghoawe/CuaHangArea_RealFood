@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">#D13636</item>
 
+        <item name="actionBarStyle">@style/MyActionBar</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

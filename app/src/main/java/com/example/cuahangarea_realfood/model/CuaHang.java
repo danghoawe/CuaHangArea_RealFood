@@ -1,4 +1,4 @@
-package com.example.cuahangarea_realfood;
+package com.example.cuahangarea_realfood.model;
 
 public class CuaHang {
     String IDCuaHang;
