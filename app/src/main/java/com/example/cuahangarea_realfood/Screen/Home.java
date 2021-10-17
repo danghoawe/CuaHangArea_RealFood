@@ -1,16 +1,18 @@
-package com.example.cuahangarea_realfood;
+package com.example.cuahangarea_realfood.Screen;
 
 import androidx.annotation.IdRes;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
+import com.example.cuahangarea_realfood.Fragment.HomeFragment;
+import com.example.cuahangarea_realfood.Fragment.NotificationFragment;
+import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.Fragment.SettingFragment;
+import com.example.cuahangarea_realfood.Fragment.StoreFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;

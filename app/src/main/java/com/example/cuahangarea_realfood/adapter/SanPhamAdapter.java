@@ -1,7 +1,6 @@
 package com.example.cuahangarea_realfood.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,33 +10,31 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.SetOnLongClick;
 import com.example.cuahangarea_realfood.model.DanhMuc;
-
+import com.example.cuahangarea_realfood.model.SanPham;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 
 
-public class DanhMucAdapter extends RecyclerView.Adapter<DanhMucAdapter.MyViewHolder> {
+public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHolder> {
     private Activity context;
     private int resource;
-    private ArrayList<DanhMuc> arrayList;
+    private ArrayList<SanPham> arrayList;
     public SetOnLongClick setOnLongClick;
 
     public SetOnLongClick getSetOnLongClick() {
@@ -49,7 +46,8 @@ public class DanhMucAdapter extends RecyclerView.Adapter<DanhMucAdapter.MyViewHo
     }
 
     StorageReference storageRef  = FirebaseStorage.getInstance().getReference();
-    public DanhMucAdapter(Activity context, int resource, ArrayList<DanhMuc> arrayList) {
+    FirebaseAuth  auth= FirebaseAuth.getInstance();
+    public SanPhamAdapter(Activity context, int resource, ArrayList<SanPham> arrayList) {
         this.context = context;
         this.resource = resource;
         this.arrayList = arrayList;
@@ -66,10 +64,16 @@ public class DanhMucAdapter extends RecyclerView.Adapter<DanhMucAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DanhMuc danhMuc = arrayList.get(position);
+        SanPham sanPham = arrayList.get(position);
 
-        holder.txtDanhMuc.setText(danhMuc.getTenDanhMuc());
-        storageRef.child("DanhMuc").child(danhMuc.getIDDanhMuc()).child("image").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(0);
+
+        holder.txtTenSanPham.setText(sanPham.getTenSanPham());
+        int number = Integer.parseInt(sanPham.getGia());
+        String price =format.format(number);
+        holder.txtGia.setText(price);
+        storageRef.child("SanPham").child(auth.getUid()).child(sanPham.getIDSanPham()).child(sanPham.getImage().get(0)).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 Glide.with(context)
@@ -115,13 +119,15 @@ public class DanhMucAdapter extends RecyclerView.Adapter<DanhMucAdapter.MyViewHo
 
     //Define RecylerVeiw Holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView txtDanhMuc;
+        TextView txtTenSanPham;
+        TextView txtGia;
         ImageView imageView;
         ProgressBar progressBar;
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imgAnh);
-            txtDanhMuc = itemView.findViewById(R.id.txtDanhMuc);
+            txtTenSanPham = itemView.findViewById(R.id.txtTenSanPham);
+            txtGia = itemView.findViewById(R.id.txtGia);
             progressBar = itemView.findViewById(R.id.progessbar);
         }
     }

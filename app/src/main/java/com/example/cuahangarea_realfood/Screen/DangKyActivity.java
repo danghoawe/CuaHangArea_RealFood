@@ -1,8 +1,9 @@
-package com.example.cuahangarea_realfood;
+package com.example.cuahangarea_realfood.Screen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -14,11 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.developer.kalert.KAlertDialog;
+import com.example.cuahangarea_realfood.Firebase_Manager;
+import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -68,6 +75,16 @@ public class DangKyActivity extends AppCompatActivity {
                                     firebase_manager.Up2MatCMND(CMND_truoc,CMND_sau,uuid);
                                     kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
                                     kAlertDialog.setContentText("Đăng ký tài khỏan thành công");
+//                                    Dialog a = new NordanAlertDialog.Builder(DangKyActivity.this)
+//                                            .setAnimation(Animation.SIDE)
+//                                            .isCancellable(false)
+//                                            .setTitle("Thông báo")
+//                                            .setMessage("Thêm danh mục thành công")
+//                                            .setPositiveBtnText("Ok")
+//                                            .setDialogType(DialogType.SUCCESS)
+//                                            .onPositiveClicked(() -> {/* Do something here */})
+//                                            .build();
+//                                    a.show();
                                     clearForm(viewGroup);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

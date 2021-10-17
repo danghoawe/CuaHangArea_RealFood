@@ -1,4 +1,4 @@
-package com.example.cuahangarea_realfood;
+package com.example.cuahangarea_realfood.Screen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,18 +12,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.developer.kalert.KAlertDialog;
+import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.Validate;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.regex.Pattern;
-
 public class LoginActivity extends AppCompatActivity {
     EditText edtEmail, edtMatKhau;
-    TextView txtDangKy;
+    TextView txtDangKy,txtQuenMatKhau;
     Button btnDangNhap;
     FirebaseAuth auth;
 
@@ -45,6 +43,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DangKyActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_right);
+            }
+        });
+        txtQuenMatKhau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, QuenMatKhauActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_right);
             }
@@ -98,5 +104,6 @@ public class LoginActivity extends AppCompatActivity {
         btnDangNhap = findViewById(R.id.btnDangNhap);
         edtEmail = findViewById(R.id.edtEmail);
         edtMatKhau = findViewById(R.id.edtMatKhau);
+        txtQuenMatKhau = findViewById(R.id.txtQuenMatKhau);
     }
 }

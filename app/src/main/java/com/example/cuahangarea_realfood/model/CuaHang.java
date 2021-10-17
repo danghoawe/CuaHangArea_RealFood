@@ -14,10 +14,8 @@ public class CuaHang {
     String TrangThai;
     String CMND_MatTruoc;
     String CMND_MatSau;
-
     public CuaHang() {
     }
-
     public String getCMND_MatTruoc() {
         return CMND_MatTruoc;
     }
@@ -61,8 +59,6 @@ public class CuaHang {
     public void setChuSoHuu(String chuSoHuu) {
         ChuSoHuu = chuSoHuu;
     }
-
-
 
     public String getThongTinChiTiet() {
         return ThongTinChiTiet;

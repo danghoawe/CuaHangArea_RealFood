@@ -9,7 +9,8 @@ public class DanhMuc {
         TenDanhMuc = tenDanhMuc;
     }
 
-
+    public DanhMuc() {
+    }
 
     public String getIDCuaHang() {
         return IDCuaHang;

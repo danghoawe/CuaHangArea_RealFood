@@ -1,4 +1,4 @@
-package com.example.cuahangarea_realfood;
+package com.example.cuahangarea_realfood.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.Screen.DS_SanPhamActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,10 +57,11 @@ public class HomeFragment extends Fragment {
         danhSachSanPham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),DS_SanPhamActivity.class);
+                Intent intent = new Intent(getActivity(), DS_SanPhamActivity.class);
                 startActivity(intent);
             }
         });
+
         return  view;
     }
 }

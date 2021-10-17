@@ -10,6 +10,7 @@
         <item name="android:paddingLeft" >20dp</item>
         <item name="android:background" >@drawable/edittext_background_v1</item>
     </style>
+
     <style name="Title">
         <item name="android:textSize" >26dp</item>
         <item name="android:textStyle" >bold</item>
@@ -18,6 +19,11 @@
     </style>
     <style name="Title_V2">
         <item name="android:textSize" >14dp</item>
+        <item name="android:textColor" >@color/black</item>
+        <item name="android:textAlignment" >center</item>
+    </style>
+    <style name="Title_V3">
+        <item name="android:textSize" >30dp</item>
         <item name="android:textColor" >@color/black</item>
         <item name="android:textAlignment" >center</item>
     </style>
@@ -31,6 +37,24 @@
         <item name="android:textAllCaps" >false</item>
         <item name="android:textColor" >@color/white</item>
         <item name="android:textSize" >16dp</item>
+    </style><style name="Button_v2_Green">
+        <item name="android:layout_width" >match_parent</item>
+        <item name="android:layout_height" >50dp</item>
+        <item name="android:layout_margin" >10dp</item>
+        <item name="android:background" >@drawable/button_background_green</item>
+        <item name="android:textAllCaps" >false</item>
+        <item name="android:textColor" >@color/white</item>
+        <item name="android:textSize" >17dp</item>
+    </style>
+
+    <style name="Button_v2_Red">
+        <item name="android:layout_width" >match_parent</item>
+        <item name="android:layout_height" >50dp</item>
+        <item name="android:layout_margin" >10dp</item>
+        <item name="android:background" >@drawable/button_background_red</item>
+        <item name="android:textAllCaps" >false</item>
+        <item name="android:textColor" >@color/white</item>
+        <item name="android:textSize" >17dp</item>
     </style>
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/white</item>
@@ -52,12 +76,7 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18dp</item>
-
-
     </style>
-
-
-
     <style name="MyActionBar" parent="Widget.AppCompat.ActionBar.Solid">
         <item name="titleTextStyle">@style/MyActionBarTitle</item>
         <item name="android:gravity">center</item>

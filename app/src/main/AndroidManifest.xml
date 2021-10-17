@@ -9,28 +9,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CuaHangArea_RealFood"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".DS_SanPhamActivity"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon">
+        <activity android:name=".Screen.QuenMatKhauActivity" android:label="Quên mật khẩu" android:parentActivityName=".Screen.LoginActivity">
+
+        </activity>
+        <activity
+            android:name=".Screen.ThongTinSanPhamActivity"
+            android:label="Thông tin sản phẩm"
+            android:parentActivityName=".Screen.DS_SanPhamActivity"></activity>
+        <activity
+            android:name=".Screen.DS_SanPhamActivity"
             android:label="Danh sách sản phẩm"
-            android:parentActivityName=".Home">
+            android:parentActivityName=".Screen.Home">
+
+        </activity>
+        <activity
+            android:name=".Screen.Home"
+            android:label="Home" />
+        <activity
+            android:name=".Screen.DangKyActivity"
+            android:label="RealFood"
+            android:parentActivityName=".Screen.LoginActivity" />
+        <activity
+            android:name=".Screen.LoginActivity"
+            android:label="Đăng nhập">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Home"
-            android:label="Home">
-
-        </activity>
-        <activity
-            android:name=".DangKyActivity"
-            android:label="RealFood"
-            android:parentActivityName=".LoginActivity" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="Đăng nhập"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
