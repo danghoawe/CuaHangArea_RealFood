@@ -153,19 +153,6 @@
                     />
             </LinearLayout>
         </ScrollView>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:foregroundGravity="center"
-            app:fabSize="normal"
-            android:scaleType="center"
-            app:fabCustomSize="70dp"
-            android:layout_margin="15dp"
-            app:backgroundTint="#C6343C"
-            android:src="@drawable/ic_baseline_edit_24" />
-
     </FrameLayout>
 
 </LinearLayout>

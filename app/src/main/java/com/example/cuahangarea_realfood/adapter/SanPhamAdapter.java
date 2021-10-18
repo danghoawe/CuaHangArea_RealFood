@@ -1,6 +1,7 @@
 package com.example.cuahangarea_realfood.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.Screen.Home;
+import com.example.cuahangarea_realfood.Screen.ThongTinSanPhamActivity;
 import com.example.cuahangarea_realfood.SetOnLongClick;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.SanPham;
@@ -91,6 +94,17 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHo
                     setOnLongClick.onLongClick(position);
                 }
                 return true;
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ThongTinSanPhamActivity.class);
+
+                intent.putExtra("sampleObject", sanPham);
+                context.startActivity(intent);
+
+                startActivity(i);
             }
         });
 

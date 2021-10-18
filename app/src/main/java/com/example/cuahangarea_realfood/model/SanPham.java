@@ -3,8 +3,37 @@ package com.example.cuahangarea_realfood.model;
 import java.util.ArrayList;
 
 public class SanPham {
-    String IDSanPham, TenSanPham, IDLoai, IDDanhMuc, Gia, ChiTietSanPham, IDCuaHang;
+    String IDSanPham, TenSanPham, IDLoai, IDDanhMuc, Gia, ChiTietSanPham, IDCuaHang,size;
     Float Rating;
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        size = size;
+    }
+
+    public ArrayList<String> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
+    }
+
+    public SanPham(String IDSanPham, String tenSanPham, String IDLoai, String IDDanhMuc, String gia, String chiTietSanPham, String IDCuaHang, String size, Float rating, ArrayList<String> images) {
+        this.IDSanPham = IDSanPham;
+        TenSanPham = tenSanPham;
+        this.IDLoai = IDLoai;
+        this.IDDanhMuc = IDDanhMuc;
+        Gia = gia;
+        ChiTietSanPham = chiTietSanPham;
+        this.IDCuaHang = IDCuaHang;
+        size = size;
+        Rating = rating;
+        this.images = images;
+    }
 
     public ArrayList<String> getImage() {
         return images;
@@ -15,18 +44,6 @@ public class SanPham {
     }
 
     ArrayList<String> images;
-
-    public SanPham(String IDSanPham, String tenSanPham, String IDLoai, String IDDanhMuc, String gia, String chiTietSanPham, String IDCuaHang, Float rating,  ArrayList<String> images) {
-        this.IDSanPham = IDSanPham;
-        TenSanPham = tenSanPham;
-        this.IDLoai = IDLoai;
-        this.IDDanhMuc = IDDanhMuc;
-        Gia = gia;
-        ChiTietSanPham = chiTietSanPham;
-        this.IDCuaHang = IDCuaHang;
-        Rating = rating;
-        this.images = images;
-    }
 
     public SanPham( ) {
     }

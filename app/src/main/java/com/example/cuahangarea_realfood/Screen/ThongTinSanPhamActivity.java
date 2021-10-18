@@ -1,19 +1,10 @@
 package com.example.cuahangarea_realfood.Screen;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.fragment.app.FragmentManager;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,7 +16,6 @@ import android.widget.Toast;
 
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
-import com.example.cuahangarea_realfood.Fragment.DanhMuc_DialogFragment;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.DanhMuc;
@@ -34,14 +24,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.nordan.dialog.Animation;
-import com.nordan.dialog.DialogType;
-import com.nordan.dialog.NordanAlertDialog;
-import com.nordan.dialog.NordanLoadingDialog;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
-import com.vansuita.pickimage.listeners.IPickCancel;
 import com.vansuita.pickimage.listeners.IPickResult;
 
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
@@ -50,8 +35,12 @@ import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThongTinSanPhamActivity extends AppCompatActivity {
+
+    SanPham sanPham;
+
     List<CarouselItem> list = new ArrayList<>();
     List<DanhMuc> listDanhMuc = new ArrayList<>();
     List<String> namesDanhMuc = new ArrayList<>();
@@ -101,7 +90,26 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
             imageView.setVisibility(View.GONE);
             imageDelete.setVisibility(View.VISIBLE);
         }
+
+        if(sanPham!= null){
+            edtTenSanPham.setText(sanPham.getTenSanPham());
+            edtThongTinChiTiet.setText(sanPham.getChiTietSanPham());
+            edtSize.setText(sanPham.getSize());
+            edtTenSanPham.setText(sanPham.getTenSanPham());
+            edtDonGia.setText(sanPham.getGia());
+            AtomicInteger positon = new AtomicInteger();
+            listDanhMuc.forEach(danhMuc -> {
+                positon.getAndIncrement();
+                if (danhMuc.getIDDanhMuc()==sanPham.getIDDanhMuc())
+                {
+                    spDanhMuc.setSelection(positon.get());
+                }
+            });
+        }
     }
+
+
+
     private void SetEvent() {
         btnThemAnh.setOnClickListener(new View.OnClickListener() {
                                           @Override
@@ -131,7 +139,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
 
 
                     String uuid = UUID.randomUUID().toString().replace("-", "");
-                    SanPham sanPham = new SanPham(uuid, edtTenSanPham.getText().toString(), "", "", edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(), (float) 0.0, images);
+                    SanPham sanPham = new SanPham(uuid, edtTenSanPham.getText().toString(), "", "", edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
                     firebase_manager.UpImageSanPham(uriImages, uuid, images);
                     firebase_manager.Ghi_SanPham(sanPham).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

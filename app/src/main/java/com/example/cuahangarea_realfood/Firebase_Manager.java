@@ -36,7 +36,8 @@ public class Firebase_Manager {
     public void Ghi_DanhMuc(DanhMuc danhMuc)
     {
         mDatabase.child("DanhMuc").child(auth.getUid()).child(danhMuc.getIDDanhMuc()).setValue(danhMuc);
-    }public Task<Void> Ghi_SanPham(SanPham sanPham)
+    }
+    public Task<Void> Ghi_SanPham(SanPham sanPham)
     {
        return mDatabase.child("SanPham").child(auth.getUid()).child((sanPham.getIDSanPham())).setValue(sanPham);
     }

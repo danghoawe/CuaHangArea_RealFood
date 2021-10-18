@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-public class QuenMatKhauActivity extends AppCompatActivity {
+public class  QuenMatKhauActivity extends AppCompatActivity {
     ActivityQuenMatKhauBinding binding;
     Validate validate = new Validate();
     Firebase_Manager firebase_manager = new Firebase_Manager();

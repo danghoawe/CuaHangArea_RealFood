@@ -120,11 +120,10 @@ public class DanhMuc_DialogFragment extends DialogFragment {
                         else {
                             KAlertDialog kAlertDialog = new KAlertDialog(getActivity(),KAlertDialog.PROGRESS_TYPE).setContentText("Loading");
                             kAlertDialog.show();
-                            String uuid = UUID.randomUUID().toString().replace("-", "");
                             DanhMuc temp = new DanhMuc(auth.getUid(),danhMuc.getIDDanhMuc(), edtTenDanhMuc.getText().toString());
                             if (uriSua!=image)
                             {
-                                firebase_manager.UpImageDanhMuc(image, uuid).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                firebase_manager.UpImageDanhMuc(image, danhMuc.getIDDanhMuc()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                             firebase_manager.Ghi_DanhMuc(temp);

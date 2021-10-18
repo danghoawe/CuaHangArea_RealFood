@@ -12,7 +12,13 @@
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:src="@drawable/logo"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="20dp"/>
+    <TextView
+        android:fontFamily="sans-serif"
+        android:text="Đăng nhập"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Title_V3"/>
 
     <EditText
         android:drawablePadding="10dp"
