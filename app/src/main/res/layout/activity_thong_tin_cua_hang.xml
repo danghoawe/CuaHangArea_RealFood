@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment.HomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+
+                android:id="@+id/lnLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!-- TODO: Update blank fragment layout -->
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="256dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:src="@drawable/background_store" />
+                    <android.widget.Button
+                        android:id="@+id/btnThemAnh"
+                        android:layout_width="120dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="top"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/ic_baseline_image_24"
+                        android:src="@drawable/ic_baseline_add_a_photo_50"
+                        android:text=" Thêm ảnh "
+                        android:textAllCaps="false" />
+                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-120dp"
+                    android:orientation="horizontal">
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/profile_image"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/logo_banh_mi"
+                            app:civ_border_color="#F44336"
+                            app:civ_border_width="2dp" />
+                        <ImageButton
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="45dp"
+                            android:background="@color/transparent"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_baseline_edit_24"/>
+                    </FrameLayout>
+
+
+                    <EditText
+                        android:id="@+id/edtTenCuaHang"
+                        style="@style/Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="6dp"
+                        android:text="Bánh mì Pewpew"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#050505" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Số điện thoại"
+                    >
+                    <EditText
+                        android:id="@+id/edtSoDT"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_margin="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Họ tên chủ cửa hàng"
+                    >
+                    <EditText
+                        android:id="@+id/edtHotenChu"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_margin="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Số CMND"
+                    >
+                    <EditText
+                        android:id="@+id/edtSoCMND"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_margin="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    >
+                    <EditText
+                        android:editable="false"
+                        android:id="@+id/edtEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_margin="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Địa Chỉ"
+                    >
+                    <EditText
+                        android:id="@+id/edtDiaChi"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_margin="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Thông tin chi tiết">
+                    <EditText
+                        android:id="@+id/edtThongTinChiTiet"
+                        android:lines="6"
+                        android:maxLines="10"
+                        android:gravity="top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.widget.Button xmlns:android="http://schemas.android.com/apk/res/android"
+                        style="@style/Button_v2_Green"
+                        android:layout_weight="2"
+                        android:text="Lưu thông tin"
+                        android:id="@+id/btnLuuThongTin"
+                        />
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <android.widget.Button xmlns:android="http://schemas.android.com/apk/res/android"
+                            style="@style/Button_v2_Red"
+                            android:layout_weight="3"
+                            android:text="Ẩn"
+                            android:id="@+id/btnAn"
+                            />
+                        <android.widget.Button xmlns:android="http://schemas.android.com/apk/res/android"
+                            style="@style/Button_v2_Blue"
+                            android:layout_weight="3"
+                            android:id="@+id/btnHienthi"
+                            android:text="Hiển Thị"
+                            android:visibility="gone"
+                            />
+                    </FrameLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progessbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                />
+        </FrameLayout>
+    </ScrollView>
+</LinearLayout>

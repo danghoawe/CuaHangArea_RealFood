@@ -22,7 +22,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Firebase_Manager {
     public  DatabaseReference mDatabase ;
@@ -33,9 +32,9 @@ public class Firebase_Manager {
         storageRef = FirebaseStorage.getInstance().getReference();
         auth= FirebaseAuth.getInstance();
     }
-    public void Ghi_CuaHang(CuaHang cuaHang)
+    public Task<Void> Ghi_CuaHang(CuaHang cuaHang)
     {
-        mDatabase.child("CuaHang").child(cuaHang.getIDCuaHang()).setValue(cuaHang);
+      return  mDatabase.child("CuaHang").child(cuaHang.getIDCuaHang()).setValue(cuaHang);
     }
     public void Ghi_DanhMuc(DanhMuc danhMuc)
     {
@@ -117,6 +116,20 @@ public class Firebase_Manager {
             }
         });
         return danhMucs;
+    }
+    public CuaHang getCuaHang(){
+        final CuaHang[] cuaHang = new CuaHang[1];
+        mDatabase.child("CuaHang").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               CuaHang temp = dataSnapshot.getValue(CuaHang.class);
+               cuaHang[0] = temp;
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        return cuaHang[0];
     }
 
 }

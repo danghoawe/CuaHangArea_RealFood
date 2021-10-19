@@ -10,8 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.Screen.DS_SanPhamActivity;
+import com.example.cuahangarea_realfood.Screen.ThongTinCuaHangActivity;
+import com.example.cuahangarea_realfood.databinding.FragmentHomeBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +22,7 @@ import com.example.cuahangarea_realfood.Screen.DS_SanPhamActivity;
 public class HomeFragment extends Fragment {
 
     CardView danhSachSanPham,maGiamGia,danhSachDonHang,phanHoiKhachHang,khuVucBep,DoanhThu;
+    FragmentHomeBinding binding;
 
     public HomeFragment() {
     }
@@ -45,16 +47,11 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        danhSachDonHang = view.findViewById(R.id.cardView_DanhSachDonHang);
-        danhSachSanPham = view.findViewById(R.id.cardView_DanhSachSamPham);
-        maGiamGia = view.findViewById(R.id.cardView_MaGiamGia);
-        phanHoiKhachHang = view.findViewById(R.id.cardView_PhanHoiKhachHang);
-        khuVucBep = view.findViewById(R.id.cardView_KhuVucBep);
-        phanHoiKhachHang = view.findViewById(R.id.cardView_PhanHoiKhachHang);
+        binding = FragmentHomeBinding.inflate(getLayoutInflater());
 
 
-        danhSachSanPham.setOnClickListener(new View.OnClickListener() {
+
+        binding.cardViewDanhSachSamPham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DS_SanPhamActivity.class);
@@ -62,6 +59,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        return  view;
+        binding.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ThongTinCuaHangActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return  binding.getRoot();
     }
 }

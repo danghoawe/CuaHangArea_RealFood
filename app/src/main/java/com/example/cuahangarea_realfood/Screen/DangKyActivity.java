@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -70,7 +71,7 @@ public class DangKyActivity extends AppCompatActivity {
                                 public void onSuccess(AuthResult authResult) {
                                     String uuid = authResult.getUser().getUid();
                                     CuaHang cuaHang = new CuaHang(uuid, edtTenCuaHang.getText().toString()
-                                            , edtHoTen.getText().toString(), "", edtIDcard.getText().toString(), edtSoDienThoai.getText().toString(), "", "", (float) 0.0, edtEmail.getText().toString(), "Chờ mở khóa");
+                                            , edtHoTen.getText().toString(), "", edtIDcard.getText().toString(), edtSoDienThoai.getText().toString(), "", "", (float) 0.0, edtEmail.getText().toString(), TrangThaiCuaHang.ChuaKichHoat,edtDiaChi.getText().toString());
                                     firebase_manager.Ghi_CuaHang(cuaHang);
                                     firebase_manager.Up2MatCMND(CMND_truoc,CMND_sau,uuid);
                                     kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
@@ -85,6 +86,7 @@ public class DangKyActivity extends AppCompatActivity {
 //                                            .onPositiveClicked(() -> {/* Do something here */})
 //                                            .build();
 //                                    a.show();
+
                                     clearForm(viewGroup);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

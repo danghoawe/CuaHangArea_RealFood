@@ -11,19 +11,25 @@
         android:theme="@style/Theme.CuaHangArea_RealFood"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".Screen.QuenMatKhauActivity" android:label="Quên mật khẩu" android:parentActivityName=".Screen.LoginActivity">
-
-        </activity>
+        <activity android:name=".Screen.ThongTinCuaHangActivity"
+            android:label="Thông tin cửa hàng"
+            android:parentActivityName=".Screen.Home"
+            ></activity>
+        <activity
+            android:name=".Screen.QuenMatKhauActivity"
+            android:label="Quên mật khẩu"
+            android:parentActivityName=".Screen.LoginActivity"></activity>
         <activity
             android:name=".Screen.ThongTinSanPhamActivity"
             android:label="Thông tin sản phẩm"
-            android:parentActivityName=".Screen.DS_SanPhamActivity">
-
-        </activity>
+            android:parentActivityName=".Screen.DS_SanPhamActivity"></activity>
         <activity
             android:name=".Screen.DS_SanPhamActivity"
             android:label="Danh sách sản phẩm"
-            android:parentActivityName=".Screen.Home">
+            android:parentActivityName=".Screen.Home"></activity>
+        <activity
+            android:name=".Screen.Home"
+            android:label="Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,17 +37,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Screen.Home"
-            android:label="Home" />
-        <activity
             android:name=".Screen.DangKyActivity"
             android:label="RealFood"
             android:parentActivityName=".Screen.LoginActivity" />
         <activity
             android:name=".Screen.LoginActivity"
-            android:label="Đăng nhập">
-
-        </activity>
+            android:label="Đăng nhập"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
