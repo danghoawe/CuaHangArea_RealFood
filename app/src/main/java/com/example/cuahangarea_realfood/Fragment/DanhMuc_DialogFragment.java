@@ -50,7 +50,7 @@ public class DanhMuc_DialogFragment extends DialogFragment {
     static final String TAG = "DanhMuc_DialogFragment";
     static final int code = 1;
     Uri image,uriSua;
-    Button btnThemDanhMuc;
+    Button btnThemDanhMuc,btnXoa;
     EditText edtTenDanhMuc;
     ImageView imgAnh;
     DanhMuc danhMuc;
@@ -75,6 +75,7 @@ public class DanhMuc_DialogFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_danh_muc__dialog, container, false);
         btnThemDanhMuc = view.findViewById(R.id.btnThem);
+        btnXoa = view.findViewById(R.id.btnXoa);
         imgAnh = view.findViewById(R.id.imgAnh);
         edtTenDanhMuc = view.findViewById(R.id.edtTenDanhMuc);
 
@@ -93,8 +94,15 @@ public class DanhMuc_DialogFragment extends DialogFragment {
                     uriSua = task.getResult();
                 }
             });
+            btnXoa.setVisibility(View.VISIBLE);
         }
 
+        btnXoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         btnThemDanhMuc.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)

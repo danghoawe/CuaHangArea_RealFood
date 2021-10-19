@@ -49,6 +49,18 @@ public class DS_SanPhamActivity extends AppCompatActivity {
     SetOnLongClick setOnLongClick;
 
     @Override
+    protected void onResume() {
+        GetSanPham();
+        GetDanhSachDanhMuc();
+        sanPhamAdapter.notifyDataSetChanged();
+        danhMucAdapter.notifyDataSetChanged();
+        super.onResume();
+        Log.d("a","oke");
+    }
+
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         danhMucs = new ArrayList<DanhMuc>();
@@ -113,7 +125,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
         });
     }
     public void GetSanPham() {
-        firebase_manager.mDatabase.child("SanPham").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+        firebase_manager.mDatabase.child("SanPham").child(firebase_manager.auth.getUid()).orderByChild("tenSanPham").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 sanPhams.clear();

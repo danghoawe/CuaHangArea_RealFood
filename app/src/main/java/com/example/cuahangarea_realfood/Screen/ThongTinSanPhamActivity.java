@@ -1,7 +1,9 @@
 package com.example.cuahangarea_realfood.Screen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,16 +16,25 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.SanPham;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -47,25 +58,74 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
     ArrayAdapter adapter ;
 
     ImageCarousel carousel;
-    Button btnThemAnh, btnThemSanPham;
+    Button btnThemAnh, btnThemSanPham,btnXoaSanPham;
     private String image;
     EditText edtTenSanPham, edtSize, edtDonGia, edtThongTinChiTiet;
     Spinner spDanhMuc, spLoaiSanPham;
     Validate validate = new Validate();
     ImageView imageView,imageDelete;
     Firebase_Manager firebase_manager = new Firebase_Manager();
+
+    //Lưu trữ ảnh
     ArrayList<String> images = new ArrayList<>();
     ArrayList<Uri> uriImages = new ArrayList<>();
+    ArrayList<Uri> temp = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham);
         setControl();
+        //Lấy sản phẩm truyền vào nếu có
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            Intent intent = getIntent();
+            String dataDonHang = intent.getStringExtra("sanPham");
+            Gson gson = new Gson();
+            sanPham = gson.fromJson(dataDonHang, SanPham.class);
+        }
+        getDanhMuc();
         LoadData();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SetEvent();
-        getDanhMuc();
+
+    }
+
+    private void LoadInfoSanPham() {
+        //Nếu có sản phẩm truyền vào
+        if(sanPham!= null){
+            btnXoaSanPham.setVisibility(View.VISIBLE);
+            edtTenSanPham.setText(sanPham.getTenSanPham());
+            edtThongTinChiTiet.setText(sanPham.getChiTietSanPham());
+            edtSize.setText(sanPham.getSize());
+            edtTenSanPham.setText(sanPham.getTenSanPham());
+            edtDonGia.setText(sanPham.getGia());
+            AtomicInteger positon = new AtomicInteger();
+            listDanhMuc.forEach(danhMuc -> {
+                if (danhMuc.getIDDanhMuc().equals(sanPham.getIDDanhMuc()))
+                {
+                    spDanhMuc.setSelection(positon.get());
+
+                }
+                positon.getAndIncrement();
+            });
+            images = sanPham.getImages();
+            //Load hình ảnh và truyền vào carousel dựa vào properties Images của sản phẩm
+            for (int i =0 ; i <sanPham.getImages().size();i++)
+            {
+                firebase_manager.storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).child(sanPham.getImages().get(i)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        list.add(new CarouselItem(uri.toString()));
+                        carousel.setData(list);
+                        uriImages.add(uri);
+                        temp.add(uri);
+                        LoadData();
+                    }
+                });
+
+            }
+        }
+
     }
 
     private void setControl() {
@@ -80,9 +140,11 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
         btnThemSanPham = findViewById(R.id.btnThemSanPham);
         imageView = findViewById(R.id.imagebackground);
         imageDelete = findViewById(R.id.imageDelete);
+        btnXoaSanPham = findViewById(R.id.btnXoaSanPham);
     }
 
     private void LoadData() {
+
         if (list.size() == 0) {
             imageView.setVisibility(View.VISIBLE);
             imageDelete.setVisibility(View.GONE);
@@ -91,74 +153,114 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
             imageDelete.setVisibility(View.VISIBLE);
         }
 
-        if(sanPham!= null){
-            edtTenSanPham.setText(sanPham.getTenSanPham());
-            edtThongTinChiTiet.setText(sanPham.getChiTietSanPham());
-            edtSize.setText(sanPham.getSize());
-            edtTenSanPham.setText(sanPham.getTenSanPham());
-            edtDonGia.setText(sanPham.getGia());
-            AtomicInteger positon = new AtomicInteger();
-            listDanhMuc.forEach(danhMuc -> {
-                positon.getAndIncrement();
-                if (danhMuc.getIDDanhMuc()==sanPham.getIDDanhMuc())
-                {
-                    spDanhMuc.setSelection(positon.get());
-                }
-            });
-        }
     }
 
 
 
     private void SetEvent() {
+
+        btnXoaSanPham.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NordanAlertDialog.Builder(ThongTinSanPhamActivity.this)
+                        .setDialogType(DialogType.WARNING)
+                        .setAnimation(Animation.SLIDE)
+                        .isCancellable(true)
+                        .setTitle("Thông báo!")
+                        .setMessage("Bạn có muốn xóa?")
+                        .setPositiveBtnText("Yes")
+                        .setNegativeBtnText("No")
+                        .onPositiveClicked(() -> {
+                            //Xóa sản phẩm trong danh sách
+                            firebase_manager.mDatabase.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    finish();
+                                    Log.d("SanPham",sanPham.getIDCuaHang()+"/"+sanPham.getIDSanPham());
+                                    //Xóa thư mục hình ảnh
+                                    firebase_manager.storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).listAll()
+                                            .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                                                @Override
+                                                public void onSuccess(ListResult listResult) {
+                                                    List<StorageReference> items = listResult.getItems();
+                                                    items.forEach(storageReference -> storageReference.delete());
+                                                    Toast.makeText(ThongTinSanPhamActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                                                }
+                                                                                                                                                                            }
+                                    );
+                                }
+                            });
+
+                        })
+                        .build().show();
+            }
+        });
+
         btnThemAnh.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                              PickImageDialog.build(new PickSetup()).setOnPickResult(new IPickResult() {
-                                                  @Override
-                                                  public void onPickResult(PickResult r) {
-                                                      image = r.getUri().toString();
-                                                      list.add(new CarouselItem(image));
-                                                      carousel.setData(list);
-                                                      uriImages.add(r.getUri());
-                                                      images.add("Image" + images.size());
-                                                      LoadData();
-                                                  }
-                                              })
-                                                      .show(ThongTinSanPhamActivity.this);
-                                          }
-                                      }
-        );
+            @Override
+            public void onClick(View v) {
+                PickImageDialog.build(new PickSetup()).setOnPickResult(new IPickResult() {
+                    @Override
+                    public void onPickResult(PickResult r) {
+                        image = r.getUri().toString();
+                        list.add(new CarouselItem(image));
+                        carousel.setData(list);
+                        uriImages.add(r.getUri());
+                        String uuid = UUID.randomUUID().toString().replace("-", "");
+                        images.add(uuid);
+                        LoadData();
+                    }
+                }).show(ThongTinSanPhamActivity.this);
+            }
+        });
         btnThemSanPham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (Validated_Form()) {
                     KAlertDialog kAlertDialog = new KAlertDialog(ThongTinSanPhamActivity.this, KAlertDialog.PROGRESS_TYPE);
                     kAlertDialog.show();
-
-
-                    String uuid = UUID.randomUUID().toString().replace("-", "");
-                    SanPham sanPham = new SanPham(uuid, edtTenSanPham.getText().toString(), "", "", edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
-                    firebase_manager.UpImageSanPham(uriImages, uuid, images);
-                    firebase_manager.Ghi_SanPham(sanPham).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-
-                            kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
-                            kAlertDialog.setContentText("Đã thêm sản phẩm thành công");
-//                            Dialog a = new NordanAlertDialog.Builder(DangKyActivity.this)
-//                                    .setAnimation(Animation.SIDE)
-//                                    .isCancellable(false)
-//                                    .setTitle("Thông báo")
-//                                    .setMessage("Thêm danh mục thành công")
-//                                    .setPositiveBtnText("Ok")
-//                                    .setDialogType(DialogType.SUCCESS)
-//                                    .onPositiveClicked(() -> {/* Do something here */})
-//                                    .build();
-//                            a.show();
+                    if (!images.isEmpty())
+                    {
+                        if (sanPham==null)
+                        {
+                            String uuid = UUID.randomUUID().toString().replace("-", "");
+                            SanPham temp = new SanPham(uuid, edtTenSanPham.getText().toString(), "", listDanhMuc.get(spDanhMuc.getSelectedItemPosition()).getIDDanhMuc(), edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
+                            firebase_manager.UpImageSanPham(uriImages, uuid, images);
+                            firebase_manager.Ghi_SanPham(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
+                                    kAlertDialog.setContentText("Đã Lưu phẩm thành công");
+                                }
+                            });
+                            sanPham = temp;
                         }
-                    });
+                        else {
+                            String uuid = sanPham.getIDSanPham();
+                            SanPham temp = new SanPham(uuid, edtTenSanPham.getText().toString(), "", listDanhMuc.get(spDanhMuc.getSelectedItemPosition()).getIDDanhMuc(), edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
+
+                            firebase_manager.Ghi_SanPham(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
+                                    kAlertDialog.setContentText("Đã Lưu sản phẩm thành công");
+                                    try {
+                                        firebase_manager.UpImageSanPham(uriImages, uuid, images);
+                                    }catch (Exception e)
+                                    {
+                                        Log.d("Firebase UPLOAD",e.getMessage());
+                                    }
+                                }
+                            });
+                            sanPham = temp;
+
+
+                        }
+                    }
+                    else {
+                        kAlertDialog.changeAlertType(KAlertDialog.ERROR_TYPE);
+                        kAlertDialog.setContentText("Vui lòng chọn ảnh" );
+                    }
                 } else {
                     Toast.makeText(ThongTinSanPhamActivity.this, "Vui lòng nhập đúng định dạng", Toast.LENGTH_SHORT).show();
                 }
@@ -167,9 +269,19 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
         imageDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               list.remove( carousel.getCurrentPosition());
-               LoadData();
-               carousel.setData(list);
+                    if(sanPham== null)
+                    {
+                        list.remove( carousel.getCurrentPosition());
+                        images.remove( carousel.getCurrentPosition());
+                        carousel.setData(list);
+                        LoadData();
+                    }
+                    else {
+                        list.remove( carousel.getCurrentPosition());
+                        images.remove( carousel.getCurrentPosition());
+                        carousel.setData(list);
+                        LoadData();
+                    }
             }
         });
     }
@@ -199,6 +311,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         android.R.layout.simple_expandable_list_item_1 ,
                         namesDanhMuc);
                 spDanhMuc.setAdapter(adapter);
+                LoadInfoSanPham();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

@@ -23,10 +23,12 @@ import com.example.cuahangarea_realfood.SetOnLongClick;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -67,46 +69,49 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        SanPham sanPham = arrayList.get(position);
+        if (arrayList.size()>0)
+        {
+            SanPham sanPham = arrayList.get(position);
 
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
+            NumberFormat format = NumberFormat.getCurrencyInstance();
+            format.setMaximumFractionDigits(0);
 
-        holder.txtTenSanPham.setText(sanPham.getTenSanPham());
-        int number = Integer.parseInt(sanPham.getGia());
-        String price =format.format(number);
-        holder.txtGia.setText(price);
-        storageRef.child("SanPham").child(auth.getUid()).child(sanPham.getIDSanPham()).child(sanPham.getImage().get(0)).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                Glide.with(context)
-                        .load(task.getResult().toString())
-                        .into(holder.imageView);
-                holder.progressBar.setVisibility(View.GONE);
-                Log.d("link",task.getResult().toString());
-            }
-        });
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (setOnLongClick!=null)
-                {
-                    setOnLongClick.onLongClick(position);
+            holder.txtTenSanPham.setText(sanPham.getTenSanPham());
+            int number = Integer.parseInt(sanPham.getGia());
+            String price =format.format(number);
+            holder.txtGia.setText(price);
+            storageRef.child("SanPham").child(auth.getUid()).child(sanPham.getIDSanPham()).child(sanPham.getImages().get(0)).
+                    getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(context)
+                            .load(uri.toString())
+                            .into(holder.imageView);
+                    holder.progressBar.setVisibility(View.GONE);
+                    Log.d("link",uri.toString());
                 }
-                return true;
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ThongTinSanPhamActivity.class);
-
-                intent.putExtra("sampleObject", sanPham);
-                context.startActivity(intent);
-
-                startActivity(i);
-            }
-        });
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (setOnLongClick!=null)
+                    {
+                        setOnLongClick.onLongClick(position);
+                    }
+                    return true;
+                }
+            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ThongTinSanPhamActivity.class);
+                    Gson gson = new Gson();
+                    String data = gson.toJson(sanPham);
+                    intent.putExtra("sanPham", data);
+                    context.startActivity(intent);
+                }
+            });
+        }
 
     }
 

@@ -17,7 +17,9 @@
         <activity
             android:name=".Screen.ThongTinSanPhamActivity"
             android:label="Thông tin sản phẩm"
-            android:parentActivityName=".Screen.DS_SanPhamActivity"></activity>
+            android:parentActivityName=".Screen.DS_SanPhamActivity">
+
+        </activity>
         <activity
             android:name=".Screen.DS_SanPhamActivity"
             android:label="Danh sách sản phẩm"

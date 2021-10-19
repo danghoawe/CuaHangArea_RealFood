@@ -32,5 +32,15 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background_green"
-        android:text="Thêm danh mục mới"/>
+        android:text="Lưu danh mục"/>
+    <android.widget.Button
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:id="@+id/btnXoa"
+        android:layout_margin="10dp"
+        style="@style/button_text"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background_red"
+        android:text="Xóa danh mục"/>
 </LinearLayout>

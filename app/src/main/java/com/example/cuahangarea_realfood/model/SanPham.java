@@ -11,12 +11,13 @@ public class SanPham {
     }
 
     public void setSize(String size) {
-        size = size;
+        this.size = size;
     }
 
     public ArrayList<String> getImages() {
         return images;
     }
+    ArrayList<String> images;
 
     public void setImages(ArrayList<String> images) {
         this.images = images;
@@ -30,20 +31,14 @@ public class SanPham {
         Gia = gia;
         ChiTietSanPham = chiTietSanPham;
         this.IDCuaHang = IDCuaHang;
-        size = size;
+        this.size = size;
         Rating = rating;
         this.images = images;
     }
 
-    public ArrayList<String> getImage() {
-        return images;
-    }
 
-    public void setImage( ArrayList<String> images) {
-        this.images = images;
-    }
 
-    ArrayList<String> images;
+
 
     public SanPham( ) {
     }

@@ -137,7 +137,7 @@
                 <android.widget.Button xmlns:android="http://schemas.android.com/apk/res/android"
                     style="@style/Button_v2_Green"
                     android:id="@+id/btnThemSanPham"
-                    android:text="Thêm mới"
+                    android:text="Lưu sản phẩm"
                     />
                 <android.widget.Button xmlns:android="http://schemas.android.com/apk/res/android"
                     style="@style/Button_v2_Red"
