@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.SanPham;
+import com.example.cuahangarea_realfood.model.ThongBao;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +33,12 @@ public class Firebase_Manager {
         storageRef = FirebaseStorage.getInstance().getReference();
         auth= FirebaseAuth.getInstance();
     }
+
+    public Task<Void> Ghi_ThongBao(ThongBao thongBao)
+    {
+        return  mDatabase.child("ThongBao").child(auth.getUid()).child(thongBao.getIDThongBao()).setValue(thongBao);
+    }
+
     public Task<Void> Ghi_CuaHang(CuaHang cuaHang)
     {
       return  mDatabase.child("CuaHang").child(cuaHang.getIDCuaHang()).setValue(cuaHang);
@@ -95,6 +102,15 @@ public class Firebase_Manager {
     {
         storageRef.child("CuaHang").child(IDCuaHang).child("CMND_MatTruoc").putFile(truoc);
         storageRef.child("CuaHang").child(IDCuaHang).child("CMND_MatSau").putFile(sau);
+    }
+    public UploadTask UpAvatar(Uri Avatar)
+    {
+        return   storageRef.child("CuaHang").child(auth.getUid()).child("Avatar").putFile(Avatar);
+
+    }
+    public UploadTask UpWallPaper(Uri WallPaper)
+    {
+        return   storageRef.child("CuaHang").child(auth.getUid()).child("WallPaper").putFile(WallPaper);
     }
     public ArrayList<DanhMuc> GetDanhSachDanhMuc()
     {

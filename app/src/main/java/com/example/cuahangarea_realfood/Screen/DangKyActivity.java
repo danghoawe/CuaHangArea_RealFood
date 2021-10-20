@@ -148,7 +148,7 @@ public class DangKyActivity extends AppCompatActivity {
     private boolean Validated_Form() {
         boolean result = false;
         if (!validate.isBlank(edtEmail) && validate.isEmail(edtEmail)
-                &&!validate.isBlank(edtHoTen)&&!validate.isBlank(edtIDcard)&&!validate.isBlank(edtTenCuaHang)
+                &&!validate.isBlank(edtHoTen)&&!validate.isBlank(edtIDcard)&&!validate.isBlank(edtTenCuaHang)&&!validate.moreThan50Char(edtTenCuaHang)
                 &&!validate.isBlank(edtDiaChi)&&validate.isPhone(edtSoDienThoai)
                 &&!validate.isBlank(edtMatKhau) && !validate.lessThan6Char(edtMatKhau)
                 &&!validate.isBlank(edtReMatKhau) && !validate.lessThan6Char(edtReMatKhau)

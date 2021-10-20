@@ -1,5 +1,7 @@
 package com.example.cuahangarea_realfood.Fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,60 +10,91 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.Screen.ThongTinCuaHangActivity;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
+import com.example.cuahangarea_realfood.databinding.FragmentStoreBinding;
+import com.example.cuahangarea_realfood.model.CuaHang;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StoreFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class StoreFragment extends Fragment {
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    FragmentStoreBinding binding;
+    Firebase_Manager firebase_manager = new Firebase_Manager();
     public StoreFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StoreFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StoreFragment newInstance(String param1, String param2) {
-        StoreFragment fragment = new StoreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_store, container, false);
+        binding = FragmentStoreBinding.inflate(getLayoutInflater());
+        LoadData();
+        binding.btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),ThongTinCuaHangActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+        return binding.getRoot();
+
+    }
+    private void LoadData() {
+        binding.lnLayout.setVisibility(View.GONE);
+        firebase_manager. mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                CuaHang temp = dataSnapshot.getValue(CuaHang.class);
+                binding.txtDiaChi.setText( temp.getDiaChi());
+                binding.txtTenCuaHang.setText(temp.getTenCuaHang());
+                binding.txtEmail.setText(temp.getEmail());
+                binding.txtSoDT.setText(temp.getSoDienThoai());
+                binding.txtSoCMND.setText(temp.getSoCMND());
+                binding.txtChuSoHu.setText(temp.getChuSoHuu());
+                binding.txtThongTinChiTiet.setText(temp.getThongTinChiTiet());
+                binding.progessbar.setVisibility(View.GONE);
+                binding.lnLayout.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        firebase_manager.storageRef.child("CuaHang").child(firebase_manager.auth.getUid()).child("Avatar").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext())
+                        .load(uri.toString())
+                        .into(binding.profileImage);
+                binding.progessbarAvatar.setVisibility(View.GONE);
+
+            }
+        });
+        firebase_manager.storageRef.child("CuaHang").child(firebase_manager.auth.getUid()).child("WallPaper").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext())
+                        .load(uri.toString())
+                        .into(binding.imgWallPaper);
+                binding.progessbarWallPaper.setVisibility(View.GONE);
+
+            }
+        });
+
     }
 }

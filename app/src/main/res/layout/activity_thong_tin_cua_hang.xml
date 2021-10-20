@@ -26,19 +26,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="256dp">
                     <ImageView
+                        android:id="@+id/imgWallPaper"
                         android:layout_width="match_parent"
+                        android:scaleType="centerCrop"
                         android:layout_height="200dp"
                         android:src="@drawable/background_store" />
                     <android.widget.Button
-                        android:id="@+id/btnThemAnh"
+                        android:id="@+id/btnEditWallPaper"
                         android:layout_width="120dp"
                         android:layout_height="40dp"
                         android:layout_gravity="top"
                         android:clickable="true"
                         android:drawableLeft="@drawable/ic_baseline_image_24"
                         android:src="@drawable/ic_baseline_add_a_photo_50"
-                        android:text=" Thêm ảnh "
+                        android:text="Chỉnh sửa"
                         android:textAllCaps="false" />
+
                 </FrameLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -53,19 +56,18 @@
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/logo_banh_mi"
-                            app:civ_border_color="#F44336"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/baseline_image_black_48dp"
+                            app:civ_border_color="#852F28"
                             app:civ_border_width="2dp" />
                         <ImageButton
+                            android:id="@+id/btnEditAvatar"
                             android:layout_gravity="bottom"
-                            android:layout_marginLeft="45dp"
                             android:background="@color/transparent"
-                            android:layout_width="30dp"
+                            android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_baseline_edit_24"/>
                     </FrameLayout>
-
-
                     <EditText
                         android:id="@+id/edtTenCuaHang"
                         style="@style/Title"

@@ -28,6 +28,15 @@ public class Validate {
         }
         return false;
     }
+    public boolean moreThan50Char(EditText editText){
+        editText.setError(null);
+        if (editText.getText().toString().length()>50)
+        {
+            editText.setError("Vui lòng nhập ít hơn 50 kí tự!");
+            return true;
+        }
+        return false;
+    }
 
     public boolean isEmail(EditText editText){
         editText.setError(null);

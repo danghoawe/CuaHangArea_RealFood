@@ -8,11 +8,16 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
+import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.Fragment.HomeFragment;
 import com.example.cuahangarea_realfood.Fragment.NotificationFragment;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.Fragment.SettingFragment;
 import com.example.cuahangarea_realfood.Fragment.StoreFragment;
+import com.example.cuahangarea_realfood.model.DanhMuc;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -20,6 +25,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 public class Home extends AppCompatActivity {
 FrameLayout frameLayout;
 BottomBar bottomBar ;
+Firebase_Manager firebase_manager = new Firebase_Manager();
 public static Fragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +36,17 @@ public static Fragment fragment;
         setControl();
         setEvent();
         BottomBarTab nearby = bottomBar.getTabWithId(R.id.tab_notification);
-        nearby.setBadgeCount(5);
+        firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid())
+                .orderByChild("trangThaiThongBao").equalTo("ChuaXem")
+                .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nearby.setBadgeCount((int) dataSnapshot.getChildrenCount());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
     private void loadFragment(Fragment fragment) {
         // load fragment

@@ -10,7 +10,7 @@
         id="@+id/tab_store"
         icon="@drawable/ic_store"
         title="Cửa hàng"
-        barColorWhenSelected="#00608C" />
+        barColorWhenSelected="#027DB5" />
     <tab
         id="@+id/tab_notification"
         icon="@drawable/ic_notification"

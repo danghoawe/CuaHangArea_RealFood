@@ -16,35 +16,66 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <!-- TODO: Update blank fragment layout -->
-            <ImageView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:src="@drawable/background_store" />
-
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imagebackground"
+                    android:layout_width="match_parent"
+                    android:scaleType="centerCrop"
+                    android:layout_height="200dp"
+                    android:src="@drawable/background_store" />
+                <ProgressBar
+                    android:id="@+id/progessbarWallPaper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+            </FrameLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-60dp"
                 android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/profile_image"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/logo_banh_mi"
-                    app:civ_border_color="#F44336"
-                    app:civ_border_width="2dp" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/profile_image"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/baseline_image_black_48dp"
+                        app:civ_border_color="#852F28"
+                        app:civ_border_width="2dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnEditAvatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/transparent"
+                        android:src="@drawable/ic_baseline_edit_24" />
+                    <ProgressBar
+                        android:id="@+id/progessbarAvatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
 
                 <TextView
+                    android:id="@+id/txtTenCuaHang"
                     style="@style/Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginLeft="6dp"
+                    android:layout_marginLeft="25dp"
                     android:text="Bánh mì Pewpew"
                     android:textStyle="bold" />
+
                 <ImageButton
                     android:id="@+id/btnEdit"
                     android:background="@color/transparent"
@@ -54,6 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:src="@drawable/baseline_border_color_black_24dp"/>
+
             </LinearLayout>
 
             <View
