@@ -32,6 +32,7 @@
         android:textSize="19dp"
         android:padding="10dp"/>
     <TextView
+        android:id="@+id/txtTaiKhoanNganHang"
         android:drawablePadding="10dp"
         android:paddingLeft="20dp"
         android:drawableLeft="@drawable/baseline_credit_card_black_24dp"
@@ -51,6 +52,7 @@
         android:textSize="19dp"
         android:padding="10dp"/>
     <TextView
+        android:id="@+id/txtDoiMatKhau"
         android:drawablePadding="10dp"
         android:paddingLeft="20dp"
         android:drawableLeft="@drawable/ic_outline_vpn_key_24"
@@ -70,6 +72,7 @@
         android:textSize="19dp"
         android:padding="10dp"/>
     <TextView
+        android:id="@+id/txtTroGiup"
         android:drawablePadding="10dp"
         android:paddingLeft="20dp"
         android:drawableLeft="@drawable/ic_baseline_info_24"
@@ -80,6 +83,7 @@
         android:textSize="19dp"
         android:padding="10dp"/>
     <TextView
+        android:id="@+id/txtRiengTu"
         android:drawablePadding="10dp"
         android:paddingLeft="20dp"
         android:drawableLeft="@drawable/ic_baseline_lock_24"
@@ -90,6 +94,7 @@
         android:textSize="19dp"
         android:padding="10dp"/>
     <TextView
+        android:id="@+id/txtDichVuVaChinhSach"
         android:drawablePadding="10dp"
         android:paddingLeft="20dp"
         android:drawableLeft="@drawable/ic_baseline_assignment_24"
@@ -100,6 +105,7 @@
         android:textSize="19dp"
         android:padding="10dp"/>
     <TextView
+        android:id="@+id/txtThoiGianSuDUng"
         android:drawablePadding="10dp"
         android:paddingLeft="20dp"
         android:drawableLeft="@drawable/ic_baseline_warning_24"
@@ -111,7 +117,7 @@
         android:padding="10dp"/>
     <android.widget.Button
         style="@style/Button_v2_Green"
-        android:id="@+id/btnHienthi"
+        android:id="@+id/btnDangXuat"
         android:text="Đăng xuất"
         />
 </LinearLayout>

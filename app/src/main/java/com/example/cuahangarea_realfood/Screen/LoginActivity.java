@@ -32,6 +32,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser()!=null)
+        {
+            Intent intent = new Intent(LoginActivity.this, Home.class);
+            startActivity(intent);
+        }
         this.getSupportActionBar().hide();
         setControl();
         setEvent();
@@ -74,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, Home.class);
                                 kAlertDialog.dismiss();
                                 startActivity(intent);
+                                edtMatKhau.setText("");
                             }
                             else {
                                 kAlertDialog.setTitleText("Sai tài khoản hoặc mật khẩu");

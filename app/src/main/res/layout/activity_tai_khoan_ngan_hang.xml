@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TaiKhoanNganHangActivity">
+    <FrameLayout
+        android:background="@drawable/edittext_background_v2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+        <gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
+            android:paddingLeft="15dp"
+            android:id="@+id/spTenNganHang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:SearchViewBackgroundColor="#DCDCDC"
+            app:RevealViewBackgroundColor="#DCDCDC"
+            app:DoneSearchTintColor="@android:color/holo_purple"
+            app:RevealEmptyText="Nhấp vào để chọn ngân hàng"
+            app:ShowBorders="true"
+            app:KeepLastSearch="true"
+            app:StartSearchTintColor="@android:color/white" />
+    </FrameLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên chi nhánh"
+        >
+        <EditText
+            android:id="@+id/edtTenChiNhanh"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Số tài khoản"
+        >
+        <EditText
+            android:id="@+id/edtSoTaiKhoan"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên chủ tài khoản"
+        >
+        <EditText
+            android:id="@+id/edtTenChuTaiKhoan"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Số CMND"
+        >
+        <EditText
+            android:id="@+id/edtSoDT"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <android.widget.Button
+        style="@style/Button_v2_Green"
+        android:id="@+id/btnDangXuat"
+        android:text="Lưu thông tin"
+        />
+</LinearLayout>

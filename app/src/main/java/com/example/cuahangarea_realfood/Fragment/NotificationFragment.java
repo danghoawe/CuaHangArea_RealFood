@@ -19,6 +19,7 @@ import com.example.cuahangarea_realfood.adapter.ThongBaoAdapter;
 import com.example.cuahangarea_realfood.databinding.FragmentNotificationBinding;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.ThongBao;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,8 +38,6 @@ public class NotificationFragment extends Fragment {
     public NotificationFragment() {
         // Required empty public constructor
     }
-
-
 
 
     @Override
@@ -79,6 +78,8 @@ public class NotificationFragment extends Fragment {
                     }
                     binding.rcNotification.setLayoutManager(linearLayoutManager);
                     binding.rcNotification.setAdapter(thongBaoAdapter);
+                    binding.pdLoad.setVisibility(View.GONE);
+                    LoadAlert();
                 }
             }
             @Override
@@ -88,14 +89,17 @@ public class NotificationFragment extends Fragment {
         binding.btnDanhDauLaDaDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.pdLoad.setVisibility(View.VISIBLE);
                 thongBaos.forEach(thongBao -> {
                     if (thongBao.getTrangThaiThongBao()== TrangThaiThongBao.ChuaXem)
                     {
                         thongBao.setTrangThaiThongBao(TrangThaiThongBao.DaXem);
                         firebase_manager.Ghi_ThongBao(thongBao);
+                        binding.pdLoad.setVisibility(View.GONE);
                     }
                     thongBaoAdapter.notifyDataSetChanged();
                 });
+                binding.pdLoad.setVisibility(View.GONE);
             }
         });
     }

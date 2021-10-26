@@ -75,7 +75,8 @@ public class DangKyActivity extends AppCompatActivity {
                                     firebase_manager.Ghi_CuaHang(cuaHang);
                                     firebase_manager.Up2MatCMND(CMND_truoc,CMND_sau,uuid);
                                     kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
-                                    kAlertDialog.setContentText("Đăng ký tài khỏan thành công");
+                                    kAlertDialog.setTitleText("Đăng ký tài khỏan thành công ");
+                                    kAlertDialog.setContentText("Vui lòng chuyển 20.000đ phí duy trì . Đến số tài khoản 123467088\nNH: Agribank \nChủ tài khoản: Admin");
 //                                    Dialog a = new NordanAlertDialog.Builder(DangKyActivity.this)
 //                                            .setAnimation(Animation.SIDE)
 //                                            .isCancellable(false)
@@ -148,7 +149,7 @@ public class DangKyActivity extends AppCompatActivity {
     private boolean Validated_Form() {
         boolean result = false;
         if (!validate.isBlank(edtEmail) && validate.isEmail(edtEmail)
-                &&!validate.isBlank(edtHoTen)&&!validate.isBlank(edtIDcard)&&!validate.isBlank(edtTenCuaHang)&&!validate.moreThan50Char(edtTenCuaHang)
+                &&!validate.isBlank(edtHoTen)&&!validate.isBlank(edtIDcard)&&validate.isCMND(edtIDcard)&&!validate.isBlank(edtTenCuaHang)&&!validate.moreThan50Char(edtTenCuaHang)
                 &&!validate.isBlank(edtDiaChi)&&validate.isPhone(edtSoDienThoai)
                 &&!validate.isBlank(edtMatKhau) && !validate.lessThan6Char(edtMatKhau)
                 &&!validate.isBlank(edtReMatKhau) && !validate.lessThan6Char(edtReMatKhau)

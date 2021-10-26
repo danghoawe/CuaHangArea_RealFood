@@ -28,17 +28,27 @@
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:background="@drawable/button_background_gray"
-                android:text="Đánh giấu là đã đọc"
+                android:text="Đánh dấu là đã đọc"
                 android:textAllCaps="false"
                 android:layout_height="40dp"
                 android:textSize="17dp"
                 android:textColor="@color/white"
                 android:id="@+id/btnDanhDauLaDaDoc"
                 />
-            <androidx.recyclerview.widget.RecyclerView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rcNotification"/>
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/rcNotification"/>
+                <ProgressBar
+                    android:id="@+id/pdLoad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
         </LinearLayout>
         <TextView
             android:id="@+id/txtAlert"

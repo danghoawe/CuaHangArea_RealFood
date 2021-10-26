@@ -29,7 +29,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyViewHolder> {
@@ -83,6 +85,16 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
 
             }
         });
+        Date now = new Date();
+        if (thongBao.getDate().getDate()== now.getDate())
+        {
+
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+            holder.txtThoiGian.setText(formatter.format(thongBao.getDate().getTime()));
+
+        }
+
+
     }
 
     //Hàm để get layout type
@@ -99,7 +111,33 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
 //        }
         return resource;
     }
-
+//    public  String Time(Date dateStart,Date dateStop){
+//
+////HH converts hour in 24 hours format (0-23), day calculation
+//        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+//
+//        Date d1 = dateStart;
+//        Date d2 = dateStop;
+//
+//        try {
+//
+//            long diff = d2.getTime() - d1.getTime();
+//
+//            long diffSeconds = diff / 1000 % 60;
+//            long diffMinutes = diff / (60 * 1000) % 60;
+//            long diffHours = diff / (60 * 60 * 1000) % 24;
+//            long diffDays = diff / (24 * 60 * 60 * 1000);
+//
+//            System.out.print(diffDays + " days, ");
+//            System.out.print(diffHours + " hours, ");
+//            System.out.print(diffMinutes + " minutes, ");
+//            System.out.print(diffSeconds + " seconds.");
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
     //trả về số phần tử
     @Override
     public int getItemCount() {
@@ -111,6 +149,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
         TextView txtTieuDe;
         ImageView imageView;
         TextView txtNoiDung;
+        TextView txtThoiGian;
         LinearLayout linearLayout;
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -118,6 +157,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
             txtNoiDung = itemView.findViewById(R.id.txtNoiDung);
             txtTieuDe = itemView.findViewById(R.id.txtTieuDe);
             linearLayout = itemView.findViewById(R.id.lnLayout);
+            txtThoiGian = itemView.findViewById(R.id.txtThoiGian);
         }
     }
 }

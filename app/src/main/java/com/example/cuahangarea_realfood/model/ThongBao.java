@@ -2,6 +2,8 @@ package com.example.cuahangarea_realfood.model;
 
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
 
+import java.util.Date;
+
 public class ThongBao {
     String IDThongBao;
     String noiDung;
@@ -10,6 +12,27 @@ public class ThongBao {
     String IDUSer;
     String Image;
     TrangThaiThongBao trangThaiThongBao;
+    Date date;
+
+    public ThongBao(String IDThongBao, String noiDung, String tieuDe, String theme, String IDUSer, String image, TrangThaiThongBao trangThaiThongBao, Date date) {
+        this.IDThongBao = IDThongBao;
+        this.noiDung = noiDung;
+        this.tieuDe = tieuDe;
+        this.theme = theme;
+        this.IDUSer = IDUSer;
+        Image = image;
+        this.trangThaiThongBao = trangThaiThongBao;
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public String getImage() {
         return Image;
     }
@@ -66,17 +89,6 @@ public class ThongBao {
     public void setTrangThaiThongBao(TrangThaiThongBao trangThaiThongBao) {
         this.trangThaiThongBao = trangThaiThongBao;
     }
-
-    public ThongBao(String IDThongBao, String noiDung, String tieuDe, String theme, String IDUSer, String Image,TrangThaiThongBao trangThaiThongBao) {
-        this.IDThongBao = IDThongBao;
-        this.noiDung = noiDung;
-        this.tieuDe = tieuDe;
-        this.theme = theme;
-        this.IDUSer = IDUSer;
-        this.trangThaiThongBao = trangThaiThongBao;
-        this.Image = Image;
-    }
-
     public ThongBao() {
     }
 }

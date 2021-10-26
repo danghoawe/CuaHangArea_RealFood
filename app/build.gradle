@@ -35,6 +35,20 @@ android {
 
 dependencies {
 
+    def work_version = "2.5.0"
+
+    // (Java only)
+    implementation "androidx.work:work-runtime:$work_version"
+
+
+
+
+
+
+    implementation 'gr.escsoft.michaelprimez.searchablespinner:SearchableSpinner:1.0.9'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.google.code.gson:gson:2.8.7'
     // Material Components for Android. Replace the version with the latest version of Material Components library.
     implementation 'com.google.android.material:material:1.4.0'

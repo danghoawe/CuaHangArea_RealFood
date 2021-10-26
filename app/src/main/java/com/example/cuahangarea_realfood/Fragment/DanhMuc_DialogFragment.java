@@ -23,15 +23,25 @@ import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.Screen.ThongTinSanPhamActivity;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -39,6 +49,7 @@ import com.vansuita.pickimage.listeners.IPickCancel;
 import com.vansuita.pickimage.listeners.IPickResult;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -174,6 +185,50 @@ public class DanhMuc_DialogFragment extends DialogFragment {
                                 //TODO: do what you have to if user clicked cancel
                             }
                         }).show(getActivity());
+            }
+        });
+        btnXoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new NordanAlertDialog.Builder(getActivity())
+                        .setDialogType(DialogType.WARNING)
+                        .setAnimation(Animation.SLIDE)
+                        .isCancellable(true)
+                        .setTitle("Thông báo!")
+                        .setMessage("Bạn có muốn xóa? Sẽ xóa toàn bộ sản phẩm có danh mục "+danhMuc.getTenDanhMuc() + ".Và không thể khôi phục .    Vui lòng cân nhắc ")
+                        .setPositiveBtnText("Không")
+                        .setNegativeBtnText("Có")
+                        .onPositiveClicked(() -> {})
+                        .onNegativeClicked(() -> {
+                            //Xóa sản phẩm trong danh mục
+                            firebase_manager.mDatabase.child("DanhMuc").child(danhMuc.getIDCuaHang()).child(danhMuc.getIDDanhMuc()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    getDialog().dismiss();
+                                }
+                            });
+                            DatabaseReference ref = firebase_manager.mDatabase;
+                            //Xóa các sản phẩm theo danh mục
+                            Query applesQuery = ref.child("SanPham").orderByChild("iddanhMuc").equalTo(danhMuc.getIDDanhMuc());
+
+                            applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                        appleSnapshot.getRef().removeValue();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Log.e(TAG, "onCancelled", databaseError.toException());
+                                }
+                            });
+                        })
+                        .build().show();
+
+
             }
         });
         return view;

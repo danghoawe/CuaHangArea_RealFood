@@ -11,38 +11,45 @@
         android:theme="@style/Theme.CuaHangArea_RealFood"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".Screen.ThongTinCuaHangActivity"
+        <activity android:name=".TaiKhoanNganHangActivity"
+            android:label="Tài khoản ngân hàng"
+            android:parentActivityName=".Screen.Home"></activity>
+        <activity
+            android:name=".Screen.DoiMatKhauActivity"
+            android:label="Đổi mật khẩu"
+            android:parentActivityName=".Screen.Home" />
+        <activity
+            android:name=".Screen.ThongTinCuaHangActivity"
             android:label="Thông tin cửa hàng"
-            android:parentActivityName=".Screen.Home"
-            ></activity>
+            android:parentActivityName=".Screen.Home" />
         <activity
             android:name=".Screen.QuenMatKhauActivity"
             android:label="Quên mật khẩu"
-            android:parentActivityName=".Screen.LoginActivity"></activity>
+            android:parentActivityName=".Screen.LoginActivity" />
         <activity
             android:name=".Screen.ThongTinSanPhamActivity"
             android:label="Thông tin sản phẩm"
-            android:parentActivityName=".Screen.DS_SanPhamActivity"></activity>
+            android:parentActivityName=".Screen.DS_SanPhamActivity" />
         <activity
             android:name=".Screen.DS_SanPhamActivity"
             android:label="Danh sách sản phẩm"
-            android:parentActivityName=".Screen.Home"></activity>
+            android:parentActivityName=".Screen.Home" />
         <activity
             android:name=".Screen.Home"
-            android:label="Home">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="Home"></activity>
         <activity
             android:name=".Screen.DangKyActivity"
             android:label="RealFood"
             android:parentActivityName=".Screen.LoginActivity" />
         <activity
             android:name=".Screen.LoginActivity"
-            android:label="Đăng nhập"></activity>
+            android:label="Đăng nhập">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -3,12 +3,20 @@ package com.example.cuahangarea_realfood.Screen;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.ListenableWorker;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +39,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 ;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 
@@ -47,6 +56,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
     Firebase_Manager firebase_manager = new Firebase_Manager();
     RecyclerView rcDanhMuc,rcSanPham;
     SetOnLongClick setOnLongClick;
+    SearchView search;
 
     @Override
     protected void onResume() {
@@ -58,11 +68,17 @@ public class DS_SanPhamActivity extends AppCompatActivity {
         Log.d("a","oke");
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        WorkRequest uploadWorkRequest =
+//                new OneTimeWorkRequest.Builder(LoadWorker.class)
+//                        .build();
+//
+//        WorkManager
+//                .getInstance(this)
+//                .enqueue(uploadWorkRequest);
+
         danhMucs = new ArrayList<DanhMuc>();
         sanPhams = new ArrayList<SanPham>();
         setContentView(R.layout.activity_ds_san_pham);
@@ -94,7 +110,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
         rcSanPham.setLayoutManager(gridLayoutManager);
         rcSanPham.setAdapter(sanPhamAdapter);
         GetDanhSachDanhMuc();
-        GetSanPham();
+//        GetSanPham();
         setEvent();
     }
 
@@ -125,7 +141,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
         });
     }
     public void GetSanPham() {
-        firebase_manager.mDatabase.child("SanPham").child(firebase_manager.auth.getUid()).orderByChild("tenSanPham").addValueEventListener(new ValueEventListener() {
+        firebase_manager.mDatabase.child("SanPham").orderByChild("idcuaHang").equalTo(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 sanPhams.clear();
@@ -152,10 +168,27 @@ public class DS_SanPhamActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
-        if (menu instanceof MenuBuilder) {
-            MenuBuilder m = (MenuBuilder) menu;
-            m.setOptionalIconsVisible(true);
-        }
+        MenuItem searchItem = menu.findItem(R.id.menuItem_search);
+        SearchView searchView =
+                (SearchView) searchItem.getActionView();
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                sanPhamAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                sanPhamAdapter.getFilter().filter(query);
+                return true;
+
+            }
+
+        });
         return true;
     }
 
@@ -177,5 +210,22 @@ public class DS_SanPhamActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    public class LoadWorker extends Worker {
+        public LoadWorker(
+                @NonNull Context context,
+                @NonNull WorkerParameters params) {
+            super(context, params);
+        }
+
+        @Override
+        public Result doWork() {
+
+            // Do the work here--in this case, upload the images.
+            GetSanPham();
+
+            // Indicate whether the work finished successfully with the Result
+            return Result.success();
+        }
     }
 }

@@ -49,7 +49,7 @@ public class Firebase_Manager {
     }
     public Task<Void> Ghi_SanPham(SanPham sanPham)
     {
-       return mDatabase.child("SanPham").child(auth.getUid()).child((sanPham.getIDSanPham())).setValue(sanPham);
+       return mDatabase.child("SanPham").child((sanPham.getIDSanPham())).setValue(sanPham);
     }
     public UploadTask UpImageDanhMuc(Uri truoc, String danhMuc)
     {

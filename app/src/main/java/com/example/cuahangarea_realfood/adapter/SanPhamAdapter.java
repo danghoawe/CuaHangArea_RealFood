@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -36,10 +38,11 @@ import java.util.ArrayList;
 import java.util.Currency;
 
 
-public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHolder> {
+public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHolder> implements Filterable {
     private Activity context;
     private int resource;
     private ArrayList<SanPham> arrayList;
+    private ArrayList<SanPham> source;
     public SetOnLongClick setOnLongClick;
 
     public SetOnLongClick getSetOnLongClick() {
@@ -56,6 +59,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHo
         this.context = context;
         this.resource = resource;
         this.arrayList = arrayList;
+        source = arrayList;
     }
 
 
@@ -77,8 +81,8 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHo
             format.setMaximumFractionDigits(0);
 
             holder.txtTenSanPham.setText(sanPham.getTenSanPham());
-            int number = Integer.parseInt(sanPham.getGia());
-            String price =format.format(number);
+            float parseFloat = Float.parseFloat(sanPham.getGia());
+            String price =format.format(parseFloat);
             holder.txtGia.setText(price);
             storageRef.child("SanPham").child(auth.getUid()).child(sanPham.getIDSanPham()).child(sanPham.getImages().get(0)).
                     getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -134,6 +138,38 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHo
     @Override
     public int getItemCount() {
         return arrayList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSearch = constraint.toString();
+                if (strSearch.isEmpty()) {
+                    arrayList = source;
+                } else {
+                    ArrayList<SanPham> list = new ArrayList<>();
+                    for (SanPham sanPham : source) {
+                        if (sanPham.getTenSanPham().toLowerCase().contains(strSearch.toLowerCase())||
+                                sanPham.getChiTietSanPham().toLowerCase().contains(strSearch.toLowerCase())||
+                                sanPham.getGia().toLowerCase().contains(strSearch.toLowerCase())) {
+                            list.add(sanPham);
+                        }
+                    }
+                    arrayList = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = arrayList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                arrayList = (ArrayList<SanPham>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     //Define RecylerVeiw Holder

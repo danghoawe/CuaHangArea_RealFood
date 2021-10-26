@@ -46,6 +46,7 @@ import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -238,7 +239,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                             sanPham = temp;
                             String path = "SanPham/"+firebase_manager.auth.getUid()+"/"+uuid+"/"+images.get(0);
                             String uuid_ThongBao = UUID.randomUUID().toString().replace("-", "");
-                            ThongBao thongBao = new ThongBao(uuid_ThongBao, "Sản phẩm đã được thêm mới: "+sanPham.getTenSanPham(), "Thông báo", "", firebase_manager.auth.getUid(), path,TrangThaiThongBao.ChuaXem);
+                            ThongBao thongBao = new ThongBao(uuid_ThongBao, "Sản phẩm đã được thêm mới: "+sanPham.getTenSanPham(), "Thông báo", "", firebase_manager.auth.getUid(), path,TrangThaiThongBao.ChuaXem,new Date());
                             firebase_manager.Ghi_ThongBao(thongBao);
                         }
                         else {
