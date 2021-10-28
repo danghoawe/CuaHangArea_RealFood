@@ -1,22 +1,16 @@
-package com.example.cuahangarea_realfood.Screen;
+package com.example.cuahangarea_realfood.screen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuBuilder;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.ListenableWorker;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-import androidx.work.WorkRequest;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import android.annotation.SuppressLint;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -211,21 +205,5 @@ public class DS_SanPhamActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public class LoadWorker extends Worker {
-        public LoadWorker(
-                @NonNull Context context,
-                @NonNull WorkerParameters params) {
-            super(context, params);
-        }
 
-        @Override
-        public Result doWork() {
-
-            // Do the work here--in this case, upload the images.
-            GetSanPham();
-
-            // Indicate whether the work finished successfully with the Result
-            return Result.success();
-        }
-    }
 }

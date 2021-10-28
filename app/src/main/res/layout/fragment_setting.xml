@@ -6,22 +6,6 @@
     tools:context=".Fragment.SettingFragment"
     android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_margin="20dp"
-        android:layout_gravity="center"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/logo_banh_mi"/>
-    <TextView
-        android:id="@+id/txtTenCuaHang"
-        style="@style/Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="6dp"
-        android:layout_marginLeft="6dp"
-        android:text="Bánh mì Pewpew"
-        android:textStyle="bold" />
     <TextView
         android:textStyle="bold"
         android:background="#7EBDBDBD"

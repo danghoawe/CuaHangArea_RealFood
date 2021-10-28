@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/linear1"
-    tools:context=".Screen.LoginActivity">
+    tools:context=".screen.LoginActivity">
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -89,7 +89,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Xác thực tài khoản"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tải lên 2 mặt CCCD/CMND để đội ngũ kỹ thuật viên xét duyệt!"/>
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -99,17 +107,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:layout_marginTop="20dp"
                     android:textColor="@color/black"
                     android:layout_marginLeft="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Mặt trước"/>
                 <ImageView
+                    android:layout_margin="10dp"
+
                     android:id="@+id/imgCMND_Truoc"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:src="@drawable/baseline_photo_camera_red_500_48dp"
+                    android:layout_height="140dp"
+                    android:src="@drawable/idtruoc"
                     />
             </LinearLayout>
             <LinearLayout
@@ -118,17 +127,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:layout_marginTop="20dp"
                     android:textColor="@color/black"
                     android:layout_marginLeft="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Mặt sau"/>
                 <ImageView
+                    android:layout_margin="10dp"
                     android:id="@+id/imgCMND_Sau"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:src="@drawable/baseline_photo_camera_red_500_48dp"
+                    android:layout_height="140dp"
+                    android:src="@drawable/idsau"
                     />
             </LinearLayout>
         </LinearLayout>

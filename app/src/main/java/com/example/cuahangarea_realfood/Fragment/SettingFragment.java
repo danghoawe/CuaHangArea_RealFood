@@ -10,9 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cuahangarea_realfood.Firebase_Manager;
-import com.example.cuahangarea_realfood.R;
-import com.example.cuahangarea_realfood.Screen.DoiMatKhauActivity;
-import com.example.cuahangarea_realfood.TaiKhoanNganHangActivity;
+import com.example.cuahangarea_realfood.screen.DoiMatKhauActivity;
+import com.example.cuahangarea_realfood.screen.TaiKhoanNganHangActivity;
 import com.example.cuahangarea_realfood.databinding.FragmentSettingBinding;
 
 public class SettingFragment extends Fragment {

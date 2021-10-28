@@ -7,7 +7,9 @@ import androidx.annotation.NonNull;
 
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.example.cuahangarea_realfood.model.DanhMuc;
+import com.example.cuahangarea_realfood.model.NganHang;
 import com.example.cuahangarea_realfood.model.SanPham;
+import com.example.cuahangarea_realfood.model.TaiKhoanNganHang;
 import com.example.cuahangarea_realfood.model.ThongBao;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +40,10 @@ public class Firebase_Manager {
     {
         return  mDatabase.child("ThongBao").child(auth.getUid()).child(thongBao.getIDThongBao()).setValue(thongBao);
     }
-
+    public Task<Void> Ghi_NganHang(TaiKhoanNganHang taiKhoanNganHang)
+    {
+        return  mDatabase.child("TaiKhoanNganHang").child(taiKhoanNganHang.getId()).setValue(taiKhoanNganHang);
+    }
     public Task<Void> Ghi_CuaHang(CuaHang cuaHang)
     {
       return  mDatabase.child("CuaHang").child(cuaHang.getIDCuaHang()).setValue(cuaHang);

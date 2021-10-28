@@ -5,37 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Screen.LoginActivity">
-
-    <ImageView
+    tools:context=".screen.LoginActivity">
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="-35dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/logo"
-        android:layout_marginBottom="20dp"/>
-    <TextView
-        android:fontFamily="sans-serif"
-        android:text="Đăng nhập"
+
+        app:cardCornerRadius="40dp">
+        <FrameLayout
+            android:backgroundTint="#93242A"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+
+                android:adjustViewBounds="true"
+                android:background="@drawable/logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/logo"
+                android:layout_marginTop="33dp"/>
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+    <com.google.android.material.textfield.TextInputLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Title_V3"/>
-
+        app:startIconDrawable="@drawable/baseline_email_black_24dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp">
     <EditText
+        android:layout_marginTop="30dp"
         android:drawablePadding="10dp"
         android:drawableLeft="@drawable/baseline_email_black_24dp"
         android:id="@+id/edtEmail"
         style="@style/Edittext_v1"
         android:hint="@string/taiikhon"
        />
-
-    <EditText
-        android:drawablePadding="10dp"
-        android:drawableLeft="@drawable/baseline_password_black_24dp"
-        android:id="@+id/edtMatKhau"
-        style="@style/Edittext_v1"
-        android:hint="@string/matkhau"
-         />
-
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/etPasswordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/baseline_password_black_24dp"
+        app:passwordToggleEnabled="true"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp">
+        <EditText
+            android:drawablePadding="10dp"
+            android:id="@+id/edtMatKhau"
+            style="@style/Edittext_v1"
+            android:hint="@string/matkhau"
+            android:inputType="textPassword"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:textSize="16dp"
         android:id="@+id/txtQuenMatKhau"

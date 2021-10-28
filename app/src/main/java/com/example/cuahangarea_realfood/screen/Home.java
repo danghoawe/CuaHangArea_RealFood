@@ -1,9 +1,7 @@
-package com.example.cuahangarea_realfood.Screen;
+package com.example.cuahangarea_realfood.screen;
 
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -16,7 +14,6 @@ import com.example.cuahangarea_realfood.Fragment.NotificationFragment;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.Fragment.SettingFragment;
 import com.example.cuahangarea_realfood.Fragment.StoreFragment;
-import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;

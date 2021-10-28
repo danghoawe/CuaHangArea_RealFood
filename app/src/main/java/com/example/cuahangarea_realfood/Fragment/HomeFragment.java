@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.cuahangarea_realfood.Firebase_Manager;
-import com.example.cuahangarea_realfood.Screen.DS_SanPhamActivity;
-import com.example.cuahangarea_realfood.Screen.ThongTinCuaHangActivity;
+import com.example.cuahangarea_realfood.screen.MaGiamGiaActivity;
+import com.example.cuahangarea_realfood.screen.DS_SanPhamActivity;
+import com.example.cuahangarea_realfood.screen.ThongTinCuaHangActivity;
 import com.example.cuahangarea_realfood.databinding.FragmentHomeBinding;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -32,6 +32,8 @@ public class HomeFragment extends Fragment {
 
     CardView danhSachSanPham,maGiamGia,danhSachDonHang,phanHoiKhachHang,khuVucBep,DoanhThu;
     FragmentHomeBinding binding;
+    String txtTenCuaHang ;
+    Uri avatar,wallPaper;
     Firebase_Manager firebase_manager = new Firebase_Manager();
     public HomeFragment() {
     }
@@ -69,6 +71,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        binding.cardViewMaGiamGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MaGiamGiaActivity.class);
+                startActivity(intent);
+            }
+        });
         binding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,16 +92,25 @@ public class HomeFragment extends Fragment {
 
 
     private void Loaddata() {
-        firebase_manager. mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                CuaHang temp = dataSnapshot.getValue(CuaHang.class);
-                binding.txtTenCuaHang.setText(temp.getTenCuaHang());
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        if (txtTenCuaHang!=null)
+        {
+            binding.txtTenCuaHang.setText(txtTenCuaHang);
+        }
+        else {
+            firebase_manager. mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    CuaHang temp = dataSnapshot.getValue(CuaHang.class);
+                    binding.txtTenCuaHang.setText(temp.getTenCuaHang());
+                    txtTenCuaHang =  temp.getTenCuaHang();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+
+
         firebase_manager.storageRef.child("CuaHang").child(firebase_manager.auth.getUid()).child("Avatar").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -100,6 +118,7 @@ public class HomeFragment extends Fragment {
                         .load(uri.toString())
                         .into(binding.profileImage);
                 binding.progessbarAvatar.setVisibility(View.GONE);
+                avatar =  uri;
             }
         });
         firebase_manager.storageRef.child("CuaHang").child(firebase_manager.auth.getUid()).child("WallPaper").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

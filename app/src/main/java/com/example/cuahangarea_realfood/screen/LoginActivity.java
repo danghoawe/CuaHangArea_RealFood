@@ -1,4 +1,4 @@
-package com.example.cuahangarea_realfood.Screen;
+package com.example.cuahangarea_realfood.screen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.cuahangarea_realfood.Firebase_Manager;
-import com.example.cuahangarea_realfood.R;
-import com.example.cuahangarea_realfood.Screen.ThongTinCuaHangActivity;
-import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
+import com.example.cuahangarea_realfood.screen.ThongTinCuaHangActivity;
 import com.example.cuahangarea_realfood.databinding.FragmentStoreBinding;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.google.android.gms.tasks.OnSuccessListener;

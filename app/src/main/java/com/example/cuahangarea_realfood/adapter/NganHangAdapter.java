@@ -2,6 +2,7 @@ package com.example.cuahangarea_realfood.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
-public class NganHangAdapter extends ArrayAdapter<NganHang>  implements Filterable {
+import gr.escsoft.michaelprimez.searchablespinner.interfaces.ISpinnerSelectedView;
+
+public class NganHangAdapter extends ArrayAdapter<NganHang>  implements Filterable, ISpinnerSelectedView {
     ArrayList<NganHang> objects ;
     ArrayList<NganHang> source ;
     Context context;
@@ -35,6 +38,12 @@ public class NganHangAdapter extends ArrayAdapter<NganHang>  implements Filterab
         this.context = context;
         this.resource = resource;
         this.source = objects;
+    }
+
+    @Nullable
+    @Override
+    public NganHang getItem(int position) {
+        return objects.get(position);
     }
 
     @Override
@@ -68,6 +77,9 @@ public class NganHangAdapter extends ArrayAdapter<NganHang>  implements Filterab
         return convertView;
 
     }
+
+
+
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -96,5 +108,30 @@ public class NganHangAdapter extends ArrayAdapter<NganHang>  implements Filterab
                 notifyDataSetChanged();
             }
         };
+    }
+
+    @Override
+    public View getNoSelectionView() {
+    return null;
+    }
+
+    @Override
+    public View getSelectedView(int position) {
+        View  convertView  = LayoutInflater.from(context).inflate(resource,null);
+        NganHang nganHang = objects.get(position);
+
+        TextView txtTenNH = convertView.findViewById(R.id.textView);
+        ImageView imgLogo = convertView.findViewById(R.id.imgLogo);
+
+        txtTenNH.setText(nganHang.getName());
+        try {
+            Glide.with(context)
+                    .load(nganHang.getLogo())
+                    .into(imgLogo);
+        }catch (Exception e)
+        {
+            Log.d("ERROr",e.getMessage());
+        }
+        return convertView;
     }
 }

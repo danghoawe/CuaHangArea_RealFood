@@ -19,23 +19,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cuahangarea_realfood.R;
-import com.example.cuahangarea_realfood.Screen.Home;
-import com.example.cuahangarea_realfood.Screen.ThongTinSanPhamActivity;
+import com.example.cuahangarea_realfood.screen.ThongTinSanPhamActivity;
 import com.example.cuahangarea_realfood.SetOnLongClick;
-import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.SanPham;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 
 
 public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHolder> implements Filterable {

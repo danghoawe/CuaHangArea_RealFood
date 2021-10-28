@@ -82,6 +82,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
                 Glide.with(context)
                         .load(uri.toString())
                         .into(holder.imageView);
+                holder.progressBar.setVisibility(View.GONE);
 
             }
         });
@@ -151,6 +152,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
         TextView txtNoiDung;
         TextView txtThoiGian;
         LinearLayout linearLayout;
+        ProgressBar progressBar;
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_noti);
@@ -158,6 +160,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
             txtTieuDe = itemView.findViewById(R.id.txtTieuDe);
             linearLayout = itemView.findViewById(R.id.lnLayout);
             txtThoiGian = itemView.findViewById(R.id.txtThoiGian);
+            progressBar = itemView.findViewById(R.id.progessbar);
         }
     }
 }

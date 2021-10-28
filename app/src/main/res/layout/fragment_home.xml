@@ -19,18 +19,33 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="15dp"
+                android:layout_marginTop="-20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
                 <ImageView
+                    android:paddingTop="20dp"
                     android:id="@+id/imagebackground"
                     android:layout_width="match_parent"
-                    android:scaleType="centerCrop"
                     android:layout_height="200dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/background_store" />
+
                 <ProgressBar
                     android:id="@+id/progessbarWallPaper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center" />
+            </androidx.cardview.widget.CardView>
             </FrameLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.cardview.widget.CardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,9 +53,9 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
+                    android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-
                     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/profile_image"
                         android:layout_width="120dp"
@@ -50,19 +65,11 @@
                         android:src="@drawable/baseline_image_black_48dp"
                         app:civ_border_color="#852F28"
                         app:civ_border_width="2dp" />
-
-                    <ImageButton
-                        android:id="@+id/btnEditAvatar"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_baseline_edit_24" />
                     <ProgressBar
                         android:id="@+id/progessbarAvatar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center" />
                 </FrameLayout>
 
                 <TextView
@@ -71,20 +78,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginBottom="6dp"
                     android:layout_marginLeft="25dp"
+                    android:layout_marginBottom="6dp"
                     android:text="Bánh mì Pewpew"
                     android:textStyle="bold" />
 
                 <ImageButton
                     android:id="@+id/btnEdit"
-                    android:background="@color/transparent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_gravity="bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginBottom="15dp"
-                    android:src="@drawable/baseline_border_color_black_24dp"/>
+                    android:background="@color/transparent"
+                    android:src="@drawable/baseline_border_color_black_24dp" />
 
             </LinearLayout>
 
@@ -122,11 +129,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#050505" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView_DanhSachSamPham"
                     style="@style/Button_Home_Cardview"
@@ -153,11 +162,13 @@
                             android:text="Danh sách sản phẩm" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
-                    style="@style/Button_Home_Cardview"
                     android:id="@+id/cardView_MaGiamGia"
+                    style="@style/Button_Home_Cardview"
                     android:backgroundTint="@color/black"
                     app:cardCornerRadius="20dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -180,21 +191,25 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
+
                 <androidx.cardview.widget.CardView
-                    style="@style/Button_Home_Cardview"
                     android:id="@+id/cardView_DanhSachDonHang"
+                    style="@style/Button_Home_Cardview"
                     app:cardCornerRadius="20dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/cardview_magiamgia"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="100dp"
@@ -209,21 +224,25 @@
                             android:text="Danh sách đơn hàng" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_PhanHoiKhachHang"
                     style="@style/Button_Home_Cardview"
                     android:backgroundTint="@color/black"
-                    android:id="@+id/cardView_PhanHoiKhachHang"
                     app:cardCornerRadius="20dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/cardview_danhsachsanpham"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="100dp"
                             android:src="@drawable/danhgia_icon" />
+
                         <TextView
                             style="@style/Title_V2"
                             android:layout_width="wrap_content"
@@ -234,11 +253,13 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView_KhuVucBep"
 
@@ -266,11 +287,13 @@
                             android:text="Khu vực bếp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView_DoanhThu"
                     style="@style/Button_Home_Cardview"
                     android:backgroundTint="@color/black"
                     app:cardCornerRadius="20dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

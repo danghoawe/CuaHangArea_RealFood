@@ -1,9 +1,8 @@
-package com.example.cuahangarea_realfood.Screen;
+package com.example.cuahangarea_realfood.screen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -24,9 +23,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.nordan.dialog.Animation;
-import com.nordan.dialog.DialogType;
-import com.nordan.dialog.NordanAlertDialog;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;

@@ -11,38 +11,46 @@
         android:theme="@style/Theme.CuaHangArea_RealFood"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".TaiKhoanNganHangActivity"
+        <activity android:name=".screen.ThongTinMaGiamGiaActivity"
+            android:label="Voucher"
+            android:parentActivityName=".screen.MaGiamGiaActivity"></activity>
+        <activity
+            android:name=".screen.MaGiamGiaActivity"
+            android:label="Voucher"
+            android:parentActivityName=".screen.Home" />
+        <activity
+            android:name=".screen.TaiKhoanNganHangActivity"
             android:label="Tài khoản ngân hàng"
-            android:parentActivityName=".Screen.Home"></activity>
+            android:parentActivityName=".screen.Home" />
         <activity
-            android:name=".Screen.DoiMatKhauActivity"
+            android:name=".screen.DoiMatKhauActivity"
             android:label="Đổi mật khẩu"
-            android:parentActivityName=".Screen.Home" />
+            android:parentActivityName=".screen.Home" />
         <activity
-            android:name=".Screen.ThongTinCuaHangActivity"
+            android:name=".screen.ThongTinCuaHangActivity"
             android:label="Thông tin cửa hàng"
-            android:parentActivityName=".Screen.Home" />
+            android:parentActivityName=".screen.Home" />
         <activity
-            android:name=".Screen.QuenMatKhauActivity"
+            android:name=".screen.QuenMatKhauActivity"
             android:label="Quên mật khẩu"
-            android:parentActivityName=".Screen.LoginActivity" />
+            android:parentActivityName=".screen.LoginActivity" />
         <activity
-            android:name=".Screen.ThongTinSanPhamActivity"
+            android:name=".screen.ThongTinSanPhamActivity"
             android:label="Thông tin sản phẩm"
-            android:parentActivityName=".Screen.DS_SanPhamActivity" />
+            android:parentActivityName=".screen.DS_SanPhamActivity" />
         <activity
-            android:name=".Screen.DS_SanPhamActivity"
+            android:name=".screen.DS_SanPhamActivity"
             android:label="Danh sách sản phẩm"
-            android:parentActivityName=".Screen.Home" />
+            android:parentActivityName=".screen.Home" />
         <activity
-            android:name=".Screen.Home"
-            android:label="Home"></activity>
+            android:name=".screen.Home"
+            android:label="Home" />
         <activity
-            android:name=".Screen.DangKyActivity"
+            android:name=".screen.DangKyActivity"
             android:label="RealFood"
-            android:parentActivityName=".Screen.LoginActivity" />
+            android:parentActivityName=".screen.LoginActivity" />
         <activity
-            android:name=".Screen.LoginActivity"
+            android:name=".screen.LoginActivity"
             android:label="Đăng nhập">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -39,7 +39,7 @@ dependencies {
 
     // (Java only)
     implementation "androidx.work:work-runtime:$work_version"
-
+    implementation 'com.github.florent37:singledateandtimepicker:2.2.7'
 
 
 

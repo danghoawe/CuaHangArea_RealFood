@@ -17,13 +17,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
-import com.example.cuahangarea_realfood.Screen.ThongTinSanPhamActivity;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +34,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.nordan.dialog.Animation;
@@ -48,8 +45,6 @@ import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickCancel;
 import com.vansuita.pickimage.listeners.IPickResult;
 
-import java.io.File;
-import java.util.List;
 import java.util.UUID;
 
 

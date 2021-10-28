@@ -1,4 +1,4 @@
-package com.example.cuahangarea_realfood.Screen;
+package com.example.cuahangarea_realfood.screen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,13 +8,10 @@ import android.view.View;
 
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
-import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.databinding.ActivityQuenMatKhauBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 public class  QuenMatKhauActivity extends AppCompatActivity {
     ActivityQuenMatKhauBinding binding;
