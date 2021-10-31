@@ -54,8 +54,8 @@ public class DS_SanPhamActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        GetSanPham();
-        GetDanhSachDanhMuc();
+        //GetSanPham();
+        //GetDanhSachDanhMuc();
         sanPhamAdapter.notifyDataSetChanged();
         danhMucAdapter.notifyDataSetChanged();
         super.onResume();
@@ -99,11 +99,12 @@ public class DS_SanPhamActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         rcDanhMuc.setLayoutManager(linearLayoutManager);
         rcDanhMuc.setAdapter(danhMucAdapter);
-
         gridLayoutManager = new GridLayoutManager(this,2);
         rcSanPham.setLayoutManager(gridLayoutManager);
         rcSanPham.setAdapter(sanPhamAdapter);
-        GetDanhSachDanhMuc();
+        firebase_manager.GetSanPham(sanPhams,sanPhamAdapter);
+        firebase_manager.GetDanhSachDanhMuc(danhMucs,danhMucAdapter);
+//          GetDanhSachDanhMuc();
 //        GetSanPham();
         setEvent();
     }
@@ -118,38 +119,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
         });
     }
 
-    public void GetDanhSachDanhMuc() {
-        firebase_manager.mDatabase.child("DanhMuc").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                danhMucs.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    DanhMuc danhMuc = postSnapshot.getValue(DanhMuc.class);
-                    danhMucs.add(danhMuc);
-                    danhMucAdapter.notifyDataSetChanged();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
-    public void GetSanPham() {
-        firebase_manager.mDatabase.child("SanPham").orderByChild("idcuaHang").equalTo(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                sanPhams.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    SanPham sanPham = postSnapshot.getValue(SanPham.class);
-                    sanPhams.add(sanPham);
-                    sanPhamAdapter.notifyDataSetChanged();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
+
 
     private void setControl() {
         rcDanhMuc = findViewById(R.id.rcDanhMuc);

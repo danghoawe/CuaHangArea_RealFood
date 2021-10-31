@@ -6,6 +6,13 @@ public class SanPham {
     String IDSanPham, TenSanPham, IDLoai, IDDanhMuc, Gia, ChiTietSanPham, IDCuaHang,size;
     Float Rating;
 
+
+
+    ArrayList<String> images;
+
+    public ArrayList<String> getImages() {
+        return images;
+    }
     public String getSize() {
         return size;
     }
@@ -14,10 +21,6 @@ public class SanPham {
         this.size = size;
     }
 
-    public ArrayList<String> getImages() {
-        return images;
-    }
-    ArrayList<String> images;
 
     public void setImages(ArrayList<String> images) {
         this.images = images;

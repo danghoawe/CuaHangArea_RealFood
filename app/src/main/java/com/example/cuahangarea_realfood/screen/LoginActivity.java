@@ -12,19 +12,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.developer.kalert.KAlertDialog;
+import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
 import com.example.cuahangarea_realfood.Validate;
+import com.example.cuahangarea_realfood.model.CuaHang;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     EditText edtEmail, edtMatKhau;
     TextView txtDangKy,txtQuenMatKhau;
     Button btnDangNhap;
     FirebaseAuth auth;
-
+    Firebase_Manager firebase_manager = new Firebase_Manager();
     Validate validate = new Validate();
 
     @Override
@@ -76,10 +82,33 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull  Task<AuthResult> task) {
                             if (task.isSuccessful())
                             {
-                                Intent intent = new Intent(LoginActivity.this, Home.class);
-                                kAlertDialog.dismiss();
-                                startActivity(intent);
-                                edtMatKhau.setText("");
+                                firebase_manager. mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.exists())
+                                        {
+                                            CuaHang temp = dataSnapshot.getValue(CuaHang.class);
+
+                                            if (temp.getTrangThaiCuaHang()== TrangThaiCuaHang.ChuaKichHoat)
+                                            {
+                                                kAlertDialog.setTitleText("Thông báo");
+                                                kAlertDialog.setContentText("Vui lòng chuyển 20.000đ phí duy trì . Đến số tài khoản 123467088\nNH: Agribank \nChủ tài khoản: Admin để kích hoạt tài khoản");
+                                                kAlertDialog.changeAlertType(KAlertDialog.WARNING_TYPE);
+                                                firebase_manager.auth.signOut();
+                                            }
+                                            else {
+                                                Intent intent = new Intent(LoginActivity.this, Home.class);
+                                                kAlertDialog.dismiss();
+                                                startActivity(intent);
+                                                edtMatKhau.setText("");
+                                            }
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+
                             }
                             else {
                                 kAlertDialog.setTitleText("Sai tài khoản hoặc mật khẩu");

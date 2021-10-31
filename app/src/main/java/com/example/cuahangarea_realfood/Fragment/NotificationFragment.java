@@ -65,7 +65,7 @@ public class NotificationFragment extends Fragment {
         }
     }
     private void LoadData() {
-        firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+        firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).orderByChild("trangThaiThongBao").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())

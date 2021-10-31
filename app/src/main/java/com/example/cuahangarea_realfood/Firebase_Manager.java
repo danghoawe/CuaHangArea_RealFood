@@ -5,6 +5,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
+import com.example.cuahangarea_realfood.adapter.SanPhamAdapter;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.NganHang;
@@ -51,6 +53,42 @@ public class Firebase_Manager {
     public void Ghi_DanhMuc(DanhMuc danhMuc)
     {
         mDatabase.child("DanhMuc").child(auth.getUid()).child(danhMuc.getIDDanhMuc()).setValue(danhMuc);
+    }
+
+    public void GetSanPham(ArrayList arrayList, SanPhamAdapter sanPhamAdapter) {
+        mDatabase.child("SanPham").orderByChild("idcuaHang").equalTo(auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    SanPham sanPham = postSnapshot.getValue(SanPham.class);
+                    arrayList.add(sanPham);
+                    sanPhamAdapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+    public void GetDanhSachDanhMuc(ArrayList<DanhMuc>danhMucs, DanhMucAdapter danhMucAdapter) {
+        mDatabase.child("DanhMuc").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                danhMucs.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    DanhMuc danhMuc = postSnapshot.getValue(DanhMuc.class);
+                    danhMucs.add(danhMuc);
+                    if (danhMucAdapter!=null)
+                    {
+                        danhMucAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
     public Task<Void> Ghi_SanPham(SanPham sanPham)
     {
@@ -117,27 +155,7 @@ public class Firebase_Manager {
     {
         return   storageRef.child("CuaHang").child(auth.getUid()).child("WallPaper").putFile(WallPaper);
     }
-    public ArrayList<DanhMuc> GetDanhSachDanhMuc()
-    {
-        ArrayList<DanhMuc> danhMucs = new ArrayList<>();
-        mDatabase.child("DanhMuc").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                danhMucs.clear();
-                Log.d("a",dataSnapshot.toString());
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    DanhMuc danhMuc = postSnapshot.getValue(DanhMuc.class);
-                    danhMucs.add(danhMuc);
-                    Log.d("a",danhMuc.getIDDanhMuc()+danhMucs.size());
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-        return danhMucs;
-    }
     public CuaHang getCuaHang(){
         final CuaHang[] cuaHang = new CuaHang[1];
         mDatabase.child("CuaHang").child(auth.getUid()).addValueEventListener(new ValueEventListener() {

@@ -71,7 +71,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
     //Lưu trữ ảnh
     ArrayList<String> images = new ArrayList<>();
     ArrayList<Uri> uriImages = new ArrayList<>();
-    ArrayList<Uri> temp = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,16 +123,17 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
             //Load hình ảnh và truyền vào carousel dựa vào properties Images của sản phẩm
             for (int i =0 ; i <sanPham.getImages().size();i++)
             {
+
                 firebase_manager.storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).child(sanPham.getImages().get(i)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         list.add(new CarouselItem(uri.toString()));
-                        carousel.setData(list);
                         uriImages.add(uri);
-                        temp.add(uri);
+                        carousel.setData(list);
                         LoadData();
                     }
                 });
+
 
             }
         }
@@ -183,11 +184,11 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         .setNegativeBtnText("No")
                         .onPositiveClicked(() -> {
                             //Xóa sản phẩm trong danh sách
-                            firebase_manager.mDatabase.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            firebase_manager.mDatabase.child("SanPham").child(sanPham.getIDSanPham()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     finish();
-                                    Log.d("SanPham",sanPham.getIDCuaHang()+"/"+sanPham.getIDSanPham());
+
                                     //Xóa thư mục hình ảnh
                                     firebase_manager.storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).listAll()
                                             .addOnSuccessListener(new OnSuccessListener<ListResult>() {
@@ -284,6 +285,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
         imageDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(ThongTinSanPhamActivity.this,  list.size()+"", Toast.LENGTH_SHORT).show();
                     if(sanPham== null)
                     {
                         list.remove( carousel.getCurrentPosition());
@@ -292,8 +294,9 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         LoadData();
                     }
                     else {
-                        list.remove( carousel.getCurrentPosition());
                         images.remove( carousel.getCurrentPosition());
+                        list.remove( carousel.getCurrentPosition());
+
                         carousel.setData(list);
                         LoadData();
                     }
@@ -313,8 +316,6 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
         return result;
     }
     private void getDanhMuc(){
-
-
         firebase_manager.mDatabase.child("DanhMuc").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -328,16 +329,13 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         android.R.layout.simple_expandable_list_item_1 ,
                         namesDanhMuc);
                 spDanhMuc.setAdapter(adapter);
-                LoadInfoSanPham();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        Log.d("A",namesDanhMuc.size()+"");
     }
     private void getLoaiSanPham(){
-
 
         firebase_manager.mDatabase.child("LoaiSanPham").addValueEventListener(new ValueEventListener() {
             @Override

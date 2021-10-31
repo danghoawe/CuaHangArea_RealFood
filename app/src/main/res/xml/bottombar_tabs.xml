@@ -6,7 +6,6 @@
         title="Home"
         barColorWhenSelected="#5D4037" />
     <tab
-
         id="@+id/tab_store"
         icon="@drawable/ic_store"
         title="Cửa hàng"
