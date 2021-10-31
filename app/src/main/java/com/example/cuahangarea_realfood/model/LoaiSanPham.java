@@ -1,32 +1,38 @@
 package com.example.cuahangarea_realfood.model;
 
-public class LoaiSanPham {
-  String  IDLoai;
-    String TenLoai;
+public class LoaiSanPham extends CuaHang {
+    String iDLoai, sTT, tenLoai;
 
     public LoaiSanPham() {
     }
 
-    public String getIDLoai() {
-        return IDLoai;
+    public LoaiSanPham(String iDLoai, String sTT, String tenLoai) {
+        this.iDLoai = iDLoai;
+        this.sTT = sTT;
+        this.tenLoai = tenLoai;
     }
 
-    public void setIDLoai(String IDLoai) {
-        this.IDLoai = IDLoai;
+    public String getiDLoai() {
+        return iDLoai;
+    }
+
+    public void setiDLoai(String iDLoai) {
+        this.iDLoai = iDLoai;
+    }
+
+    public String getsTT() {
+        return sTT;
+    }
+
+    public void setsTT(String sTT) {
+        this.sTT = sTT;
     }
 
     public String getTenLoai() {
-        return TenLoai;
+        return tenLoai;
     }
 
     public void setTenLoai(String tenLoai) {
-        TenLoai = tenLoai;
+        this.tenLoai = tenLoai;
     }
-
-    public LoaiSanPham(String IDLoai, String tenLoai) {
-        this.IDLoai = IDLoai;
-        TenLoai = tenLoai;
-    }
-
-
 }

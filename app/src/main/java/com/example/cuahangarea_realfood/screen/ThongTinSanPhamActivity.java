@@ -21,6 +21,7 @@ import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.DanhMuc;
+import com.example.cuahangarea_realfood.model.LoaiSanPham;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.ThongBao;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,7 +54,9 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
 
     List<CarouselItem> list = new ArrayList<>();
     List<DanhMuc> listDanhMuc = new ArrayList<>();
+    List<LoaiSanPham> listLoaiSanPham = new ArrayList<>();
     List<String> namesDanhMuc = new ArrayList<>();
+    List<String> namesLoaiSanPham = new ArrayList<>();
     ArrayAdapter adapter ;
 
     ImageCarousel carousel;
@@ -83,6 +86,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
             sanPham = gson.fromJson(dataDonHang, SanPham.class);
         }
         getDanhMuc();
+        getLoaiSanPham();
         LoadData();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SetEvent();
@@ -106,6 +110,14 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
 
                 }
                 positon.getAndIncrement();
+            });
+            AtomicInteger positon1 = new AtomicInteger();
+            listLoaiSanPham.forEach(loaiSanPham -> {
+                if (loaiSanPham.getiDLoai().equals(sanPham.getIDLoai()))
+                {
+                    spLoaiSanPham.setSelection(positon1.get());
+                }
+                positon1.getAndIncrement();
             });
             images = sanPham.getImages();
             //Load hình ảnh và truyền vào carousel dựa vào properties Images của sản phẩm
@@ -223,7 +235,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         if (sanPham==null)
                         {
                             String uuid = UUID.randomUUID().toString().replace("-", "");
-                            SanPham temp = new SanPham(uuid, edtTenSanPham.getText().toString(), "", listDanhMuc.get(spDanhMuc.getSelectedItemPosition()).getIDDanhMuc(), edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
+                            SanPham temp = new SanPham(uuid, edtTenSanPham.getText().toString(), listLoaiSanPham.get(spLoaiSanPham.getSelectedItemPosition()).getiDLoai(), listDanhMuc.get(spDanhMuc.getSelectedItemPosition()).getIDDanhMuc(), edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
                             firebase_manager.UpImageSanPham(uriImages, uuid, images);
                             firebase_manager.Ghi_SanPham(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -240,7 +252,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         }
                         else {
                             String uuid = sanPham.getIDSanPham();
-                            SanPham temp = new SanPham(uuid, edtTenSanPham.getText().toString(), "", listDanhMuc.get(spDanhMuc.getSelectedItemPosition()).getIDDanhMuc(), edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
+                            SanPham temp = new SanPham(uuid, edtTenSanPham.getText().toString(), listLoaiSanPham.get(spLoaiSanPham.getSelectedItemPosition()).getiDLoai(), listDanhMuc.get(spDanhMuc.getSelectedItemPosition()).getIDDanhMuc(), edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
 
                             firebase_manager.Ghi_SanPham(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -301,6 +313,8 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
         return result;
     }
     private void getDanhMuc(){
+
+
         firebase_manager.mDatabase.child("DanhMuc").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -320,8 +334,30 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+        Log.d("A",namesDanhMuc.size()+"");
+    }
+    private void getLoaiSanPham(){
 
 
+        firebase_manager.mDatabase.child("LoaiSanPham").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listLoaiSanPham.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    LoaiSanPham danhMuc = postSnapshot.getValue(LoaiSanPham.class);
+                    listLoaiSanPham.add(danhMuc);
+                    namesLoaiSanPham.add(danhMuc.getTenLoai());
+                }
+                adapter = new ArrayAdapter(ThongTinSanPhamActivity.this,
+                        android.R.layout.simple_expandable_list_item_1 ,
+                        namesLoaiSanPham);
+                spLoaiSanPham.setAdapter(adapter);
+                LoadInfoSanPham();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
         Log.d("A",namesDanhMuc.size()+"");
     }
 
