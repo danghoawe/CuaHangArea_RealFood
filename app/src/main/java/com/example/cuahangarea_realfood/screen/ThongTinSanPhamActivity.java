@@ -131,6 +131,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         uriImages.add(uri);
                         carousel.setData(list);
                         LoadData();
+                        Toast.makeText(ThongTinSanPhamActivity.this,  images.size()+"", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -285,7 +286,8 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
         imageDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ThongTinSanPhamActivity.this,  list.size()+"", Toast.LENGTH_SHORT).show();
+
+
                     if(sanPham== null)
                     {
                         list.remove( carousel.getCurrentPosition());
@@ -296,7 +298,6 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                     else {
                         images.remove( carousel.getCurrentPosition());
                         list.remove( carousel.getCurrentPosition());
-
                         carousel.setData(list);
                         LoadData();
                     }

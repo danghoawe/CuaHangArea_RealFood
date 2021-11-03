@@ -3,28 +3,21 @@ package com.example.cuahangarea_realfood.model;
 import java.util.Date;
 
 public class Voucher {
-    String maGiamGia,idSanPham;
+    String idSanPham,idMaGiamGia,maGiamGia;
     Double giaGiam,phanTramGiam;
     Date ngayTao,hanSuDung;
 
-    public Voucher() {
-    }
-
-    public Voucher(String maGiamGia, String idSanPham, Double giaGiam, Double phanTramGiam, Date hanSuDung) {
-        this.maGiamGia = maGiamGia;
+    public Voucher( String idMaGiamGia,String idSanPham, String maGiamGia, Double giaGiam, Double phanTramGiam, Date ngayTao, Date hanSuDung) {
         this.idSanPham = idSanPham;
+        this.idMaGiamGia = idMaGiamGia;
+        this.maGiamGia = maGiamGia;
         this.giaGiam = giaGiam;
         this.phanTramGiam = phanTramGiam;
-        this.ngayTao = new Date();
+        this.ngayTao = ngayTao;
         this.hanSuDung = hanSuDung;
     }
 
-    public String getMaGiamGia() {
-        return maGiamGia;
-    }
-
-    public void setMaGiamGia(String maGiamGia) {
-        this.maGiamGia = maGiamGia;
+    public Voucher() {
     }
 
     public String getIdSanPham() {
@@ -33,6 +26,22 @@ public class Voucher {
 
     public void setIdSanPham(String idSanPham) {
         this.idSanPham = idSanPham;
+    }
+
+    public String getIdMaGiamGia() {
+        return idMaGiamGia;
+    }
+
+    public void setIdMaGiamGia(String idMaGiamGia) {
+        this.idMaGiamGia = idMaGiamGia;
+    }
+
+    public String getMaGiamGia() {
+        return maGiamGia;
+    }
+
+    public void setMaGiamGia(String maGiamGia) {
+        this.maGiamGia = maGiamGia;
     }
 
     public Double getGiaGiam() {

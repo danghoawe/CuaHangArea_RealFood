@@ -12,29 +12,39 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.Fragment.DanhMuc_DialogFragment;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.databinding.ActivityMaGiamGiaBinding;
 import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MaGiamGiaActivity extends AppCompatActivity {
     ActivityMaGiamGiaBinding binding;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMaGiamGiaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setEvent();
+
+
     }
+
 
     private void setEvent() {
         binding.btnThemMoiVoucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MaGiamGiaActivity.this,ThongTinMaGiamGiaActivity.class);
+                Intent intent = new Intent(MaGiamGiaActivity.this, ThongTinMaGiamGiaActivity.class);
                 startActivity(intent);
             }
         });
@@ -48,10 +58,7 @@ public class MaGiamGiaActivity extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.menuItem_search);
         SearchView searchView =
                 (SearchView) searchItem.getActionView();
-
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String query) {
 

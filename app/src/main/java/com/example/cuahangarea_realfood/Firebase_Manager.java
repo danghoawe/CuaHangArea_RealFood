@@ -2,6 +2,7 @@ package com.example.cuahangarea_realfood;
 
 import android.net.Uri;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
@@ -9,10 +10,10 @@ import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
 import com.example.cuahangarea_realfood.adapter.SanPhamAdapter;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.example.cuahangarea_realfood.model.DanhMuc;
-import com.example.cuahangarea_realfood.model.NganHang;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.TaiKhoanNganHang;
 import com.example.cuahangarea_realfood.model.ThongBao;
+import com.example.cuahangarea_realfood.model.Voucher;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -54,6 +55,10 @@ public class Firebase_Manager {
     {
         mDatabase.child("DanhMuc").child(auth.getUid()).child(danhMuc.getIDDanhMuc()).setValue(danhMuc);
     }
+    public Task<Void> Ghi_Voucher(Voucher voucher)
+    {
+      return  mDatabase.child("Voucher").child(auth.getUid()).child(voucher.getIdMaGiamGia()).setValue(voucher);
+    }
 
     public void GetSanPham(ArrayList arrayList, SanPhamAdapter sanPhamAdapter) {
         mDatabase.child("SanPham").orderByChild("idcuaHang").equalTo(auth.getUid()).addValueEventListener(new ValueEventListener() {
@@ -63,8 +68,29 @@ public class Firebase_Manager {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     SanPham sanPham = postSnapshot.getValue(SanPham.class);
                     arrayList.add(sanPham);
-                    sanPhamAdapter.notifyDataSetChanged();
+                    if (sanPhamAdapter!=null)
+                    {
+                        sanPhamAdapter.notifyDataSetChanged();
+
+                    }
                 }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+    public void GetSanPham_V2(ArrayList arrayList, ArrayAdapter sanPhamAdapter) {
+        mDatabase.child("SanPham").orderByChild("idcuaHang").equalTo(auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    SanPham sanPham = postSnapshot.getValue(SanPham.class);
+                    arrayList.add(sanPham.getTenSanPham());
+                }
+                sanPhamAdapter.notifyDataSetChanged();
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
