@@ -237,7 +237,15 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         if (sanPham==null)
                         {
                             String uuid = UUID.randomUUID().toString().replace("-", "");
-                            SanPham temp = new SanPham(uuid, edtTenSanPham.getText().toString(), listLoaiSanPham.get(spLoaiSanPham.getSelectedItemPosition()).getiDLoai(), listDanhMuc.get(spDanhMuc.getSelectedItemPosition()).getIDDanhMuc(), edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
+                            SanPham temp;
+                            if (listDanhMuc.size()==0)
+                            {
+                                temp = new SanPham(uuid, edtTenSanPham.getText().toString(), listLoaiSanPham.get(spLoaiSanPham.getSelectedItemPosition()).getiDLoai(), "", edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
+
+                            }
+                            else {
+                                temp = new SanPham(uuid, edtTenSanPham.getText().toString(), listLoaiSanPham.get(spLoaiSanPham.getSelectedItemPosition()).getiDLoai(), listDanhMuc.get(spDanhMuc.getSelectedItemPosition()).getIDDanhMuc(), edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images   );
+                            }
                             firebase_manager.UpImageSanPham(uriImages, uuid, images);
                             firebase_manager.Ghi_SanPham(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
