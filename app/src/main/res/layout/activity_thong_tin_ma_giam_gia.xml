@@ -18,14 +18,12 @@
 
         >
 
-        <gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
+        <Spinner
             android:id="@+id/spDSsanPham"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:RevealEmptyText="Nhấp vào để chọn sản phẩm"
-            app:RevealViewBackgroundColor="#F2F2F2"
-            app:SearchViewBackgroundColor="#F2F2F2" />
+             />
     </FrameLayout>
 
 

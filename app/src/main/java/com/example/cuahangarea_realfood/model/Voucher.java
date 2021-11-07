@@ -3,14 +3,15 @@ package com.example.cuahangarea_realfood.model;
 import java.util.Date;
 
 public class Voucher {
-    String idSanPham,idMaGiamGia,maGiamGia;
-    Double giaGiam,phanTramGiam;
+    String idMaGiamGia,maGiamGia;
+    SanPham sanPham;
+    int giaGiam,phanTramGiam;
     Date ngayTao,hanSuDung;
 
-    public Voucher( String idMaGiamGia,String idSanPham, String maGiamGia, Double giaGiam, Double phanTramGiam, Date ngayTao, Date hanSuDung) {
-        this.idSanPham = idSanPham;
+    public Voucher(String idMaGiamGia, String maGiamGia, SanPham sanPham, int giaGiam, int phanTramGiam, Date ngayTao, Date hanSuDung) {
         this.idMaGiamGia = idMaGiamGia;
         this.maGiamGia = maGiamGia;
+        this.sanPham = sanPham;
         this.giaGiam = giaGiam;
         this.phanTramGiam = phanTramGiam;
         this.ngayTao = ngayTao;
@@ -18,14 +19,6 @@ public class Voucher {
     }
 
     public Voucher() {
-    }
-
-    public String getIdSanPham() {
-        return idSanPham;
-    }
-
-    public void setIdSanPham(String idSanPham) {
-        this.idSanPham = idSanPham;
     }
 
     public String getIdMaGiamGia() {
@@ -44,19 +37,27 @@ public class Voucher {
         this.maGiamGia = maGiamGia;
     }
 
-    public Double getGiaGiam() {
+    public SanPham getSanPham() {
+        return sanPham;
+    }
+
+    public void setSanPham(SanPham sanPham) {
+        this.sanPham = sanPham;
+    }
+
+    public int getGiaGiam() {
         return giaGiam;
     }
 
-    public void setGiaGiam(Double giaGiam) {
+    public void setGiaGiam(int giaGiam) {
         this.giaGiam = giaGiam;
     }
 
-    public Double getPhanTramGiam() {
+    public int getPhanTramGiam() {
         return phanTramGiam;
     }
 
-    public void setPhanTramGiam(Double phanTramGiam) {
+    public void setPhanTramGiam(int phanTramGiam) {
         this.phanTramGiam = phanTramGiam;
     }
 

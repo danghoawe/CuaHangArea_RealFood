@@ -11,9 +11,11 @@
         android:theme="@style/Theme.CuaHangArea_RealFood"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".screen.ThongTinMaGiamGiaActivity"
+        <activity android:name=".DanhSachDonHangActivity"></activity>
+        <activity
+            android:name=".screen.ThongTinMaGiamGiaActivity"
             android:label="Voucher"
-            android:parentActivityName=".screen.MaGiamGiaActivity"></activity>
+            android:parentActivityName=".screen.MaGiamGiaActivity" />
         <activity
             android:name=".screen.MaGiamGiaActivity"
             android:label="Voucher"

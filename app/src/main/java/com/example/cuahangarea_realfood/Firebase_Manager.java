@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 
 import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
+import com.example.cuahangarea_realfood.adapter.MaGiamGiaAdapter;
 import com.example.cuahangarea_realfood.adapter.SanPhamAdapter;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.example.cuahangarea_realfood.model.DanhMuc;
@@ -57,7 +58,7 @@ public class Firebase_Manager {
     }
     public Task<Void> Ghi_Voucher(Voucher voucher)
     {
-      return  mDatabase.child("Voucher").child(auth.getUid()).child(voucher.getIdMaGiamGia()).setValue(voucher);
+      return  mDatabase.child("Voucher").child(voucher.getIdMaGiamGia()).setValue(voucher);
     }
 
     public void GetSanPham(ArrayList arrayList, SanPhamAdapter sanPhamAdapter) {
@@ -73,6 +74,29 @@ public class Firebase_Manager {
                         sanPhamAdapter.notifyDataSetChanged();
 
                     }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+    public void GetVoucher(ArrayList arrayList, MaGiamGiaAdapter maGiamGiaAdapter) {
+        mDatabase.child("Voucher").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Voucher voucher = postSnapshot.getValue(Voucher.class);
+                    if (voucher.getSanPham().getIDCuaHang().equals(auth.getUid()))
+                    {
+                        arrayList.add(voucher);
+                    }
+                }
+                if (maGiamGiaAdapter!=null)
+                {
+                    maGiamGiaAdapter.notifyDataSetChanged();
+
                 }
             }
             @Override
