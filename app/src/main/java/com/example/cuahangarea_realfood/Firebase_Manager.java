@@ -7,10 +7,12 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 
 import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
+import com.example.cuahangarea_realfood.adapter.DonHangAdapter;
 import com.example.cuahangarea_realfood.adapter.MaGiamGiaAdapter;
 import com.example.cuahangarea_realfood.adapter.SanPhamAdapter;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.example.cuahangarea_realfood.model.DanhMuc;
+import com.example.cuahangarea_realfood.model.DonHang;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.TaiKhoanNganHang;
 import com.example.cuahangarea_realfood.model.ThongBao;
@@ -29,6 +31,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Firebase_Manager {
     public  DatabaseReference mDatabase ;
@@ -43,6 +47,10 @@ public class Firebase_Manager {
     public Task<Void> Ghi_ThongBao(ThongBao thongBao)
     {
         return  mDatabase.child("ThongBao").child(auth.getUid()).child(thongBao.getIDThongBao()).setValue(thongBao);
+    }
+    public Task<Void> Ghi_DonHang(DonHang donHang)
+    {
+        return  mDatabase.child("DonHang").child(donHang.getIDDonHang()).setValue(donHang);
     }
     public Task<Void> Ghi_NganHang(TaiKhoanNganHang taiKhoanNganHang)
     {
@@ -75,6 +83,35 @@ public class Firebase_Manager {
 
                     }
                 }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+    public void GetDonHang(ArrayList arrayList, DonHangAdapter donHangAdapter) {
+        mDatabase.child("DonHang").orderByChild("ngayTao").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    DonHang donHang = postSnapshot.getValue(DonHang.class);
+                    if (donHang.getIDCuaHang().equals(auth.getUid()))
+                    {
+                        arrayList.add(donHang);
+                        if (donHangAdapter!=null)
+                        {
+                            donHangAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+                Collections.sort(arrayList, new Comparator<DonHang>() {
+
+                    @Override
+                    public int compare(DonHang o1, DonHang o2) {
+                        return o2.getNgayTao().compareTo(o1.getNgayTao());
+                    }
+                });
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

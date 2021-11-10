@@ -95,7 +95,6 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
                     spSanPham.setActivated(true);
                     spSanPham.dispatchSetSelected(true);
                     spSanPham.setSelection(positon.get());
-                    Toast.makeText(this, positon+"", Toast.LENGTH_SHORT).show();
                 }
                 positon.getAndIncrement();
             });

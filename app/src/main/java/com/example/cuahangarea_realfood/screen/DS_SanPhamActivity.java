@@ -169,9 +169,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
                     danhMuc_dialogFragment.show(fragmentManager, "DS_SanPhamActivity");
                 }
                 break;
-            case R.id.mnThemSanPham:
-                Toast.makeText(this, "Thêm", Toast.LENGTH_SHORT).show();
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

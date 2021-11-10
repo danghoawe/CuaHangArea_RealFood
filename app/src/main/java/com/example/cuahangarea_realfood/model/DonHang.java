@@ -1,28 +1,40 @@
 package com.example.cuahangarea_realfood.model;
 
+
+
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 
 import java.util.Date;
 
 public class DonHang {
-    String IDDonHang,IDKhachHang,IDShipper,diaChi,soDienThoai,ghiChu_KhachHang,ghiChu_Shipper;
+    String IDDonHang, IDCuaHang, IDKhachHang, IDShipper, diaChi, soDienThoai, ghiChu_KhachHang, ghiChu_Shipper;
     double tongTien;
     Date ngayTao;
     TrangThaiDonHang trangThai;
+
     public DonHang() {
     }
 
-    public DonHang(String IDDonHang, String IDKhachHang, String IDShipper, String diaChi, String soDienThoai, String TrangThaiDonHang, String ghiChu_KhachHang, String ghiChu_Shipper, double tongTien, Date ngayTao) {
+    public DonHang(String IDDonHang, String IDCuaHang, String IDKhachHang, String IDShipper, String diaChi, String soDienThoai, String ghiChu_KhachHang, String ghiChu_Shipper, double tongTien, Date ngayTao, TrangThaiDonHang trangThai) {
         this.IDDonHang = IDDonHang;
+        this.IDCuaHang = IDCuaHang;
         this.IDKhachHang = IDKhachHang;
         this.IDShipper = IDShipper;
         this.diaChi = diaChi;
         this.soDienThoai = soDienThoai;
-        this.trangThai = trangThai;
         this.ghiChu_KhachHang = ghiChu_KhachHang;
         this.ghiChu_Shipper = ghiChu_Shipper;
         this.tongTien = tongTien;
         this.ngayTao = ngayTao;
+        this.trangThai = trangThai;
+    }
+
+    public String getIDCuaHang() {
+        return IDCuaHang;
+    }
+
+    public void setIDCuaHang(String IDCuaHang) {
+        this.IDCuaHang = IDCuaHang;
     }
 
     public String getIDDonHang() {
@@ -65,14 +77,6 @@ public class DonHang {
         this.soDienThoai = soDienThoai;
     }
 
-    public TrangThaiDonHang getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(TrangThaiDonHang trangThai) {
-        this.trangThai = trangThai;
-    }
-
     public String getGhiChu_KhachHang() {
         return ghiChu_KhachHang;
     }
@@ -103,5 +107,13 @@ public class DonHang {
 
     public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
+    }
+
+    public TrangThaiDonHang getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(TrangThaiDonHang trangThai) {
+        this.trangThai = trangThai;
     }
 }

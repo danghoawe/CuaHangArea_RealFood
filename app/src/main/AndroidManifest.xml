@@ -11,7 +11,14 @@
         android:theme="@style/Theme.CuaHangArea_RealFood"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".DanhSachDonHangActivity"></activity>
+        <activity android:name=".screen.BepActivity"
+            android:label="Quản lý bếp"
+            android:parentActivityName=".screen.DanhSachDonHangActivity" ></activity>
+        <activity
+            android:name=".screen.ThongTinDonHangActivity"
+            android:label="Thông tin đơn hàng"
+            android:parentActivityName=".screen.DanhSachDonHangActivity" />
+        <activity android:name=".screen.DanhSachDonHangActivity" />
         <activity
             android:name=".screen.ThongTinMaGiamGiaActivity"
             android:label="Voucher"

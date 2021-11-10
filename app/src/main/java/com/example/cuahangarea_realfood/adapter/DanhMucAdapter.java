@@ -39,7 +39,6 @@ public class DanhMucAdapter extends RecyclerView.Adapter<DanhMucAdapter.MyViewHo
     private int resource;
     private ArrayList<DanhMuc> arrayList;
     public SetOnLongClick setOnLongClick;
-
     public SetOnLongClick getSetOnLongClick() {
         return setOnLongClick;
     }
@@ -67,16 +66,21 @@ public class DanhMucAdapter extends RecyclerView.Adapter<DanhMucAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DanhMuc danhMuc = arrayList.get(position);
-
         holder.txtDanhMuc.setText(danhMuc.getTenDanhMuc());
         storageRef.child("DanhMuc").child(danhMuc.getIDDanhMuc()).child("image").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                Glide.with(context)
-                        .load(task.getResult().toString())
-                        .into(holder.imageView);
-                holder.progressBar.setVisibility(View.GONE);
-                Log.d("link",task.getResult().toString());
+                try {
+                    Glide.with(context)
+                            .load(task.getResult().toString())
+                            .into(holder.imageView);
+                    holder.progressBar.setVisibility(View.GONE);
+                    Log.d("link",task.getResult().toString());
+                }catch (Exception e)
+                {
+                    Log.d("DanhMuc: ",e.getMessage());
+                }
+
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {

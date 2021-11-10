@@ -44,7 +44,6 @@ public class MaGiamGiaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMaGiamGiaBinding.inflate(getLayoutInflater());
         maGiamGiaAdapter = new MaGiamGiaAdapter(this,R.layout.magiamgia_item,vouchers);
-
         setContentView(binding.getRoot());
         setEvent();
         LoadData();
@@ -110,9 +109,8 @@ public class MaGiamGiaActivity extends AppCompatActivity {
                     danhMuc_dialogFragment.show(fragmentManager, "DS_SanPhamActivity");
                 }
                 break;
-            case R.id.mnThemSanPham:
-                Toast.makeText(this, "Thêm", Toast.LENGTH_SHORT).show();
-                break;
+
+
         }
         return super.onOptionsItemSelected(item);
     }
