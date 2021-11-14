@@ -57,7 +57,6 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thong_tin_ma_giam_gia);
         firebase_manager = new Firebase_Manager();
         setControl();
-
         setEvent();
         if (getIntent() != null && getIntent().getExtras() != null) {
             Intent intent = getIntent();
@@ -67,7 +66,6 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
             LoadData();
         }
         loadLoaiGiamGia();
-
 
     }
 
@@ -80,7 +78,6 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
                 radGiamTheoGia.setChecked(true);
                 loadLoaiGiamGia();
                 edtSoTienGiam.setText(voucher.getGiaGiam()+"");
-
             }
             else {
                 radGiamTheoPhanTram.setChecked(true);

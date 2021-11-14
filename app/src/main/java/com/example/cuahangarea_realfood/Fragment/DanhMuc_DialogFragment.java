@@ -238,8 +238,6 @@ public class DanhMuc_DialogFragment extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == DanhMuc_DialogFragment.code) {
-
         }
-
     }
 }

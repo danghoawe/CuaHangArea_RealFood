@@ -1,13 +1,13 @@
 package com.example.cuahangarea_realfood.adapter;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -17,21 +17,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.SetOnLongClick;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
-import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.DonHang;
 import com.example.cuahangarea_realfood.model.DonHangInfo;
 import com.example.cuahangarea_realfood.model.KhachHang;
-import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.screen.ThongTinDonHangActivity;
-import com.example.cuahangarea_realfood.screen.ThongTinSanPhamActivity;
+import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +40,15 @@ import com.google.gson.Gson;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHolder> implements Filterable {
+import karpuzoglu.enes.com.fastdialog.Animations;
+import karpuzoglu.enes.com.fastdialog.DismissListener;
+import karpuzoglu.enes.com.fastdialog.FastDialog;
+import karpuzoglu.enes.com.fastdialog.FastDialogBuilder;
+import karpuzoglu.enes.com.fastdialog.Positions;
+import karpuzoglu.enes.com.fastdialog.PositiveClick;
+import karpuzoglu.enes.com.fastdialog.Type;
+
+public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.MyViewHolder> implements Filterable {
     private Activity context;
     private int resource;
     private ArrayList<DonHang> arrayList;
@@ -63,7 +67,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
 
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
-    public DonHangAdapter(Activity context, int resource, ArrayList<DonHang> arrayList) {
+    public DonHang_BepAdapter(Activity context, int resource, ArrayList<DonHang> arrayList) {
         this.context = context;
         this.resource = resource;
         this.arrayList = arrayList;
@@ -73,21 +77,21 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
 
     @NonNull
     @Override
-    public DonHangAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DonHang_BepAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         LinearLayout cardView = (LinearLayout) layoutInflater.inflate(viewType, parent, false);
-        return new DonHangAdapter.MyViewHolder(cardView);
+        return new DonHang_BepAdapter.MyViewHolder(cardView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DonHangAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DonHang_BepAdapter.MyViewHolder holder, int position) {
         DonHang donHang = arrayList.get(position);
         holder.txtID.setText(donHang.getIDDonHang().substring(0, 9));
         holder.txtTrangThaiDonHang.setText(donHang.getTrangThai().toString());
         holder.txtTongTien.setText(donHang.getTongTien() + "");
         holder.txtDiaChi.setText(donHang.getDiaChi() + "");
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
-        String strDate= formatter.format(donHang.getNgayTao());
+        String strDate = formatter.format(donHang.getNgayTao());
         holder.txtTime.setText(strDate);
         LoadButton(holder, donHang.getTrangThai());
         firebase_manager.mDatabase.child("KhachHang").child(donHang.getIDKhachHang()).addValueEventListener(new ValueEventListener() {
@@ -110,7 +114,6 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
 //        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
 //        holder.rcvItemGiohang.setAdapter(donHangAdapter);
 //        holder.rcvItemGiohang.setLayoutManager(linearLayoutManager);
-
         firebase_manager.mDatabase.child("DonHangInfo").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -124,43 +127,13 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        holder.btnXacNhanCoc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DonHang temp = donHang;
-                temp.setTrangThai(TrangThaiDonHang.SHOP_DaGiaoChoBep);
-                arrayList.set(position, temp);
-                notifyDataSetChanged();
-                firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        notifyDataSetChanged();
-                        LoadButton(holder, temp.getTrangThai());
-                    }
-                });
-            }
-        });
-        holder.btnHoantac.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DonHang temp = donHang;
-                temp.setTrangThai(TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien);
-                arrayList.set(position, temp);
-                notifyDataSetChanged();
-                firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        notifyDataSetChanged();
-                        LoadButton(holder, temp.getTrangThai());
-                    }
-                });
-            }
-        });
+
         holder.txtXemChiTiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,20 +145,94 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                 context.startActivity(intent);
             }
         });
+
+        holder.btnDatThoiGian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DonHang temp = donHang;
+                temp.setTrangThai(TrangThaiDonHang.SHOP_DangChuanBihang);
+                temp.setGhiChuCuaHang(holder.dateAndTimePicker.getDate().toString());
+                arrayList.set(position, temp);
+                notifyDataSetChanged();
+                firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        notifyDataSetChanged();
+                        LoadButton(holder, temp.getTrangThai());
+                    }
+                });
+            }
+        });
+
+        holder.btnDaChuanBiXOng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DonHang temp = donHang;
+                temp.setTrangThai(TrangThaiDonHang.SHOP_DaChuanBiXong);
+                arrayList.set(position, temp);
+                notifyDataSetChanged();
+                firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        notifyDataSetChanged();
+                        LoadButton(holder, temp.getTrangThai());
+                    }
+                });
+            }
+        });
+        holder.btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FastDialog dialog = FastDialog.w(context)
+                                .setTitleText("Thông báo")
+                                .setText("Vui lòng nhập lí do hủy đơn")
+                                .setHint("Please enter text")
+                                .privateEditText()
+                                .setAnimation(Animations.GROW_IN)
+                                .positiveText("Hủy đơn")
+                                .negativeText("Quay lại")
+                                .create();
+                dialog.positiveClickListener(new PositiveClick() {
+                    @Override
+                    public void onClick(View view) {
+                        if (dialog.getInputText()!=null)
+                        {
+                            DonHang temp = donHang;
+                            temp.setTrangThai(TrangThaiDonHang.SHOP_DaChuanBiXong);
+                            temp.setGhiChuCuaHang(dialog.getInputText());
+                            arrayList.set(position, temp);
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "Đơn hàng đã được hủy vì lí do: "+dialog.getInputText(), Toast.LENGTH_SHORT).show();
+                            firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    notifyDataSetChanged();
+                                    LoadButton(holder, temp.getTrangThai());
+                                }
+                            });
+                        }
+                        else {
+                            Toast.makeText(context, "Vui lòng không để trống!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 
     private void LoadButton(MyViewHolder holder, TrangThaiDonHang trangThai) {
-        if (trangThai == TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien) {
-            holder.btnXacNhanCoc.setVisibility(View.VISIBLE);
-
-        } else {
-            holder.btnXacNhanCoc.setVisibility(View.GONE);
-        }
         if (trangThai == TrangThaiDonHang.SHOP_DangChuanBihang) {
-            holder.btnHoantac.setVisibility(View.VISIBLE);
+            holder.lnHuyLiDo.setVisibility(View.VISIBLE);
 
         } else {
-            holder.btnHoantac.setVisibility(View.GONE);
+            holder.lnHuyLiDo.setVisibility(View.GONE);
+        }
+        if (trangThai == TrangThaiDonHang.SHOP_DaGiaoChoBep) {
+            holder.lnDatThoiGian.setVisibility(View.VISIBLE);
+
+        } else {
+            holder.lnDatThoiGian.setVisibility(View.GONE);
         }
     }
 
@@ -221,7 +268,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                     arrayList = source;
                 } else {
                     ArrayList<DonHang> list = new ArrayList<>();
-                    for (DonHang donHang: source) {
+                    for (DonHang donHang : source) {
                         if (donHang.getTrangThai().equals(strSearch)) {
                             list.add(donHang);
                         }
@@ -243,11 +290,13 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
 
     //Define RecylerVeiw Holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView txtXemChiTiet,txtID, txtTrangThaiDonHang, txtTenKhach, txtDiaChi, txtSoDienThoai, txtTongTien, txtSanPham,txtTime;
+        TextView txtXemChiTiet, txtID, txtTrangThaiDonHang, txtTenKhach, txtDiaChi, txtSoDienThoai, txtTongTien, txtSanPham, txtTime;
         ImageView imageView;
         RecyclerView rcvItemGiohang;
         ProgressBar progressBar;
-        Button btnXacNhanCoc,btnHoantac;
+        Button btnDaChuanBiXOng, btnHoantac, btnHuy,btnDatThoiGian;
+        LinearLayout lnHuyLiDo,lnDatThoiGian;
+        SingleDateAndTimePicker dateAndTimePicker;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -258,11 +307,17 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
             txtTongTien = itemView.findViewById(R.id.txtTongTien);
             txtDiaChi = itemView.findViewById(R.id.txtDiaChi);
             txtSanPham = itemView.findViewById(R.id.txtSanPham);
-            btnXacNhanCoc = itemView.findViewById(R.id.btnXacNhanCoc);
+            btnDaChuanBiXOng = itemView.findViewById(R.id.btnDaChuanBiXOng);
             progressBar = itemView.findViewById(R.id.progessbar);
-            btnHoantac = itemView.findViewById(R.id.btnHoanTac1);
             txtTime = itemView.findViewById(R.id.txtTime);
             txtXemChiTiet = itemView.findViewById(R.id.txtXemChiTiet);
+            btnHuy = itemView.findViewById(R.id.btnHuy);
+            btnDatThoiGian = itemView.findViewById(R.id.btnDatThoiGian);
+            lnDatThoiGian = itemView.findViewById(R.id.lnDatThoiGian);
+            lnHuyLiDo = itemView.findViewById(R.id.lnHuyLiDo);
+            dateAndTimePicker = itemView.findViewById(R.id.single_day_picker);
+
+
         }
     }
 }

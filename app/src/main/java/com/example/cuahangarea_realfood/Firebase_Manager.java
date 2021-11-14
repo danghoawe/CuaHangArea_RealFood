@@ -6,8 +6,10 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHangAdapter;
+import com.example.cuahangarea_realfood.adapter.DonHang_BepAdapter;
 import com.example.cuahangarea_realfood.adapter.MaGiamGiaAdapter;
 import com.example.cuahangarea_realfood.adapter.SanPhamAdapter;
 import com.example.cuahangarea_realfood.model.CuaHang;
@@ -106,7 +108,40 @@ public class Firebase_Manager {
                     }
                 }
                 Collections.sort(arrayList, new Comparator<DonHang>() {
-
+                    @Override
+                    public int compare(DonHang o1, DonHang o2) {
+                        return o2.getNgayTao().compareTo(o1.getNgayTao());
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+    public void GetDonHang_Bep(ArrayList arrayList, DonHang_BepAdapter donHangAdapter) {
+        mDatabase.child("DonHang").orderByChild("ngayTao").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    DonHang donHang = postSnapshot.getValue(DonHang.class);
+                    if (donHang.getIDCuaHang().equals(auth.getUid()))
+                    {
+                        if (donHang.getTrangThai()== TrangThaiDonHang.SHOP_DangChuanBihang||
+                                donHang.getTrangThai()== TrangThaiDonHang.SHOP_DaChuanBiXong||
+                                donHang.getTrangThai()== TrangThaiDonHang.SHOP_DangGiaoShipper||
+                                donHang.getTrangThai()==TrangThaiDonHang.SHOP_DaGiaoChoBep)
+                        {
+                            arrayList.add(donHang);
+                        }
+                        if (donHangAdapter!=null)
+                        {
+                            donHangAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+                Collections.sort(arrayList, new Comparator<DonHang>() {
                     @Override
                     public int compare(DonHang o1, DonHang o2) {
                         return o2.getNgayTao().compareTo(o1.getNgayTao());

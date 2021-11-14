@@ -7,7 +7,24 @@ import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import java.util.Date;
 
 public class DonHang {
-    String IDDonHang, IDCuaHang, IDKhachHang, IDShipper, diaChi, soDienThoai, ghiChu_KhachHang, ghiChu_Shipper;
+    String IDDonHang;
+    String IDCuaHang;
+    String IDKhachHang;
+    String IDShipper;
+    String diaChi;
+    String soDienThoai;
+    String ghiChu_KhachHang;
+    String ghiChu_Shipper;
+
+    public String getGhiChuCuaHang() {
+        return ghiChuCuaHang;
+    }
+
+    public void setGhiChuCuaHang(String ghiChuCuaHang) {
+        this.ghiChuCuaHang = ghiChuCuaHang;
+    }
+
+    String ghiChuCuaHang;
     double tongTien;
     Date ngayTao;
     TrangThaiDonHang trangThai;
