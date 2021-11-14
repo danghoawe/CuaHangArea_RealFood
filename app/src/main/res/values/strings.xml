@@ -14,4 +14,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="g_i_mail">Gửi Mail</string>
+    <string-array name="trangthaidonhang">
+        <item>All</item>
+
+        <item>Đang chuẩn bị</item>
+        <item>Đã đặt thời gian</item>
+        <item>Đã chuẩn bị xong </item>
+        <item>Đang giao shipper bị</item>
+    </string-array>
 </resources>

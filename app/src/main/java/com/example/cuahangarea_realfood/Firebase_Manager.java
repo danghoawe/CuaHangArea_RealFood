@@ -131,7 +131,8 @@ public class Firebase_Manager {
                         if (donHang.getTrangThai()== TrangThaiDonHang.SHOP_DangChuanBihang||
                                 donHang.getTrangThai()== TrangThaiDonHang.SHOP_DaChuanBiXong||
                                 donHang.getTrangThai()== TrangThaiDonHang.SHOP_DangGiaoShipper||
-                                donHang.getTrangThai()==TrangThaiDonHang.SHOP_DaGiaoChoBep)
+                                donHang.getTrangThai()==TrangThaiDonHang.SHOP_DaGiaoChoBep||
+                                donHang.getTrangThai()==TrangThaiDonHang.SHOP_ChoShipperLayHang)
                         {
                             arrayList.add(donHang);
                         }

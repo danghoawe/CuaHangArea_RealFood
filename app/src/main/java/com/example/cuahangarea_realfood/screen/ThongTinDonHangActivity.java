@@ -63,6 +63,7 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
 
             }
         });
+        binding.txtTrangThaiDonHang.setText(donHang.getTrangThai().toString());
         String gia = String.valueOf(donHang.getTongTien());
         binding.txtTongTien.setText(gia);
         DonHangInfoAdapter donHangAdapter = new DonHangInfoAdapter(this,R.layout.donhang_item_sanpham,donHangInfos);

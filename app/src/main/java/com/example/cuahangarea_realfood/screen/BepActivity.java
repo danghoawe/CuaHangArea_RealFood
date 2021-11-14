@@ -11,14 +11,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.adapter.DonHangAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHang_BepAdapter;
-import com.example.cuahangarea_realfood.databinding.ActivityBepBinding;
 import com.example.cuahangarea_realfood.model.DonHang;
 
 import java.util.ArrayList;
@@ -26,11 +29,12 @@ import java.util.ArrayList;
 public class BepActivity extends AppCompatActivity {
     DonHang_BepAdapter donHang_bepAdapter;
     ArrayList<DonHang> donHangs;
-    LinearLayoutManager linearLayoutManager,linearLayoutManager2;
-    GridLayoutManager gridLayoutManager ;
+    LinearLayoutManager linearLayoutManager, linearLayoutManager2;
+    GridLayoutManager gridLayoutManager;
     Button btnThemSanPham;
     Firebase_Manager firebase_manager = new Firebase_Manager();
     RecyclerView rcDonHang;
+    Spinner spLoaiDonHang;
 
     @Override
     protected void onResume() {
@@ -38,7 +42,7 @@ public class BepActivity extends AppCompatActivity {
         //GetDanhSachDanhMuc();
         donHang_bepAdapter.notifyDataSetChanged();
         super.onResume();
-        Log.d("a","oke");
+        Log.d("a", "oke");
     }
 
     @Override
@@ -46,27 +50,54 @@ public class BepActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         donHangs = new ArrayList<DonHang>();
-        setContentView(R.layout.activity_danh_sach_don_hang);
+        setContentView(R.layout.activity_bep);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setControl();
         donHang_bepAdapter = new DonHang_BepAdapter(this, R.layout.donhang_bep_item, donHangs);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        gridLayoutManager = new GridLayoutManager(this,2);
+        gridLayoutManager = new GridLayoutManager(this, 2);
         rcDonHang.setLayoutManager(linearLayoutManager);
         rcDonHang.setAdapter(donHang_bepAdapter);
-        firebase_manager.GetDonHang_Bep(donHangs,donHang_bepAdapter);
+        firebase_manager.GetDonHang_Bep(donHangs, donHang_bepAdapter);
         setEvent();
     }
 
     private void setEvent() {
+        spLoaiDonHang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    switch (position)
+                    {
+                        case 0 :
+                            donHang_bepAdapter.getFilter().filter("");
+                            break;
+                        case 1 :
+                            donHang_bepAdapter.getFilter().filter(TrangThaiDonHang.SHOP_DaGiaoChoBep.toString());
+                            break;
+                        case 2 :
+                            donHang_bepAdapter.getFilter().filter(TrangThaiDonHang.SHOP_DangChuanBihang.toString());
+                            break;
+                        case 3 :
+                            donHang_bepAdapter.getFilter().filter(TrangThaiDonHang.SHOP_DaChuanBiXong.toString());
+                            break;
+                        case 4 :
+                            donHang_bepAdapter.getFilter().filter(TrangThaiDonHang.SHOP_DangGiaoShipper.toString());
+                            break;
+                    }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
-
 
 
     private void setControl() {
         rcDonHang = findViewById(R.id.rcDonHang);
+        spLoaiDonHang = findViewById(R.id.spLoaiDonHang);
     }
 
     @SuppressLint("RestrictedApi")
@@ -81,13 +112,13 @@ public class BepActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //  donHangAdapter.getFilter().filter(query);
+                donHang_bepAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                //  donHangAdapter.getFilter().filter(query);
+                donHang_bepAdapter.getFilter().filter(query);
                 return true;
 
             }
