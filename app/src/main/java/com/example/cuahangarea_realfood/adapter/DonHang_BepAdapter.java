@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cuahangarea_realfood.Firebase_Manager;
@@ -81,7 +82,7 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
     @Override
     public DonHang_BepAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
-        LinearLayout cardView = (LinearLayout) layoutInflater.inflate(viewType, parent, false);
+        CardView cardView = (CardView) layoutInflater.inflate(viewType, parent, false);
         return new DonHang_BepAdapter.MyViewHolder(cardView);
     }
 
@@ -198,11 +199,11 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
                         if (dialog.getInputText()!=null)
                         {
                             DonHang temp = donHang;
-                            temp.setTrangThai(TrangThaiDonHang.SHOP_DaChuanBiXong);
+                            temp.setTrangThai(TrangThaiDonHang.Bep_DaHuyDonHang);
                             temp.setGhiChuCuaHang(dialog.getInputText());
                             arrayList.set(position, temp);
                             notifyDataSetChanged();
-                            Toast.makeText(context, "Đơn hàng đã được hủy vì lí do: "+dialog.getInputText(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Đơn hàng đã được hủy vì lí do: "+dialog.getInputText(), Toast.LENGTH_LONG).show();
                             firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -223,11 +224,28 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
             @Override
             public void onClick(View v) {
                 DonHang temp = donHang;
-                temp.setTrangThai(TrangThaiDonHang.SHOP_ChoShipperLayHang);
+                temp.setTrangThai(TrangThaiDonHang.SHOP_DangGiaoShipper);
                 temp.setIDShipper(shippers.get(holder.spDSShipper.getSelectedPosition()).getiDShipper());
                 arrayList.set(position, temp);
                 notifyDataSetChanged();
                 Toast.makeText(context, "Vui lòng chờ shipper đến lấy hàng", Toast.LENGTH_SHORT).show();
+                firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        notifyDataSetChanged();
+                        LoadButton(holder, temp.getTrangThai());
+                    }
+                });
+            }
+        });
+        holder.btnDaGiaoHangChoShipper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DonHang temp = donHang;
+                temp.setTrangThai(TrangThaiDonHang.Shipper_DaLayHang);
+                arrayList.set(position, temp);
+                notifyDataSetChanged();
+                Toast.makeText(context, "Shipper đã lấy hàng", Toast.LENGTH_SHORT).show();
                 firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -252,13 +270,22 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
         } else {
             holder.lnDatThoiGian.setVisibility(View.GONE);
         }
-        if (trangThai == TrangThaiDonHang.SHOP_DaChuanBiXong) {
+        if (trangThai == TrangThaiDonHang.SHOP_DaChuanBiXong||trangThai == TrangThaiDonHang.Shipper_KhongNhanGiaoHang) {
             holder.lnShipper.setVisibility(View.VISIBLE);
             LoadShipper(holder);
 
         } else {
             holder.lnShipper.setVisibility(View.GONE);
         }
+        if (trangThai == TrangThaiDonHang.SHOP_ChoXacNhanGiaoHangChoShipper) {
+            holder.lnXacNhangShipper.setVisibility(View.VISIBLE);
+            LoadShipper(holder);
+
+        } else {
+            holder.lnXacNhangShipper.setVisibility(View.GONE);
+        }
+
+
     }
 
     private void LoadShipper(MyViewHolder holder) {
@@ -309,7 +336,10 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
                     for (DonHang donHang : source) {
                         //Thêm cái địa chỉ vs SDT vào đây
                         Toast.makeText(context, donHang.getTrangThai().toString(), Toast.LENGTH_SHORT).show();
-                        if (donHang.getIDDonHang().contains(strSearch)||donHang.getTrangThai().toString().equals(strSearch))
+                        if (donHang.getIDDonHang().contains(strSearch)||
+                                donHang.getTrangThai().toString().equals(strSearch)||
+                                donHang.getIDDonHang().contains(strSearch)||
+                                donHang.getDiaChi().contains(strSearch))
                         {
                             list.add(donHang);
                         }
@@ -334,8 +364,8 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
         ImageView imageView;
         RecyclerView rcvItemGiohang;
         ProgressBar progressBar;
-        Button btnDaChuanBiXOng, btnHoantac, btnHuy,btnDatThoiGian,btnGiaoHang;
-        LinearLayout lnHuyLiDo,lnDatThoiGian,lnShipper;
+        Button btnDaChuanBiXOng, btnHoantac, btnHuy,btnDatThoiGian,btnGiaoHang,btnDaGiaoHangChoShipper;
+        LinearLayout lnHuyLiDo,lnDatThoiGian,lnShipper,lnXacNhangShipper;
         SingleDateAndTimePicker dateAndTimePicker;
         SearchableSpinner spDSShipper;
         public MyViewHolder(View itemView) {
@@ -359,6 +389,8 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
             dateAndTimePicker = itemView.findViewById(R.id.single_day_picker);
             spDSShipper = itemView.findViewById(R.id.spDSShipper);
             btnGiaoHang = itemView.findViewById(R.id.btnGiaoHang);
+            btnDaGiaoHangChoShipper = itemView.findViewById(R.id.btnDaGiaoHangChoShipper);
+            lnXacNhangShipper = itemView.findViewById(R.id.lnXacNhangShipper);
         }
     }
 }

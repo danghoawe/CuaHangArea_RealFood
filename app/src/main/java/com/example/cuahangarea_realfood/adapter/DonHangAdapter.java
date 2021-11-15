@@ -1,6 +1,7 @@
 package com.example.cuahangarea_realfood.adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.SetOnLongClick;
@@ -40,6 +42,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +88,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
     public void onBindViewHolder(@NonNull DonHangAdapter.MyViewHolder holder, int position) {
         DonHang donHang = arrayList.get(position);
         holder.txtID.setText(donHang.getIDDonHang().substring(0, 9));
-        holder.txtTrangThaiDonHang.setText(donHang.getTrangThai().toString());
+        holder.txtTrangThaiDonHang.setText(firebase_manager.GetStringTrangThaiDonHang(donHang.getTrangThai()));
         holder.txtTongTien.setText(donHang.getTongTien() + "");
         holder.txtDiaChi.setText(donHang.getDiaChi() + "");
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
@@ -104,12 +109,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
 
             }
         });
-        ArrayList<DonHangInfo> donHangInfos = new ArrayList<>();
-//        DonHangInfoAdapter donHangAdapter = new DonHangInfoAdapter(context,R.layout.donhang_item_sanpham,donHangInfos);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-//        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-//        holder.rcvItemGiohang.setAdapter(donHangAdapter);
-//        holder.rcvItemGiohang.setLayoutManager(linearLayoutManager);
+
 
         firebase_manager.mDatabase.child("DonHangInfo").addValueEventListener(new ValueEventListener() {
             @Override
@@ -172,14 +172,78 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                 context.startActivity(intent);
             }
         });
+        holder.btnXacNhanHoanHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DonHang temp = donHang;
+                temp.setTrangThai(TrangThaiDonHang.Shipper_DaTraHang);
+                arrayList.set(position, temp);
+                notifyDataSetChanged();
+                firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        notifyDataSetChanged();
+                        LoadButton(holder, temp.getTrangThai());
+                    }
+                });
+            }
+        });
+        holder.btnXacNhanTraTien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DonHang temp = donHang;
+                temp.setTrangThai(TrangThaiDonHang.Shipper_DaChuyenTien);
+                arrayList.set(position, temp);
+                notifyDataSetChanged();
+                firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        notifyDataSetChanged();
+                        LoadButton(holder, temp.getTrangThai());
+                    }
+                });
+            }
+        });
+        holder.btnHuyDonHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog= new NordanAlertDialog.Builder(context)
+                        .setDialogType(DialogType.WARNING)
+                        .setAnimation(Animation.SLIDE)
+                        .isCancellable(true)
+                        .setTitle("Thông báo")
+                        .setMessage("Bạn có chắc hủy đơn hàng ? ")
+                        .setPositiveBtnText("Oke")
+                        .onPositiveClicked(() -> {
+                            DonHang temp = donHang;
+                            temp.setTrangThai(TrangThaiDonHang.SHOP_HuyDonHang);
+                            arrayList.set(position, temp);
+                            notifyDataSetChanged();
+                            firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    notifyDataSetChanged();
+                                    LoadButton(holder, temp.getTrangThai());
+                                    Toast.makeText(context, "Hủy thành công", Toast.LENGTH_SHORT).show();
+                                }
+                            });})
+                        .setNegativeBtnText("Hủy")
+                        .onNegativeClicked(() -> {})
+                        .build();
+                dialog.show();
+
+            }
+        });
     }
 
     private void LoadButton(MyViewHolder holder, TrangThaiDonHang trangThai) {
         if (trangThai == TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien) {
             holder.btnXacNhanCoc.setVisibility(View.VISIBLE);
+            holder.btnHuyDonHang.setVisibility(View.VISIBLE);
 
         } else {
             holder.btnXacNhanCoc.setVisibility(View.GONE);
+            holder.btnHuyDonHang.setVisibility(View.GONE);
         }
         if (trangThai == TrangThaiDonHang.SHOP_DangChuanBihang) {
             holder.btnHoantac.setVisibility(View.VISIBLE);
@@ -187,21 +251,26 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
         } else {
             holder.btnHoantac.setVisibility(View.GONE);
         }
+        if (trangThai == TrangThaiDonHang.ChoShopXacNhan_Tien) {
+            holder.btnXacNhanTraTien.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            holder.btnXacNhanTraTien.setVisibility(View.GONE);
+        }
+        if (trangThai == TrangThaiDonHang.ChoShopXacNhan_TraHang) {
+            holder.btnXacNhanHoanHang.setVisibility(View.VISIBLE);
+
+        } else {
+            holder.btnXacNhanHoanHang.setVisibility(View.GONE);
+        }
     }
 
 
     //Hàm để get layout type
     @Override
     public int getItemViewType(int position) {
-        //1 list có 2 view
-//        if(position%2==0)
-//        {
-//            ID layout A
-//        }
-//        else
-//        {
-//            ID layout B
-//        }
+
         return resource;
     }
 
@@ -222,7 +291,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                 } else {
                     ArrayList<DonHang> list = new ArrayList<>();
                     for (DonHang donHang: source) {
-                        if (donHang.getTrangThai().equals(strSearch)) {
+                        if (donHang.getTrangThai().toString().equals(strSearch)||donHang.getIDDonHang().contains(strSearch)) {
                             list.add(donHang);
                         }
                     }
@@ -247,7 +316,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
         ImageView imageView;
         RecyclerView rcvItemGiohang;
         ProgressBar progressBar;
-        Button btnXacNhanCoc,btnHoantac;
+        Button btnXacNhanCoc,btnHoantac,btnXacNhanTraTien,btnXacNhanHoanHang,btnHuyDonHang;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -263,6 +332,9 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
             btnHoantac = itemView.findViewById(R.id.btnHoanTac1);
             txtTime = itemView.findViewById(R.id.txtTime);
             txtXemChiTiet = itemView.findViewById(R.id.txtXemChiTiet);
+            btnXacNhanTraTien = itemView.findViewById(R.id.btnXacNhanTraTien);
+            btnXacNhanHoanHang = itemView.findViewById(R.id.btnXacNhanHoanHang);
+            btnHuyDonHang = itemView.findViewById(R.id.btnHuyDonHang);
         }
     }
 }

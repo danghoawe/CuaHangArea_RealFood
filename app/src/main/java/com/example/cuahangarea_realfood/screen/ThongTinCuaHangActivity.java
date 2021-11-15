@@ -40,6 +40,7 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
         LoadData();
         setEvent();
 
+
     }
 
     private void setEvent() {
@@ -81,7 +82,6 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
                 }
             }
         });
-
         binding.btnAn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

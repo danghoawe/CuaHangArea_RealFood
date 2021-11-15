@@ -262,6 +262,21 @@
         android:text="Xác nhận cọc"
         android:textSize="16dp" android:visibility="gone"/>
     <android.widget.Button
+        android:id="@+id/btnHuyDonHang"
+        style="@style/Button_v2_Red"
+        android:text="Hủy đơn hàng"
+        android:textSize="16dp"/>
+    <android.widget.Button
+        android:id="@+id/btnXacNhanTraTien"
+        style="@style/Button_v2_Green"
+        android:text="Đã nhận tiền hàng"
+        />
+    <android.widget.Button
+        android:id="@+id/btnXacNhanHoanHang"
+        style="@style/Button_v2_Green"
+        android:text="Đã nhận lại hàng"
+        />
+    <android.widget.Button
         android:id="@+id/btnHoanTac1"
         style="@style/Button_v2_Blue"
         android:text="Hoàn tác"

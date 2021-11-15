@@ -120,7 +120,7 @@ public class Firebase_Manager {
         });
     }
     public void GetDonHang_Bep(ArrayList arrayList, DonHang_BepAdapter donHangAdapter) {
-        mDatabase.child("DonHang").orderByChild("ngayTao").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("DonHang").orderByChild("trangThai").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 arrayList.clear();
@@ -132,7 +132,10 @@ public class Firebase_Manager {
                                 donHang.getTrangThai()== TrangThaiDonHang.SHOP_DaChuanBiXong||
                                 donHang.getTrangThai()== TrangThaiDonHang.SHOP_DangGiaoShipper||
                                 donHang.getTrangThai()==TrangThaiDonHang.SHOP_DaGiaoChoBep||
-                                donHang.getTrangThai()==TrangThaiDonHang.SHOP_ChoShipperLayHang)
+                                donHang.getTrangThai()==TrangThaiDonHang.SHOP_ChoShipperLayHang||
+                                donHang.getTrangThai()==TrangThaiDonHang.SHOP_ChoXacNhanGiaoHangChoShipper||
+                                donHang.getTrangThai()==TrangThaiDonHang.Shipper_KhongNhanGiaoHang
+                                )
                         {
                             arrayList.add(donHang);
                         }
@@ -293,5 +296,72 @@ public class Firebase_Manager {
         });
         return cuaHang[0];
     }
-
+    public String GetStringTrangThaiDonHang(TrangThaiDonHang trangThaiDonHang){
+        String res ="";
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_HuyDonHang)
+        {
+            res ="Đã hủy";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien)
+        {
+            res ="Chờ xác nhận chuyển tiền cọc";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_DaGiaoChoBep)
+        {
+            res ="Đã giao đơn hàng cho bếp";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_DangChuanBihang)
+        {
+            res ="Đang chuẩn bị hàng";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_DaChuanBiXong)
+        {
+            res ="Đã chuẩn bị xong";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_DangGiaoShipper)
+        {
+            res ="Đang giao shipper đi phát";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_ChoShipperLayHang)
+        {
+            res ="Chờ shipper lấy hàng";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_ChoXacNhanGiaoHangChoShipper)
+        {
+            res ="Chờ Shop xác nhận giao hàng cho Shipper";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.ChoShopXacNhan_Tien)
+        {
+            res ="Chờ Shop xác nhận đã nhận tiền hàng từ Shipper";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.ChoShopXacNhan_TraHang)
+        {
+            res ="Chờ Shop xác nhận đã nhận hàng trả về từ Shipper";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.Shipper_DaLayHang)
+        {
+            res ="Shipper đã lấy hàng đi giao";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.Shipper_KhongNhanGiaoHang)
+        {
+            res ="Shipper không nhận giao hàng";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.Shipper_DaTraHang)
+        {
+            res ="Đơn hàng đã được hoàn về";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.Shipper_DaChuyenTien)
+        {
+            res ="Đơn hàng đã thanh toán thành công";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.Shipper_GiaoKhongThanhCong)
+        {
+            res ="Giao hàng không thành công";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.Shipper_DangGiaoHang)
+        {
+            res ="Shipper đang giao hàng";
+        }
+        return res;
+    }
 }

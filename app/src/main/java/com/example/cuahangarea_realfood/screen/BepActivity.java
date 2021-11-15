@@ -104,7 +104,7 @@ public class BepActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
+        menuInflater.inflate(R.menu.menu_magiamgia, menu);
         MenuItem searchItem = menu.findItem(R.id.menuItem_search);
         SearchView searchView =
                 (SearchView) searchItem.getActionView();
@@ -120,7 +120,6 @@ public class BepActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String query) {
                 donHang_bepAdapter.getFilter().filter(query);
                 return true;
-
             }
 
         });

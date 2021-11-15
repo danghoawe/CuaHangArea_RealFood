@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
-
+    app:cardCornerRadius="8dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="10dp">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,11 +76,11 @@
         </LinearLayout>
     </LinearLayout>
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rcvItemGiohang"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp" />-->
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/rcvItemGiohang"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="10dp" />-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -258,6 +263,7 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/lnHuyLiDo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -320,6 +326,7 @@
             android:textSize="16dp" />
     </LinearLayout>
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/lnShipper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -328,7 +335,7 @@
             android:background="@drawable/edittext_background_v1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           >
+            >
             <gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
                 android:id="@+id/spDSShipper"
                 android:layout_width="match_parent"
@@ -349,7 +356,18 @@
             android:text="Giao Hàng"
             android:textSize="16dp" />
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/lnXacNhangShipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <android.widget.Button
+            android:id="@+id/btnDaGiaoHangChoShipper"
+            style="@style/Button_v2_Blue"
+            android:layout_weight="1"
+            android:text="Đã Giao Hàng"
+            android:textSize="16dp" />
+    </LinearLayout>
     <TextView
         android:id="@+id/txtXemChiTiet"
         android:textColor="#0E8AE4"
@@ -364,3 +382,5 @@
         android:layout_height="1dp"
         android:background="#ACAAAA"/>
 </LinearLayout>
+
+</androidx.cardview.widget.CardView>

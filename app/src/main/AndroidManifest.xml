@@ -13,12 +13,14 @@
         tools:replace="android:icon">
         <activity android:name=".screen.BepActivity"
             android:label="Quản lý bếp"
-            android:parentActivityName=".screen.DanhSachDonHangActivity" ></activity>
+            android:parentActivityName=".screen.Home" ></activity>
         <activity
             android:name=".screen.ThongTinDonHangActivity"
             android:label="Thông tin đơn hàng"
             android:parentActivityName=".screen.DanhSachDonHangActivity" />
-        <activity android:name=".screen.DanhSachDonHangActivity" />
+        <activity android:name=".screen.DanhSachDonHangActivity"
+            android:label="Danh sách đơn hàng"
+            android:parentActivityName=".screen.Home"/>
         <activity
             android:name=".screen.ThongTinMaGiamGiaActivity"
             android:label="Voucher"

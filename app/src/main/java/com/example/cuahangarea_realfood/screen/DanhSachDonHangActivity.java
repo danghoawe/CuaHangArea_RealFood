@@ -16,13 +16,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.Fragment.DanhMuc_DialogFragment;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHangAdapter;
 import com.example.cuahangarea_realfood.adapter.SanPhamAdapter;
@@ -37,11 +40,11 @@ import java.util.ArrayList;
 public class DanhSachDonHangActivity extends AppCompatActivity {
     DonHangAdapter donHangAdapter;
     ArrayList<DonHang> donHangs;
-    LinearLayoutManager linearLayoutManager,linearLayoutManager2;
-    GridLayoutManager gridLayoutManager ;
-    Button btnThemSanPham;
+    LinearLayoutManager linearLayoutManager, linearLayoutManager2;
+    GridLayoutManager gridLayoutManager;
     Firebase_Manager firebase_manager = new Firebase_Manager();
     RecyclerView rcDonHang;
+    Spinner spTrangThaiDonHang;
 
     @Override
     protected void onResume() {
@@ -49,7 +52,7 @@ public class DanhSachDonHangActivity extends AppCompatActivity {
         //GetDanhSachDanhMuc();
         donHangAdapter.notifyDataSetChanged();
         super.onResume();
-        Log.d("a","oke");
+        Log.d("a", "oke");
     }
 
     @Override
@@ -60,29 +63,91 @@ public class DanhSachDonHangActivity extends AppCompatActivity {
         setContentView(R.layout.activity_danh_sach_don_hang);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setControl();
-
-
         donHangAdapter = new DonHangAdapter(this, R.layout.donhang_item, donHangs);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        gridLayoutManager = new GridLayoutManager(this,2);
+        gridLayoutManager = new GridLayoutManager(this, 2);
         rcDonHang.setLayoutManager(linearLayoutManager);
         rcDonHang.setAdapter(donHangAdapter);
-        firebase_manager.GetDonHang(donHangs,donHangAdapter);
+        firebase_manager.GetDonHang(donHangs, donHangAdapter);
 //          GetDanhSachDanhMuc();
 //        GetSanPham();
         setEvent();
     }
 
     private void setEvent() {
+        spTrangThaiDonHang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        donHangAdapter.getFilter().filter("");
+                        break;
+                    case 1:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien.toString());
+                        break;
+                    case 2:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.SHOP_HuyDonHang.toString());
+                        break;
+                    case 3:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.SHOP_DaGiaoChoBep.toString());
+                        break;
+                    case 4:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.SHOP_DangChuanBihang.toString());
+                        break;
+                    case 5:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.Bep_DaHuyDonHang.toString());
+                        break;
+                    case 6:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.SHOP_DaChuanBiXong.toString());
+                        break;
+                    case 7:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.SHOP_DangGiaoShipper.toString());
+                        break;
+                    case 8:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.Shipper_KhongNhanGiaoHang.toString());
+                        break;
+                    case 9:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.SHOP_ChoShipperLayHang.toString());
+                        break;
+                    case 10:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.SHOP_ChoXacNhanGiaoHangChoShipper.toString());
+                        break;
+                    case 11:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.Shipper_DangGiaoHang.toString());
+                        break;
+                    case 12:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.Shipper_GiaoThanhCong.toString());
+                        break;
+                    case 13:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.Shipper_GiaoKhongThanhCong.toString());
+                        break;
+                    case 14:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.ChoShopXacNhan_TraHang.toString());
+                        break;
+                    case 15:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.ChoShopXacNhan_Tien.toString());
+                        break;
+                    case 16:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.Shipper_DaChuyenTien.toString());
+                        break;
+                    case 17:
+                        donHangAdapter.getFilter().filter(TrangThaiDonHang.Shipper_DaTraHang.toString());
+                        break;
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
-
 
 
     private void setControl() {
         rcDonHang = findViewById(R.id.rcDonHang);
-        btnThemSanPham = findViewById(R.id.btnThemSanPham);
+        spTrangThaiDonHang = findViewById(R.id.spTrangThaiDonHang);
     }
 
     @SuppressLint("RestrictedApi")
@@ -98,13 +163,13 @@ public class DanhSachDonHangActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-              //  donHangAdapter.getFilter().filter(query);
+                donHangAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-              //  donHangAdapter.getFilter().filter(query);
+                donHangAdapter.getFilter().filter(query);
                 return true;
 
             }

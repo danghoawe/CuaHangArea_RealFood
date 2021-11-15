@@ -15,6 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Spinner
+                android:id="@+id/spTrangThaiDonHang"
+                android:entries="@array/trangthaidonhang_dsDonhang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />

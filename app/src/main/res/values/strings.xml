@@ -14,12 +14,33 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="g_i_mail">Gửi Mail</string>
-    <string-array name="trangthaidonhang">
+    <string-array name="trangthaidonhang_Bep">
         <item>All</item>
-
         <item>Đang chuẩn bị</item>
         <item>Đã đặt thời gian</item>
         <item>Đã chuẩn bị xong </item>
-        <item>Đang giao shipper bị</item>
+        <item>Đang giao shipper</item>
+        <item>Đang chờ shipper lấy hàng</item>
+    </string-array>
+
+    <string-array name="trangthaidonhang_dsDonhang">
+        <item>All</item>
+        <item>Chờ xác nhận cọc</item>
+        <item>Đã hủy đơn hàng</item>
+        <item>Đã giao cho bếp</item>
+        <item>Đang chuẩn bị</item>
+        <item>Bếp hủy đơn hàng</item>
+        <item>Đã chuẩn bị xong </item>
+        <item>Đang giao shipper</item>
+        <item>Shipper không nhận giao hàng</item>
+        <item>Đang chờ shipper lấy hàng</item>
+        <item>Xác nhận shipper đã lấy hàng</item>
+        <item>Đang giao hàng</item>
+        <item>Đã giao hàng thành công</item>
+        <item>Giao hàng thất bại</item>
+        <item>Chờ trả hàng</item>
+        <item>Chờ trả tiền cho cửa hàng</item>
+        <item>Đơn hàng đã hoàn thành</item>
+        <item>Đơn hàng đã trả hàng</item>
     </string-array>
 </resources>
