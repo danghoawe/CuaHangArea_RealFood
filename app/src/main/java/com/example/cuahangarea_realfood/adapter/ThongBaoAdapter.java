@@ -86,13 +86,15 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
 
             }
         });
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
+        String strDate= formatter.format(thongBao.getDate());
+        holder.txtThoiGian.setText(strDate);
         Date now = new Date();
         if (thongBao.getDate().getDate()== now.getDate())
         {
-
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-            holder.txtThoiGian.setText(formatter.format(thongBao.getDate().getTime()));
-
+            SimpleDateFormat formatters = new SimpleDateFormat("hh:mm");
+            String strDates= formatters.format(thongBao.getDate());
+            holder.txtThoiGian.setText(strDates);
         }
 
 

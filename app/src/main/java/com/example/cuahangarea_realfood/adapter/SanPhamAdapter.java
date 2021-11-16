@@ -147,7 +147,9 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHo
                     for (SanPham sanPham : source) {
                         if (sanPham.getTenSanPham().toLowerCase().contains(strSearch.toLowerCase())||
                                 sanPham.getChiTietSanPham().toLowerCase().contains(strSearch.toLowerCase())||
-                                sanPham.getGia().toLowerCase().contains(strSearch.toLowerCase())) {
+                                sanPham.getGia().toLowerCase().contains(strSearch.toLowerCase())||
+                                sanPham.getIDDanhMuc().toLowerCase().equals(strSearch.toLowerCase())||
+                                sanPham.getIDLoai().toLowerCase().equals(strSearch.toLowerCase())) {
                             list.add(sanPham);
                         }
                     }

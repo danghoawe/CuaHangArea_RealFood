@@ -22,6 +22,7 @@ import com.bumptech.glide.Registry;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.SetOnClick;
 import com.example.cuahangarea_realfood.SetOnLongClick;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 
@@ -41,6 +42,15 @@ public class DanhMucAdapter extends RecyclerView.Adapter<DanhMucAdapter.MyViewHo
     public SetOnLongClick setOnLongClick;
     public SetOnLongClick getSetOnLongClick() {
         return setOnLongClick;
+    }
+    public SetOnClick setOnClick;
+
+    public SetOnClick getSetOnClick() {
+        return setOnClick;
+    }
+
+    public void setSetOnClick(SetOnClick setOnClick) {
+        this.setOnClick = setOnClick;
     }
 
     public void setSetOnLongClick(SetOnLongClick setOnLongClick) {
@@ -91,6 +101,14 @@ public class DanhMucAdapter extends RecyclerView.Adapter<DanhMucAdapter.MyViewHo
                     setOnLongClick.onLongClick(position);
                 }
                 return true;
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (setOnClick!=null){
+                    setOnClick.onClick(position);
+                }
             }
         });
 

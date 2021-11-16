@@ -24,6 +24,7 @@ import android.widget.Button;
 import com.example.cuahangarea_realfood.Fragment.DanhMuc_DialogFragment;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.SetOnClick;
 import com.example.cuahangarea_realfood.SetOnLongClick;
 import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
 import com.example.cuahangarea_realfood.adapter.SanPhamAdapter;
@@ -51,7 +52,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
     RecyclerView rcDanhMuc,rcSanPham;
     SetOnLongClick setOnLongClick;
     SearchView search;
-
+    SetOnClick setOnClick ;
     @Override
     protected void onResume() {
         //GetSanPham();
@@ -92,7 +93,13 @@ public class DS_SanPhamActivity extends AppCompatActivity {
                 danhMuc_dialogFragment.show(fragmentManager, "DS_SanPhamActivity");
             }
         };
-
+        setOnClick = new SetOnClick() {
+            @Override
+            public void onClick(int positon) {
+                sanPhamAdapter.getFilter().filter(danhMucs.get(positon).getIDDanhMuc());
+            }
+        };
+        danhMucAdapter.setSetOnClick(setOnClick);
         danhMucAdapter.setSetOnLongClick(setOnLongClick);
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -168,6 +175,11 @@ public class DS_SanPhamActivity extends AppCompatActivity {
                     danhMuc_dialogFragment.onActivityResult(1, 1, null);
                     danhMuc_dialogFragment.show(fragmentManager, "DS_SanPhamActivity");
                 }
+                break;
+            case R.id.mnThemSanPham:
+                Intent intent = new Intent(DS_SanPhamActivity.this, ThongTinSanPhamActivity.class);
+                startActivity(intent);
+
                 break;
 
         }

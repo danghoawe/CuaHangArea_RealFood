@@ -67,7 +67,7 @@ public class DangKyActivity extends AppCompatActivity {
                                 public void onSuccess(AuthResult authResult) {
                                     String uuid = authResult.getUser().getUid();
                                     CuaHang cuaHang = new CuaHang(uuid, edtTenCuaHang.getText().toString()
-                                            , edtHoTen.getText().toString(), "", edtIDcard.getText().toString(), edtSoDienThoai.getText().toString(), "", "", (float) 0.0, edtEmail.getText().toString(), TrangThaiCuaHang.ChuaKichHoat,edtDiaChi.getText().toString());
+                                            , edtHoTen.getText().toString(), "", edtIDcard.getText().toString(), edtSoDienThoai.getText().toString(), "", "", (float) 0.0, edtEmail.getText().toString(), TrangThaiCuaHang.ChuaKichHoat,edtDiaChi.getText().toString(),null,null);
                                     firebase_manager.Ghi_CuaHang(cuaHang);
                                     firebase_manager.Up2MatCMND(CMND_truoc,CMND_sau,uuid);
                                     kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);

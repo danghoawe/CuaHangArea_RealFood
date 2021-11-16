@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
@@ -13,6 +14,7 @@ import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.databinding.ActivityThongTinCuaHangBinding;
 import com.example.cuahangarea_realfood.model.CuaHang;
+import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +25,8 @@ import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickCancel;
 import com.vansuita.pickimage.listeners.IPickResult;
+
+import java.util.Date;
 
 public class ThongTinCuaHangActivity extends AppCompatActivity {
     ActivityThongTinCuaHangBinding binding;
@@ -39,8 +43,6 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         LoadData();
         setEvent();
-
-
     }
 
     private void setEvent() {
@@ -57,7 +59,7 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
                             , binding.edtHotenChu.getText().toString(), binding.edtThongTinChiTiet.getText().toString()
                             , binding.edtSoCMND.getText().toString(), binding.edtSoDT.getText().toString()
                             , "", "", cuaHang.getRating(), binding.edtEmail.getText().toString()
-                            , cuaHang.getTrangThaiCuaHang(),binding.edtDiaChi.getText().toString());
+                            , cuaHang.getTrangThaiCuaHang(),binding.edtDiaChi.getText().toString(),binding.dtpGioBatDau.getDate(),binding.dtpGioKetThuc.getDate());
                     cuaHang = temp;
                     CapNhatCuaHang(cuaHang);
                     if (uriAvatar!=null)
@@ -82,21 +84,7 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
                 }
             }
         });
-        binding.btnAn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cuaHang.setTrangThaiCuaHang(TrangThaiCuaHang.AN);
-                CapNhatCuaHang(cuaHang);
-            }
-        });
-        binding.btnHienthi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cuaHang.setTrangThaiCuaHang(TrangThaiCuaHang.DaKichHoat);
-                CapNhatCuaHang(cuaHang);
 
-            }
-        });
 
         binding.btnEditAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +105,33 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
                         }).show(ThongTinCuaHangActivity.this);
             }
         });
+        binding.dtpGioKetThuc.addOnDateChangedListener(new SingleDateAndTimePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(String displayed, Date date) {
+                if (date.compareTo(binding.dtpGioBatDau.getDate())<0){
+                    Toast.makeText(ThongTinCuaHangActivity.this, "Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc", Toast.LENGTH_SHORT).show();
+                    Date temp = binding.dtpGioBatDau.getDate();
+                    temp.setHours(temp.getHours()+1);
 
+                    binding.dtpGioKetThuc.setDefaultDate(temp);
+                }
+
+            }
+        });
+        binding.dtpGioBatDau.addOnDateChangedListener(new SingleDateAndTimePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(String displayed, Date date) {
+                if (date.compareTo(binding.dtpGioKetThuc.getDate())>0){
+                    Toast.makeText(ThongTinCuaHangActivity.this, "Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc", Toast.LENGTH_SHORT).show();
+                    Date temp = binding.dtpGioKetThuc.getDate();
+                    temp.setHours(temp.getHours()-1);
+
+                    binding.dtpGioBatDau.setDefaultDate(temp);
+                }
+            }
+
+
+        });
         binding.btnEditWallPaper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,13 +182,8 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
                 binding.edtThongTinChiTiet.setText(temp.getThongTinChiTiet());
                 binding.progessbar.setVisibility(View.GONE);
                 binding.lnLayout.setVisibility(View.VISIBLE);
-                if (temp.getTrangThaiCuaHang()==TrangThaiCuaHang.AN)
-                {
-                    binding.btnHienthi.setVisibility(View.VISIBLE);
-                }
-                else {
-                    binding.btnHienthi.setVisibility(View.GONE);
-                }
+                binding.dtpGioBatDau.setDefaultDate(temp.getTimeStart());
+                binding.dtpGioKetThuc.setDefaultDate(temp.getTimeEnd());
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
