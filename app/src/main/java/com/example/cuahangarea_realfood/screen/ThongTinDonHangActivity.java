@@ -20,9 +20,11 @@ import com.example.cuahangarea_realfood.adapter.DonHang_BepAdapter;
 import com.example.cuahangarea_realfood.adapter.ShipperAdapter;
 import com.example.cuahangarea_realfood.databinding.ActivityThongTinCuaHangBinding;
 import com.example.cuahangarea_realfood.databinding.ActivityThongTinDonHangBinding;
+import com.example.cuahangarea_realfood.model.BaoCaoShipper;
 import com.example.cuahangarea_realfood.model.DonHang;
 import com.example.cuahangarea_realfood.model.DonHangInfo;
 import com.example.cuahangarea_realfood.model.KhachHang;
+import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.Shipper;
 import com.example.cuahangarea_realfood.model.Voucher;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +38,8 @@ import com.nordan.dialog.DialogType;
 import com.nordan.dialog.NordanAlertDialog;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
 
 import karpuzoglu.enes.com.fastdialog.Animations;
 import karpuzoglu.enes.com.fastdialog.FastDialog;
@@ -113,6 +117,29 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                 firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                    }
+                });
+            }
+        });
+        binding.btnXacNhanTraTien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DonHang temp = donHang;
+                temp.setTrangThai(TrangThaiDonHang.Shipper_DaChuyenTien);
+
+                firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        donHang =temp;
+                        LoadData();
+                        LoadButton(donHang.getTrangThai());
+                        for (DonHangInfo donHangInfo:
+                                donHangInfos
+                        ) {
+                            SanPham sanPham = donHangInfo.getSanPham();
+                            sanPham.setSoLuongBanDuoc(sanPham.getSoLuongBanDuoc()+1);
+                            firebase_manager.Ghi_SanPham(sanPham);
+                        }
                     }
                 });
             }
@@ -255,6 +282,36 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                 });
             }
         });
+        binding.lnBaoCaoShipper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FastDialog dialog = FastDialog.w(ThongTinDonHangActivity.this)
+                        .setTitleText("Thông báo")
+                        .setText("Bạn muốn báo cáo Shipper này?")
+                        .setHint("Vui lòng nhập lí do")
+                        .setAnimation(Animations.GROW_IN)
+                        .positiveText("Báo cáo")
+                        .negativeText("Hủy")
+                        .create();
+                
+                dialog.positiveClickListener(new PositiveClick() {
+                    @Override
+                    public void onClick(View view) {
+                        if (dialog.getInputText()!=null)
+                        {
+                            String uuid = UUID.randomUUID().toString().replace("-", "");
+                            BaoCaoShipper baoCaoShipper = new BaoCaoShipper(uuid,firebase_manager.auth.getUid(),donHang.getIDShipper(),dialog.getInputText(),"Thông báo",new Date());
+                            Toast.makeText(ThongTinDonHangActivity.this, "Bạn đã báo cáo shipper  vì lí do: "+dialog.getInputText(), Toast.LENGTH_LONG).show();
+                            firebase_manager.mDatabase.child("BaoCao_CuaHang_Shipper").child(uuid).setValue(baoCaoShipper);
+                        }
+                        else {
+                            Toast.makeText(ThongTinDonHangActivity.this, "Vui lòng không để trống!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 
     private void LoadButton( TrangThaiDonHang trangThai) {
@@ -272,18 +329,29 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
         } else {
             binding.btnHoanTac1.setVisibility(View.GONE);
         }
-        if (trangThai.equals(TrangThaiDonHang.ChoShopXacNhan_Tien)) {
+        if (trangThai == TrangThaiDonHang.ChoShopXacNhan_Tien) {
             binding.btnXacNhanTraTien.setVisibility(View.VISIBLE);
-
+            binding.lnBaoCaoShipper.setVisibility(View.VISIBLE);
         }
         else {
             binding.btnXacNhanTraTien.setVisibility(View.GONE);
-        }
-        if (trangThai.equals(TrangThaiDonHang.ChoShopXacNhan_TraHang)) {
-            binding.btnXacNhanHoanHang.setVisibility(View.VISIBLE);
+            binding.lnBaoCaoShipper.setVisibility(View.GONE);
 
+        }
+        if (trangThai == TrangThaiDonHang.ChoShopXacNhan_TraHang) {
+            binding.btnXacNhanHoanHang.setVisibility(View.VISIBLE);
+            binding.lnBaoCaoShipper.setVisibility(View.VISIBLE);
         } else {
             binding.btnXacNhanHoanHang.setVisibility(View.GONE);
+            binding.lnBaoCaoShipper.setVisibility(View.GONE);
+        }
+        if (trangThai==TrangThaiDonHang.Shipper_DaLayHang||trangThai==TrangThaiDonHang.ChoShopXacNhan_TraHang
+                ||trangThai==TrangThaiDonHang.ChoShopXacNhan_Tien||trangThai==TrangThaiDonHang.Shipper_DaTraHang
+                ||trangThai==TrangThaiDonHang.Shipper_GiaoThanhCong||trangThai==TrangThaiDonHang.Shipper_GiaoKhongThanhCong
+                ||trangThai==TrangThaiDonHang.Shipper_DaChuyenTien)
+        {
+            binding.lnBaoCaoShipper.setVisibility(View.VISIBLE);
+            binding.lnTTShipper.setVisibility(View.VISIBLE);
         }
 
         if (trangThai == TrangThaiDonHang.SHOP_DangChuanBihang) {
@@ -312,6 +380,8 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
         } else {
             binding.lnXacNhangShipper.setVisibility(View.GONE);
         }
+
+
     }
 
     private void LoadShipper() {
@@ -330,6 +400,37 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
         });
     }
     private void LoadData() {
+        if (donHang.getIDShipper().isEmpty()) {
+            binding.lnTTShipper.setVisibility(View.GONE);
+        } else {
+            binding.lnTTShipper.setVisibility(View.VISIBLE);
+            firebase_manager.mDatabase.child("Shipper").child(donHang.getIDShipper()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                    Shipper temp = snapshot.getValue(Shipper.class);
+                    if (temp!=null)
+                    {
+                        binding.txtTenShipper.setText(temp.getHoVaTen());
+                        binding.txtDiaChiShipper.setText(temp.getSoDienThoai());
+                        binding.txtSoDienThoaiShipper.setText(temp.getDiaChi());
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull  DatabaseError error) {
+                }
+            });
+        }
+        firebase_manager.mDatabase.child("DonHang").child(donHang.getIDDonHang()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                DonHang temp = snapshot.getValue(DonHang.class);
+                donHang = temp;
+                LoadButton(donHang.getTrangThai());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
         firebase_manager.mDatabase.child("KhachHang").child(donHang.getIDKhachHang()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -342,7 +443,8 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        binding.txtTrangThaiDonHang.setText(donHang.getTrangThai().toString());
+        binding.tvIDDonHang.setText(donHang.getIDDonHang());
+        binding.txtTrangThaiDonHang.setText(firebase_manager.GetStringTrangThaiDonHang(donHang.getTrangThai()));
         String gia = String.valueOf(donHang.getTongTien());
         binding.txtTongTien.setText(gia);
         DonHangInfoAdapter donHangAdapter = new DonHangInfoAdapter(this,R.layout.donhang_item_sanpham,donHangInfos);

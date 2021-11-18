@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screen.ThongKeActivity"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:layout_gravity="center"
+                android:id="@+id/progessbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.anychart.AnyChartView
+                android:id="@+id/piechartThongKe"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:layout_marginBottom="-25dp"
+                />
+        </FrameLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/moneyicon"/>
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tổng doanh thu : "
+                android:textSize="19dp" />
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_green"
+                android:id="@+id/txtTongDoanhThu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="19dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_padding5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tổng số đơn hàng : "
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txtTongDonHang"
+                style="@style/Title_Label_padding5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0"
+                android:textSize="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_padding5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đã giao thành công : "
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txtDaGiaoThanhCong"
+                style="@style/Title_Label_padding5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0"
+                android:textSize="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_padding5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chờ chuyển tiền đặt cọc : "
+                android:textSize="16dp" />
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_padding5"
+                android:id="@+id/txtChoChuyenCoc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_padding5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đang xử lí : "
+                android:textSize="16dp" />
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_padding5"
+                android:id="@+id/txtDangXuLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_padding5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đang giao hàng : "
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txtDangGiaoHang"
+                style="@style/Title_Label_padding5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0"
+                android:textSize="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_padding5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giao hàng thất bại : "
+                android:textSize="16dp" />
+            <TextView
+                android:layout_weight="1"
+                style="@style/Title_Label_padding5"
+                android:id="@+id/txtGiaoHangKhongThanhCong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

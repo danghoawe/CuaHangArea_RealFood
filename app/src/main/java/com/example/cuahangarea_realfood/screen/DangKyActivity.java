@@ -29,6 +29,8 @@ import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickCancel;
 import com.vansuita.pickimage.listeners.IPickResult;
 
+import java.util.Date;
+
 public class DangKyActivity extends AppCompatActivity {
     EditText edtEmail,edtMatKhau,edtHoTen,edtTenCuaHang,edtDiaChi,edtSoDienThoai,edtReMatKhau,edtIDcard;
     Button btnDangKy;
@@ -67,7 +69,7 @@ public class DangKyActivity extends AppCompatActivity {
                                 public void onSuccess(AuthResult authResult) {
                                     String uuid = authResult.getUser().getUid();
                                     CuaHang cuaHang = new CuaHang(uuid, edtTenCuaHang.getText().toString()
-                                            , edtHoTen.getText().toString(), "", edtIDcard.getText().toString(), edtSoDienThoai.getText().toString(), "", "", (float) 0.0, edtEmail.getText().toString(), TrangThaiCuaHang.ChuaKichHoat,edtDiaChi.getText().toString(),null,null);
+                                            , edtHoTen.getText().toString(), "", edtIDcard.getText().toString(), edtSoDienThoai.getText().toString(), "", "", (float) 0.0, edtEmail.getText().toString(), TrangThaiCuaHang.ChuaKichHoat,edtDiaChi.getText().toString(),null,null,new Date());
                                     firebase_manager.Ghi_CuaHang(cuaHang);
                                     firebase_manager.Up2MatCMND(CMND_truoc,CMND_sau,uuid);
                                     kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);

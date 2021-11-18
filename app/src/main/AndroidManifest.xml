@@ -4,6 +4,7 @@
     package="com.example.cuahangarea_realfood">
 
     <application
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -11,16 +12,25 @@
         android:theme="@style/Theme.CuaHangArea_RealFood"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".screen.BepActivity"
+        <activity android:name=".screen.DanhGiaActivity"
+            android:label="Phản hồi từ khách hàng"
+            android:parentActivityName=".screen.Home"></activity>
+        <activity
+            android:name=".screen.ThongKeActivity"
+            android:label="Thống kê đơn hàng"
+            android:parentActivityName=".screen.Home" />
+        <activity
+            android:name=".screen.BepActivity"
             android:label="Quản lý bếp"
-            android:parentActivityName=".screen.Home" ></activity>
+            android:parentActivityName=".screen.Home" />
         <activity
             android:name=".screen.ThongTinDonHangActivity"
             android:label="Thông tin đơn hàng"
             android:parentActivityName=".screen.DanhSachDonHangActivity" />
-        <activity android:name=".screen.DanhSachDonHangActivity"
+        <activity
+            android:name=".screen.DanhSachDonHangActivity"
             android:label="Danh sách đơn hàng"
-            android:parentActivityName=".screen.Home"/>
+            android:parentActivityName=".screen.Home" />
         <activity
             android:name=".screen.ThongTinMaGiamGiaActivity"
             android:label="Voucher"

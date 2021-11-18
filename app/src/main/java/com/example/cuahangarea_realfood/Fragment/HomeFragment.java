@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.cuahangarea_realfood.screen.DanhGiaActivity;
+import com.example.cuahangarea_realfood.screen.ThongKeActivity;
 import com.example.cuahangarea_realfood.screen.BepActivity;
 import com.example.cuahangarea_realfood.screen.DanhSachDonHangActivity;
 import com.example.cuahangarea_realfood.Firebase_Manager;
@@ -98,6 +100,20 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BepActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.cardViewDoanhThu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ThongKeActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.cardViewPhanHoiKhachHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DanhGiaActivity.class);
                 startActivity(intent);
             }
         });

@@ -8,18 +8,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
-                android:gravity="left"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="left">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -34,10 +35,10 @@
                     android:textSize="15dp" />
 
                 <TextView
-                    android:layout_gravity="center"
                     android:id="@+id/tv_IDDonHang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
 
                     android:text="ID"
@@ -45,21 +46,28 @@
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <TextView
+                    android:layout_weight="1"
                     android:id="@+id/txtTrangThaiDonHang"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="Trạng thái đơn hàng "
                     android:textColor="#4CAF50"
                     android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:singleLine="false"/>
+
                 <TextView
+                    android:layout_weight="1"
                     android:id="@+id/txtTime"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text=""
@@ -70,26 +78,26 @@
         </LinearLayout>
     </LinearLayout>
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rcvItemGiohang"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp" />-->
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/rcvItemGiohang"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="10dp" />-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <TextView
-            android:textStyle="bold"
-            android:fontFamily="sans-serif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
             android:text="Sản Phẩm : "
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,22 +117,23 @@
                 android:textSize="15dp" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <TextView
-            android:textStyle="bold"
-            android:fontFamily="sans-serif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="sans-serif"
             android:text="Tên khách : "
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -133,104 +142,107 @@
             android:orientation="horizontal">
 
             <TextView
-                android:singleLine="false"
                 android:id="@+id/txtTenKhach"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="3dp"
                 android:layout_marginBottom="1dp"
+                android:singleLine="false"
                 android:text="...."
                 android:textColor="@color/black"
                 android:textSize="15dp" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:textStyle="bold"
-            android:fontFamily="sans-serif"
+        android:orientation="horizontal">
 
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_gravity="center"
+            android:fontFamily="sans-serif"
             android:text="Địa chỉ : "
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
             android:orientation="horizontal">
+
             <TextView
-                android:singleLine="false"
                 android:id="@+id/txtDiaChi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="3dp"
                 android:layout_marginBottom="1dp"
+                android:singleLine="false"
                 android:text="...."
                 android:textColor="@color/black"
                 android:textSize="15dp" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:fontFamily="sans-serif"
+        android:orientation="horizontal">
 
-            android:textStyle="bold"
+        <TextView
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="sans-serif"
             android:text="Số điện thoại : "
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
             android:orientation="horizontal">
+
             <TextView
-                android:singleLine="false"
                 android:id="@+id/txtSoDienThoai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="3dp"
                 android:layout_marginBottom="1dp"
+                android:singleLine="false"
                 android:text="...."
                 android:textColor="@color/black"
                 android:textSize="15dp" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
-            android:fontFamily="sans-serif"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="sans-serif"
             android:text="Tổng tiền : "
             android:textColor="@color/black"
             android:textSize="15dp"
@@ -256,43 +268,145 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/lnTTShipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#ACAAAA" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif"
+                android:text="Shipper  "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/txtTenShipper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="1dp"
+                android:singleLine="false"
+                android:text="...."
+                android:textSize="15dp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/txtSoDienThoaiShipper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="1dp"
+                android:singleLine="false"
+                android:text="...."
+                android:textSize="15dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/txtDiaChiShipper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="1dp"
+            android:singleLine="false"
+            android:text="...."
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <android.widget.Button
         android:id="@+id/btnXacNhanCoc"
         style="@style/Button_v2_Green"
         android:text="Xác nhận cọc"
-        android:textSize="16dp" android:visibility="gone"/>
+        android:textSize="16dp"
+        android:visibility="gone" />
+
     <android.widget.Button
         android:id="@+id/btnHuyDonHang"
         style="@style/Button_v2_Red"
         android:text="Hủy đơn hàng"
-        android:textSize="16dp"/>
+        android:textSize="16dp" />
+
     <android.widget.Button
         android:id="@+id/btnXacNhanTraTien"
         style="@style/Button_v2_Green"
-        android:text="Đã nhận tiền hàng"
-        />
+        android:text="Đã nhận tiền hàng" />
+
     <android.widget.Button
         android:id="@+id/btnXacNhanHoanHang"
         style="@style/Button_v2_Green"
-        android:text="Đã nhận lại hàng"
-        />
+        android:text="Đã nhận lại hàng" />
+
     <android.widget.Button
         android:id="@+id/btnHoanTac1"
         style="@style/Button_v2_Blue"
         android:text="Hoàn tác"
         android:textSize="16dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/txtXemChiTiet"
-        android:textColor="#0E8AE4"
-        android:textSize="14dp"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xem chi tiết"/>
+        android:gravity="center"
+        android:text="Xem chi tiết"
+        android:textColor="#0E8AE4"
+        android:textSize="14dp" />
+
+    <LinearLayout
+        android:id="@+id/lnBaoCaoShipper"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/sheildfrontgradient" />
+
+        <TextView
+            android:id="@+id/txtBaoCaoShipper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Report Shipper ?"
+            android:textColor="#DA1D39"
+            android:textSize="14dp" />
+
+    </LinearLayout>
+
     <View
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#ACAAAA"/>
+        android:layout_marginTop="5dp"
+        android:background="#ACAAAA" />
 </LinearLayout>

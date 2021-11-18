@@ -1,5 +1,6 @@
 package com.example.cuahangarea_realfood.screen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -22,7 +23,9 @@ import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.Voucher;
 import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
 import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,8 +42,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 
 public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
-    EditText edtMaGiamGia,edtSoTienGiam,edtGiamTheoPhanTram;
-    TextInputLayout tiplGiamTheoPhanTram,tiplGiamTheoGia;
+    EditText edtMaGiamGia, edtSoTienGiam, edtGiamTheoPhanTram;
+    TextInputLayout tiplGiamTheoPhanTram, tiplGiamTheoGia;
     Spinner spSanPham;
     SingleDateAndTimePicker dateAndTimePicker;
     ArrayAdapter adapter;
@@ -48,9 +51,10 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
     ArrayList<SanPham> dSSanPham = new ArrayList<>();
     Firebase_Manager firebase_manager;
     Button btnLuuMaGiamGia;
-    RadioButton radGiamTheoGia,radGiamTheoPhanTram;
-    Voucher voucher ;
+    RadioButton radGiamTheoGia, radGiamTheoPhanTram;
+    Voucher voucher;
     Validate validate = new Validate();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,28 +70,21 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
             LoadData();
         }
         loadLoaiGiamGia();
-
     }
-
     private void LoadData() {
-
-        if (voucher!=null)
-        {
-            if (voucher.getPhanTramGiam()==0.0)
-            {
+        if (voucher != null) {
+            if (voucher.getPhanTramGiam() == 0.0) {
                 radGiamTheoGia.setChecked(true);
                 loadLoaiGiamGia();
-                edtSoTienGiam.setText(voucher.getGiaGiam()+"");
-            }
-            else {
+                edtSoTienGiam.setText(voucher.getGiaGiam() + "");
+            } else {
                 radGiamTheoPhanTram.setChecked(true);
-                edtGiamTheoPhanTram.setText(voucher.getPhanTramGiam()+"");
+                edtGiamTheoPhanTram.setText(voucher.getPhanTramGiam() + "");
                 loadLoaiGiamGia();
             }
             AtomicInteger positon = new AtomicInteger();
             dSSanPham.forEach(temp -> {
-                if (temp.getIDSanPham().equals(voucher.getSanPham().getIDSanPham()))
-                {
+                if (temp.getIDSanPham().equals(voucher.getSanPham().getIDSanPham())) {
                     spSanPham.setSelected(true);
                     spSanPham.setActivated(true);
                     spSanPham.dispatchSetSelected(true);
@@ -106,14 +103,12 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
     private void loadLoaiGiamGia() {
 
 
-        if (radGiamTheoGia.isChecked())
-        {
+        if (radGiamTheoGia.isChecked()) {
             edtSoTienGiam.setVisibility(View.VISIBLE);
             tiplGiamTheoGia.setVisibility(View.VISIBLE);
             edtGiamTheoPhanTram.setVisibility(View.GONE);
             tiplGiamTheoPhanTram.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             edtSoTienGiam.setVisibility(View.GONE);
             tiplGiamTheoGia.setVisibility(View.GONE);
             edtGiamTheoPhanTram.setVisibility(View.VISIBLE);
@@ -121,6 +116,7 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
 
         }
     }
+
     public void GetSanPham_V2(ArrayList arrayList, ArrayAdapter sanPhamAdapter) {
         firebase_manager.mDatabase.child("SanPham").orderByChild("idcuaHang").equalTo(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -135,102 +131,119 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
                 LoadData();
 
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
+
     private void setEvent() {
 
         adapter = new ArrayAdapter(ThongTinMaGiamGiaActivity.this, android.R.layout.simple_expandable_list_item_1, namesSanPham);
         Date date = dateAndTimePicker.getDate();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = formatter.format(date);
-        GetSanPham_V2((ArrayList) namesSanPham,adapter);
-        spSanPham .setAdapter(adapter);
+        GetSanPham_V2((ArrayList) namesSanPham, adapter);
+        spSanPham.setAdapter(adapter);
         btnLuuMaGiamGia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validate.isBlank(edtMaGiamGia)&&spSanPham.getSelectedItem()!=null)
-                {
+                if (!validate.isBlank(edtMaGiamGia) && spSanPham.getSelectedItem() != null) {
 
-                    Voucher temp = new Voucher() ;
-                    if (radGiamTheoGia.isChecked())
-                    {
-                        if (!validate.isBlank(edtSoTienGiam)&&validate.isNumber(edtSoTienGiam)&&spSanPham.getSelectedItem()!=null)
-                        {
-
-                            double tien = Double.parseDouble(edtSoTienGiam.getText().toString()+"");
-                            if (tien>0&&tien<Double.parseDouble(dSSanPham.get(spSanPham.getSelectedItemPosition()).getGia())) {
-
-                                KAlertDialog kAlertDialog = new KAlertDialog(ThongTinMaGiamGiaActivity.this,KAlertDialog.PROGRESS_TYPE);
-                                kAlertDialog.setContentText("Loading");
-                                kAlertDialog.show();
-                                String uuid;
-                                if (voucher ==null)
+                    firebase_manager.mDatabase.child("Voucher").orderByChild("idCuaHang").equalTo(dSSanPham.get(spSanPham.getSelectedItemPosition()).getIDCuaHang()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            boolean checkExistVoucher = true;
+                            ArrayList<Voucher> vouchers = new ArrayList<>();
+                            for (DataSnapshot snapshot : task.getResult().getChildren()) {
+                                Voucher temp = snapshot.getValue(Voucher.class);
+                                vouchers.add(temp);
+                                if (temp.getSanPham().getIDSanPham().equals(dSSanPham.get(spSanPham.getSelectedItemPosition()).getIDSanPham()))
                                 {
-                                    uuid  = UUID.randomUUID().toString().replace("-", "");
+                                    checkExistVoucher = false;
+                                    Toast.makeText(ThongTinMaGiamGiaActivity.this, "Sản phẩm đã tồn tại mã giảm giá", Toast.LENGTH_SHORT).show();
+                                    break;
                                 }
-                                else {
-                                    uuid = voucher.getIdMaGiamGia();
+                                if (temp.getMaGiamGia().equals(edtMaGiamGia.getText().toString()))
+                                {
+                                    checkExistVoucher = false;
+                                    Toast.makeText(ThongTinMaGiamGiaActivity.this, "Mã giảm giá đã tồn tại", Toast.LENGTH_SHORT).show();
+                                    break;
                                 }
-                                temp = new Voucher(uuid
-                                        , edtMaGiamGia.getText().toString(), dSSanPham.get(spSanPham.getSelectedItemPosition()), Integer.parseInt(edtSoTienGiam.getText().toString() + "")
-                                        , 0, new Date(), dateAndTimePicker.getDate());
-
-                                firebase_manager.Ghi_Voucher(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
-                                        kAlertDialog.setContentText("Lưu mã giảm giá thành công!");
-                                        kAlertDialog.showConfirmButton(false);
-                                    }
-                                });
-                                voucher = temp;
                             }
-                            else {
-                                edtGiamTheoPhanTram.setError("Số tiền không hợp lệ");
-                            }
-                        }
-                    }
-                    else {
-                        if (!validate.isBlank(edtGiamTheoPhanTram)&&validate.isNumber(edtGiamTheoPhanTram))
-                        {
-                            double phanTram = Double.parseDouble(edtGiamTheoPhanTram.getText().toString()+"");
-                            if (phanTram<100.0&&phanTram>0)
+                            if (checkExistVoucher == true)
                             {
-                                KAlertDialog kAlertDialog = new KAlertDialog(ThongTinMaGiamGiaActivity.this,KAlertDialog.PROGRESS_TYPE);
-                                kAlertDialog.setContentText("Loading");
-                                kAlertDialog.show();
-                                String uuid;
-                                if (voucher ==null)
-                                {
-                                    uuid  = UUID.randomUUID().toString().replace("-", "");
-                                }
-                                else {
-                                    uuid = voucher.getIdMaGiamGia();
-                                }
+                                Voucher temp = new Voucher();
+                                if (radGiamTheoGia.isChecked()) {
+                                    if (!validate.isBlank(edtSoTienGiam) && validate.isNumber(edtSoTienGiam) && spSanPham.getSelectedItem() != null) {
 
-                                temp = new Voucher(uuid
-                                        ,edtMaGiamGia.getText().toString(),dSSanPham.get(spSanPham.getSelectedItemPosition()),0
-                                        ,Integer.parseInt(edtGiamTheoPhanTram.getText().toString()+""),new Date(),dateAndTimePicker.getDate());
+                                        double tien = Double.parseDouble(edtSoTienGiam.getText().toString() + "");
+                                        if (tien > 0 && tien < Double.parseDouble(dSSanPham.get(spSanPham.getSelectedItemPosition()).getGia())) {
+                                            KAlertDialog kAlertDialog = new KAlertDialog(ThongTinMaGiamGiaActivity.this, KAlertDialog.PROGRESS_TYPE);
+                                            kAlertDialog.setContentText("Loading");
+                                            kAlertDialog.show();
+                                            String uuid;
+                                            if (voucher == null) {
+                                                uuid = UUID.randomUUID().toString().replace("-", "");
+                                            } else {
+                                                uuid = voucher.getIdMaGiamGia();
+                                            }
+                                            temp = new Voucher(uuid
+                                                    , dSSanPham.get(spSanPham.getSelectedItemPosition()).getIDCuaHang(), edtMaGiamGia.getText().toString(), dSSanPham.get(spSanPham.getSelectedItemPosition()), Integer.parseInt(edtSoTienGiam.getText().toString() + "")
+                                                    , 0, new Date(), dateAndTimePicker.getDate());
 
-                                firebase_manager.Ghi_Voucher(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
-                                        kAlertDialog.setContentText("Lưu mã giảm giá thành công!");
-                                        kAlertDialog.showConfirmButton(false);
+                                            firebase_manager.Ghi_Voucher(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
+                                                    kAlertDialog.setContentText("Lưu mã giảm giá thành công!");
+                                                    kAlertDialog.showConfirmButton(false);
+                                                }
+                                            });
+                                            voucher = temp;
+                                        } else {
+                                            edtSoTienGiam.setError("Số tiền không hợp lệ");
+                                        }
                                     }
-                                });
-                                voucher = temp;
+                                } else {
+                                    if (!validate.isBlank(edtGiamTheoPhanTram) && validate.isNumber(edtGiamTheoPhanTram)) {
+                                        double phanTram = Double.parseDouble(edtGiamTheoPhanTram.getText().toString() + "");
+                                        if (phanTram < 100.0 && phanTram > 0) {
+                                            KAlertDialog kAlertDialog = new KAlertDialog(ThongTinMaGiamGiaActivity.this, KAlertDialog.PROGRESS_TYPE);
+                                            kAlertDialog.setContentText("Loading");
+                                            kAlertDialog.show();
+                                            String uuid;
+                                            if (voucher == null) {
+                                                uuid = UUID.randomUUID().toString().replace("-", "");
+                                            } else {
+                                                uuid = voucher.getIdMaGiamGia();
+                                            }
 
+                                            temp = new Voucher(uuid
+                                                    , dSSanPham.get(spSanPham.getSelectedItemPosition()).getIDCuaHang(), edtMaGiamGia.getText().toString(), dSSanPham.get(spSanPham.getSelectedItemPosition()), 0
+                                                    , Integer.parseInt(edtGiamTheoPhanTram.getText().toString() + ""), new Date(), dateAndTimePicker.getDate());
+
+                                            firebase_manager.Ghi_Voucher(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
+                                                    kAlertDialog.setContentText("Lưu mã giảm giá thành công!");
+                                                    kAlertDialog.showConfirmButton(false);
+                                                }
+                                            });
+                                            voucher = temp;
+
+                                        } else {
+                                            edtGiamTheoPhanTram.setError("Số % không hợp lệ");
+                                        }
+                                    }
+                                }
                             }
-                           else {
-                                edtGiamTheoPhanTram.setError("Số % không hợp lệ");
-                            }
+
                         }
-                    }
+                    });
+
 
                 }
 
@@ -256,7 +269,7 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
         edtSoTienGiam = findViewById(R.id.edtSoTienGiam);
         spSanPham = findViewById(R.id.spDSsanPham);
         dateAndTimePicker = findViewById(R.id.single_day_picker);
-        btnLuuMaGiamGia= findViewById(R.id.btnLuuMaGiamGia);
+        btnLuuMaGiamGia = findViewById(R.id.btnLuuMaGiamGia);
         radGiamTheoGia = findViewById(R.id.radGiamTheoGia);
         radGiamTheoPhanTram = findViewById(R.id.radGiamTheoPhanTram);
         tiplGiamTheoGia = findViewById(R.id.tiplGiamTheoGia);

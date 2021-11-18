@@ -80,7 +80,6 @@ public class MaGiamGiaAdapter extends RecyclerView.Adapter<MaGiamGiaAdapter.MyVi
                 SanPham sanPham = snapshot.getValue(SanPham.class);
                 holder.txtTenSanPham.setText(sanPham.getTenSanPham());
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

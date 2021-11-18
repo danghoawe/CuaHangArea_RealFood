@@ -62,8 +62,8 @@
                         android:layout_height="120dp"
                         android:layout_gravity="center"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/baseline_image_black_48dp"
-                        app:civ_border_color="#852F28"
+                        android:src="@drawable/picturefrontpremium"
+                        app:civ_border_color="@color/transparent"
                         app:civ_border_width="2dp" />
                     <ProgressBar
                         android:id="@+id/progessbarAvatar"
@@ -80,18 +80,18 @@
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="25dp"
                     android:layout_marginBottom="6dp"
-                    android:text="Bánh mì Pewpew"
+                    android:text="___________"
                     android:textStyle="bold" />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/btnEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="bottom"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginBottom="15dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/baseline_border_color_black_24dp" />
+                    android:src="@drawable/pencilfrontcolor" />
 
             </LinearLayout>
 
@@ -222,7 +222,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="100dp"
-                            android:src="@drawable/danhgia_icon" />
+                            android:src="@drawable/starfrontpremium" />
 
                         <TextView
                             style="@style/Title_V2"
@@ -285,7 +285,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="100dp"
-                            android:src="@drawable/thongke_icon" />
+                            android:src="@drawable/moneyicon" />
 
                         <TextView
                             style="@style/Title_V2"

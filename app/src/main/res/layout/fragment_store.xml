@@ -66,17 +66,10 @@
                             android:layout_height="120dp"
                             android:layout_gravity="center"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/baseline_image_black_48dp"
-                            app:civ_border_color="#852F28"
+                            android:src="@drawable/picturefrontpremium"
+                            app:civ_border_color="@color/transparent"
                             app:civ_border_width="2dp" />
 
-                        <ImageButton
-                            android:id="@+id/btnEditAvatar"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_gravity="bottom"
-                            android:background="@color/transparent"
-                            android:src="@drawable/ic_baseline_edit_24" />
                         <ProgressBar
                             android:id="@+id/progessbarAvatar"
                             android:layout_width="match_parent"
@@ -92,7 +85,7 @@
                         android:layout_gravity="bottom"
                         android:layout_marginLeft="6dp"
                         android:layout_marginBottom="7dp"
-                        android:text="Bánh mì Pewpew"
+                        android:text=""
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -128,7 +121,7 @@
                         android:id="@+id/txtThoiGianHoatDong"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cả ngày"
+                        android:text=""
                         android:textSize="16dp" />
                 </LinearLayout>
                 <LinearLayout
@@ -148,7 +141,7 @@
                         android:id="@+id/txtSoDT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số Điện Thoại"
+                        android:text=""
                         android:textSize="16dp" />
                 </LinearLayout>
 
@@ -169,7 +162,7 @@
                         android:id="@+id/txtChuSoHu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chủ sở hữu"
+                        android:text=""
                         android:textSize="16dp" />
                 </LinearLayout>
                 <LinearLayout
@@ -189,7 +182,7 @@
                         android:id="@+id/txtSoCMND"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số CMND"
+                        android:text=""
                         android:textSize="16dp" />
                 </LinearLayout>
 
@@ -204,13 +197,14 @@
                         android:layout_height="wrap_content"
                         android:text="Email :"
                         android:textSize="16dp" />
+
                     <TextView
-                        android:layout_weight="1"
-                        style="@style/Title_Label_Normal"
                         android:id="@+id/txtEmail"
+                        style="@style/Title_Label_Normal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số Điện Thoại"
+                        android:layout_weight="1"
+                        android:text=""
                         android:textSize="16dp" />
                 </LinearLayout>
                 <LinearLayout
@@ -230,7 +224,7 @@
                         android:id="@+id/txtDiaChi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số Điện Thoại"
+                        android:text=""
                         android:textSize="16dp" />
                 </LinearLayout>
 
@@ -243,15 +237,16 @@
                         style="@style/Title_Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số Điện Thoại :"
+                        android:text="Thông tin chi tiết :"
                         android:textSize="16dp" />
+
                     <TextView
-                        android:layout_weight="1"
-                        style="@style/Title_Label_Normal"
                         android:id="@+id/txtThongTinChiTiet"
+                        style="@style/Title_Label_Normal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số Điện Thoại"
+                        android:layout_weight="1"
+                        android:text=""
                         android:textSize="16dp" />
                 </LinearLayout>
 

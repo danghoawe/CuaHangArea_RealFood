@@ -150,9 +150,15 @@ public class ShipperAdapter extends ArrayAdapter implements ISpinnerSelectedView
         firebase_manager.storageRef.child("Shipper").child(shipper.getiDShipper()).child("avatar").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull  Task<Uri> task) {
-                Glide.with(context)
-                        .load(task.getResult())
-                        .into(imgAvata);
+                try {
+                    Glide.with(context)
+                            .load(task.getResult())
+                            .into(imgAvata);
+                }catch (Exception e)
+                {
+                    Log.d("Image: ","Not found");
+                }
+
             }
         });
         return convertView;

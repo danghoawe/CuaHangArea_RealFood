@@ -84,6 +84,9 @@ public class BepActivity extends AppCompatActivity {
                         case 4 :
                             donHang_bepAdapter.getFilter().filter(TrangThaiDonHang.SHOP_DangGiaoShipper.toString());
                             break;
+                        case 5 :
+                            donHang_bepAdapter.getFilter().filter(TrangThaiDonHang.SHOP_ChoShipperLayHang.toString());
+                            break;
                     }
             }
 

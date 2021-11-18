@@ -82,11 +82,15 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHo
                     getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Glide.with(context)
-                            .load(uri.toString())
-                            .into(holder.imageView);
-                    holder.progressBar.setVisibility(View.GONE);
-                    Log.d("link",uri.toString());
+                    try {
+                        Glide.with(context)
+                                .load(uri.toString())
+                                .into(holder.imageView);
+                        holder.progressBar.setVisibility(View.GONE);
+                    }catch (Exception e)
+                    {
+                        Log.d("link",uri.toString());
+                    }
                 }
             });
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {

@@ -58,8 +58,8 @@
                             android:layout_height="120dp"
                             android:layout_gravity="center"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/baseline_image_black_48dp"
-                            app:civ_border_color="#852F28"
+                            android:src="@drawable/picturefrontpremium"
+                            app:civ_border_color="@color/transparent"
                             app:civ_border_width="2dp" />
                         <ImageButton
 
@@ -77,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:layout_marginLeft="6dp"
-                        android:text="Bánh mì Pewpew"
+                        android:text=""
                         android:textStyle="bold" />
                 </LinearLayout>
                 <View

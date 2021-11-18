@@ -5,8 +5,15 @@ import java.util.ArrayList;
 public class SanPham {
     String IDSanPham, TenSanPham, IDLoai, IDDanhMuc, Gia, ChiTietSanPham, IDCuaHang,size;
     Float Rating;
+    int SoLuongBanDuoc;
 
+    public int getSoLuongBanDuoc() {
+        return SoLuongBanDuoc;
+    }
 
+    public void setSoLuongBanDuoc(int soLuongBanDuoc) {
+        SoLuongBanDuoc = soLuongBanDuoc;
+    }
 
     ArrayList<String> images;
 

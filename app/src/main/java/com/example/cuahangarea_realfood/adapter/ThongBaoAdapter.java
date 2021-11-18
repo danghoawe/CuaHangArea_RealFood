@@ -75,17 +75,21 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
         {
             holder.linearLayout.setBackgroundColor(Color.WHITE);
         }
-       firebase_manager.storageRef.child(thongBao.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Log.d("link",uri.toString());
-                Glide.with(context)
-                        .load(uri.toString())
-                        .into(holder.imageView);
-                holder.progressBar.setVisibility(View.GONE);
+        if (!thongBao.getImage().isEmpty())
+        {
+            firebase_manager.storageRef.child(thongBao.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Log.d("link",uri.toString());
+                    Glide.with(context)
+                            .load(uri.toString())
+                            .into(holder.imageView);
+                    holder.progressBar.setVisibility(View.GONE);
 
-            }
-        });
+                }
+            });
+        }
+
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
         String strDate= formatter.format(thongBao.getDate());
         holder.txtThoiGian.setText(strDate);

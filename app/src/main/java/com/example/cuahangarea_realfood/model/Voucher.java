@@ -3,13 +3,14 @@ package com.example.cuahangarea_realfood.model;
 import java.util.Date;
 
 public class Voucher {
-    String idMaGiamGia,maGiamGia;
+    String idMaGiamGia,idCuaHang,maGiamGia;
     SanPham sanPham;
     int giaGiam,phanTramGiam;
     Date ngayTao,hanSuDung;
 
-    public Voucher(String idMaGiamGia, String maGiamGia, SanPham sanPham, int giaGiam, int phanTramGiam, Date ngayTao, Date hanSuDung) {
+    public Voucher(String idMaGiamGia, String idCuaHang, String maGiamGia, SanPham sanPham, int giaGiam, int phanTramGiam, Date ngayTao, Date hanSuDung) {
         this.idMaGiamGia = idMaGiamGia;
+        this.idCuaHang = idCuaHang;
         this.maGiamGia = maGiamGia;
         this.sanPham = sanPham;
         this.giaGiam = giaGiam;
@@ -27,6 +28,14 @@ public class Voucher {
 
     public void setIdMaGiamGia(String idMaGiamGia) {
         this.idMaGiamGia = idMaGiamGia;
+    }
+
+    public String getIdCuaHang() {
+        return idCuaHang;
+    }
+
+    public void setIdCuaHang(String idCuaHang) {
+        this.idCuaHang = idCuaHang;
     }
 
     public String getMaGiamGia() {

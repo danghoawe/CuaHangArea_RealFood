@@ -59,7 +59,7 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
                             , binding.edtHotenChu.getText().toString(), binding.edtThongTinChiTiet.getText().toString()
                             , binding.edtSoCMND.getText().toString(), binding.edtSoDT.getText().toString()
                             , "", "", cuaHang.getRating(), binding.edtEmail.getText().toString()
-                            , cuaHang.getTrangThaiCuaHang(),binding.edtDiaChi.getText().toString(),binding.dtpGioBatDau.getDate(),binding.dtpGioKetThuc.getDate());
+                            , cuaHang.getTrangThaiCuaHang(),binding.edtDiaChi.getText().toString(),binding.dtpGioBatDau.getDate(),binding.dtpGioKetThuc.getDate(),cuaHang.getCreatedDate());
                     cuaHang = temp;
                     CapNhatCuaHang(cuaHang);
                     if (uriAvatar!=null)

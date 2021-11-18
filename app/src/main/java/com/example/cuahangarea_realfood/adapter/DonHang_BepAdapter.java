@@ -94,7 +94,7 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
         }
         DonHang donHang = arrayList.get(position);
         holder.txtID.setText(donHang.getIDDonHang().substring(0, 9));
-        holder.txtTrangThaiDonHang.setText(donHang.getTrangThai().toString());
+        holder.txtTrangThaiDonHang.setText(firebase_manager.GetStringTrangThaiDonHang(donHang.getTrangThai()));
         holder.txtTongTien.setText(donHang.getTongTien() + "");
         holder.txtDiaChi.setText(donHang.getDiaChi() + "");
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
@@ -188,7 +188,6 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
                                 .setTitleText("Thông báo")
                                 .setText("Vui lòng nhập lí do hủy đơn")
                                 .setHint("Please enter text")
-                                .privateEditText()
                                 .setAnimation(Animations.GROW_IN)
                                 .positiveText("Hủy đơn")
                                 .negativeText("Quay lại")
@@ -255,6 +254,7 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
                 });
             }
         });
+
     }
 
     private void LoadButton(MyViewHolder holder, TrangThaiDonHang trangThai) {
@@ -328,14 +328,12 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String strSearch = constraint.toString();
-                Toast.makeText(context, strSearch, Toast.LENGTH_SHORT).show();
                 ArrayList<DonHang> list = new ArrayList<>();
                 if (strSearch.isEmpty()) {
                     list = source;
                 } else {
                     for (DonHang donHang : source) {
                         //Thêm cái địa chỉ vs SDT vào đây
-                        Toast.makeText(context, donHang.getTrangThai().toString(), Toast.LENGTH_SHORT).show();
                         if (donHang.getIDDonHang().contains(strSearch)||
                                 donHang.getTrangThai().toString().equals(strSearch)||
                                 donHang.getIDDonHang().contains(strSearch)||

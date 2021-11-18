@@ -20,6 +20,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+
 
 public class StoreFragment extends Fragment {
 
@@ -58,7 +60,16 @@ public class StoreFragment extends Fragment {
         firebase_manager. mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 CuaHang temp = dataSnapshot.getValue(CuaHang.class);
+                SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
+                if (temp.getTimeStart()!=null&&temp.getTimeEnd()!=null){
+                    String strTimeStart= formatter.format(temp.getTimeStart());
+                    String strTimeEnd= formatter.format(temp.getTimeEnd());
+                    binding.txtThoiGianHoatDong.setText(strTimeStart + " đến " +strTimeEnd );
+                }
+
+
                 binding.txtDiaChi.setText( temp.getDiaChi());
                 binding.txtTenCuaHang.setText(temp.getTenCuaHang());
                 binding.txtEmail.setText(temp.getEmail());
@@ -68,6 +79,7 @@ public class StoreFragment extends Fragment {
                 binding.txtThongTinChiTiet.setText(temp.getThongTinChiTiet());
                 binding.progessbar.setVisibility(View.GONE);
                 binding.lnLayout.setVisibility(View.VISIBLE);
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

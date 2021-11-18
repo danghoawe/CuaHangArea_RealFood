@@ -23,7 +23,7 @@ public class CuaHang {
     public CuaHang() {
     }
 
-    public CuaHang(String IDCuaHang, String tenCuaHang, String chuSoHuu, String thongTinChiTiet, String soCMND, String soDienThoai, String avatar, String wallPaper, Float rating, String email, TrangThaiCuaHang trangThaiCuaHang, String diaChi, Date timeStart, Date timeEnd) {
+    public CuaHang(String IDCuaHang, String tenCuaHang, String chuSoHuu, String thongTinChiTiet, String soCMND, String soDienThoai, String avatar, String wallPaper, Float rating, String email, TrangThaiCuaHang trangThaiCuaHang, String diaChi, Date timeStart, Date timeEnd,Date createdDate) {
         this.IDCuaHang = IDCuaHang;
         TenCuaHang = tenCuaHang;
         ChuSoHuu = chuSoHuu;
@@ -38,7 +38,7 @@ public class CuaHang {
         DiaChi = diaChi;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
-        this.createdDate = new Date();
+        this.createdDate = createdDate;
 
     }
 

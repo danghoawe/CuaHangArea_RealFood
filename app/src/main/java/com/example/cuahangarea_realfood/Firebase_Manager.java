@@ -1,24 +1,35 @@
 package com.example.cuahangarea_realfood;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
+import com.example.cuahangarea_realfood.adapter.DanhGiaSanPhamAdapter;
 import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHangAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHang_BepAdapter;
 import com.example.cuahangarea_realfood.adapter.MaGiamGiaAdapter;
 import com.example.cuahangarea_realfood.adapter.SanPhamAdapter;
 import com.example.cuahangarea_realfood.model.CuaHang;
+import com.example.cuahangarea_realfood.model.DanhGia;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.DonHang;
+import com.example.cuahangarea_realfood.model.KhachHang;
+import com.example.cuahangarea_realfood.model.LoaiSanPham;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.TaiKhoanNganHang;
 import com.example.cuahangarea_realfood.model.ThongBao;
 import com.example.cuahangarea_realfood.model.Voucher;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -72,6 +83,24 @@ public class Firebase_Manager {
     }
 
     public void GetSanPham(ArrayList arrayList, SanPhamAdapter sanPhamAdapter) {
+        mDatabase.child("Voucher").orderByChild("idcuaHang").equalTo(auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    SanPham sanPham = postSnapshot.getValue(SanPham.class);
+                    arrayList.add(sanPham);
+                    if (sanPhamAdapter!=null)
+                    {
+                        sanPhamAdapter.notifyDataSetChanged();
+
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
         mDatabase.child("SanPham").orderByChild("idcuaHang").equalTo(auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -88,6 +117,70 @@ public class Firebase_Manager {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+    public void LayTenLoai(SanPham sanPham, TextView tvTenLoai) {
+        mDatabase.child("LoaiSanPham").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    LoaiSanPham loaiSanPham = dataSnapshot.getValue(LoaiSanPham.class);
+                    if (loaiSanPham.getiDLoai().equals(sanPham.getIDLoai())) {
+                        tvTenLoai.setText(loaiSanPham.getTenLoai());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void LoadImageFood(SanPham sanPham, Context context, ImageView ivFood) {
+        storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).child(sanPham.getImages().get(0)).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                Glide.with(context)
+                        .load(task.getResult().toString())
+                        .into(ivFood);
+            }
+        });
+    }
+    public void LoadImageLoai(LoaiSanPham loaiSanPham, Context context, ImageView ivLoai) {
+        storageRef.child("LoaiSanPham").child(loaiSanPham.getiDLoai()).child("Loại sản phẩm").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri).into(ivLoai);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("", e.getMessage());
+            }
+        });
+    }
+    public void LoadImageKhachHang(Context context,ImageView civAvatar){
+        storageRef.child("KhachHang").child(auth.getUid()).child("AvatarKhachHang").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri.toString()).into(civAvatar);
+            }
+        });
+    }
+
+    public void LoadTenKhachHang(TextView tvHoTen) {
+        mDatabase.child("KhachHang").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                KhachHang khachHang = snapshot.getValue(KhachHang.class);
+                tvHoTen.setText(khachHang.getTenKhachHang());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -113,6 +206,30 @@ public class Firebase_Manager {
                         return o2.getNgayTao().compareTo(o1.getNgayTao());
                     }
                 });
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+    public void GetPhanHoi(ArrayList arrayList, DanhGiaSanPhamAdapter danhGiaSanPhamAdapter) {
+        mDatabase.child("DanhGia").orderByChild("idcuaHang").equalTo(auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    DanhGia danhGia = postSnapshot.getValue(DanhGia.class);
+                    arrayList.add(danhGia);
+                    Log.d("Tag",arrayList.size()+"");
+
+                }
+                Collections.sort(arrayList, new Comparator<DanhGia>() {
+                    @Override
+                    public int compare(DanhGia o1, DanhGia o2) {
+                        return o2.getNgayDanhGia().compareTo(o1.getNgayDanhGia());
+                    }
+                });
+                danhGiaSanPhamAdapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -151,6 +268,7 @@ public class Firebase_Manager {
                         return o2.getNgayTao().compareTo(o1.getNgayTao());
                     }
                 });
+                donHangAdapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -361,7 +479,45 @@ public class Firebase_Manager {
         if (trangThaiDonHang == TrangThaiDonHang.Shipper_DangGiaoHang)
         {
             res ="Shipper đang giao hàng";
+        }if (trangThaiDonHang == TrangThaiDonHang.Shipper_GiaoThanhCong)
+        {
+            res ="Shipper giao hàng thành công";
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.KhachHang_HuyDon)
+        {
+            res ="Khách hàng hủy đơn hàng";
+        }if (trangThaiDonHang == TrangThaiDonHang.Bep_DaHuyDonHang)
+        {
+            res ="Bếp đã hủy đơn";
         }
         return res;
+    }
+    public void SetColor(TrangThaiDonHang trangThaiDonHang, TextView textView){
+
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_HuyDonHang||trangThaiDonHang == TrangThaiDonHang.Shipper_DaTraHang||
+                trangThaiDonHang == TrangThaiDonHang.Shipper_GiaoKhongThanhCong)
+        {
+           textView.setTextColor(Color.RED);
+        }
+
+
+        if (trangThaiDonHang == TrangThaiDonHang.SHOP_DangChuanBihang||trangThaiDonHang == TrangThaiDonHang.SHOP_DaChuanBiXong
+        ||trangThaiDonHang == TrangThaiDonHang.SHOP_DangGiaoShipper||trangThaiDonHang == TrangThaiDonHang.SHOP_ChoShipperLayHang
+        ||trangThaiDonHang == TrangThaiDonHang.SHOP_ChoXacNhanGiaoHangChoShipper||trangThaiDonHang == TrangThaiDonHang.ChoShopXacNhan_Tien
+        ||trangThaiDonHang == TrangThaiDonHang.ChoShopXacNhan_TraHang||trangThaiDonHang == TrangThaiDonHang.Shipper_DaLayHang
+        ||trangThaiDonHang == TrangThaiDonHang.Shipper_KhongNhanGiaoHang||trangThaiDonHang == TrangThaiDonHang.Shipper_DangGiaoHang||trangThaiDonHang == TrangThaiDonHang.Shipper_KhongNhanGiaoHang)
+        {
+            textView.setTextColor(Color.parseColor("#FFFFC107"));
+
+        }
+        if (trangThaiDonHang == TrangThaiDonHang.Shipper_GiaoThanhCong||trangThaiDonHang == TrangThaiDonHang.ChoShopXacNhan_Tien||trangThaiDonHang == TrangThaiDonHang.Shipper_DaChuyenTien)
+        {
+            textView.setTextColor(Color.BLUE);
+
+        }
+
+
+
+
     }
 }
