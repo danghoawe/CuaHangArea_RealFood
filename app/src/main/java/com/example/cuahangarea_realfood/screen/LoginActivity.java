@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                                             if (temp.getTrangThaiCuaHang()== TrangThaiCuaHang.ChuaKichHoat)
                                             {
                                                 kAlertDialog.setTitleText("Thông báo");
-                                                kAlertDialog.setContentText("Vui lòng chuyển 20.000đ phí duy trì . Đến số tài khoản 123467088\nNH: Agribank \nChủ tài khoản: Admin để kích hoạt tài khoản");
+                                                kAlertDialog.setContentText("Vui lòng đợi Admin xét duyệt và kích hoạt tài khoản trong vòng 24h!");
                                                 kAlertDialog.changeAlertType(KAlertDialog.WARNING_TYPE);
                                                 firebase_manager.auth.signOut();
                                             }

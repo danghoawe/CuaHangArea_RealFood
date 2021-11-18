@@ -49,6 +49,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
     }
 
     Firebase_Manager firebase_manager = new Firebase_Manager();
+
     public ThongBaoAdapter(Activity context, int resource, ArrayList<ThongBao> arrayList) {
         this.context = context;
         this.resource = resource;
@@ -70,34 +71,29 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
 
         holder.txtTieuDe.setText(thongBao.getTieuDe());
         holder.txtNoiDung.setText(thongBao.getNoiDung());
-        Log.d("Noti",thongBao.getNoiDung());
-        if (thongBao.getTrangThaiThongBao()== TrangThaiThongBao.DaXem)
-        {
+        Log.d("Noti", thongBao.getNoiDung());
+        if (thongBao.getTrangThaiThongBao() == TrangThaiThongBao.DaXem) {
             holder.linearLayout.setBackgroundColor(Color.WHITE);
         }
-        if (!thongBao.getImage().isEmpty())
-        {
-            firebase_manager.storageRef.child(thongBao.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Log.d("link",uri.toString());
-                    Glide.with(context)
-                            .load(uri.toString())
-                            .into(holder.imageView);
-                    holder.progressBar.setVisibility(View.GONE);
+        if (!thongBao.getImage().isEmpty()) {
+            Glide.with(context)
+                    .load(thongBao.getImage())
+                    .into(holder.imageView);
+            holder.progressBar.setVisibility(View.GONE);
+        }
+        else {
+            holder.imageView.setImageResource(R.drawable.tickfrontcolor);
+            holder.progressBar.setVisibility(View.GONE);
 
-                }
-            });
         }
 
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
-        String strDate= formatter.format(thongBao.getDate());
+        String strDate = formatter.format(thongBao.getDate());
         holder.txtThoiGian.setText(strDate);
         Date now = new Date();
-        if (thongBao.getDate().getDate()== now.getDate())
-        {
+        if (thongBao.getDate().getDate() == now.getDate()) {
             SimpleDateFormat formatters = new SimpleDateFormat("hh:mm");
-            String strDates= formatters.format(thongBao.getDate());
+            String strDates = formatters.format(thongBao.getDate());
             holder.txtThoiGian.setText(strDates);
         }
 
@@ -118,7 +114,8 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
 //        }
         return resource;
     }
-//    public  String Time(Date dateStart,Date dateStop){
+
+    //    public  String Time(Date dateStart,Date dateStop){
 //
 ////HH converts hour in 24 hours format (0-23), day calculation
 //        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -159,6 +156,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
         TextView txtThoiGian;
         LinearLayout linearLayout;
         ProgressBar progressBar;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_noti);

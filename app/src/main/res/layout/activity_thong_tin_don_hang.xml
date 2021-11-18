@@ -30,19 +30,32 @@
                    android:gravity="left"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content">
-
-                   <TextView
+                   <LinearLayout
+                       android:id="@+id/lnNew"
                        android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginLeft="5dp"
-
-                       android:background="#DF3E21"
-                       android:gravity="center"
-                       android:padding="3dp"
-                       android:text="  Mới   "
-                       android:textColor="@color/white"
-                       android:textSize="15dp" />
-
+                       android:layout_height="wrap_content">
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="30dp"
+                           android:src="@drawable/targetfrontcolor"
+                           />
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="5dp"
+                           android:background="#DF3E21"
+                           android:gravity="center"
+                           android:padding="3dp"
+                           android:text="  Mới   "
+                           android:textColor="@color/white"
+                           android:textSize="15dp" />
+                   </LinearLayout>
+                   <ImageView
+                       android:id="@+id/imgTick"
+                       android:layout_width="40dp"
+                       android:layout_height="30dp"
+                       android:src="@drawable/tickfrontgradient"
+                       />
                    <TextView
                        android:layout_gravity="center"
                        android:id="@+id/tv_IDDonHang"

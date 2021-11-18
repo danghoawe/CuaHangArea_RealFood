@@ -41,6 +41,16 @@ public class DanhGiaSanPhamAdapter extends RecyclerView.Adapter<DanhGiaSanPhamAd
     Activity context;
     int resource;
     ArrayList<DanhGia> danhGias;
+
+    public ArrayList<DanhGia> getDanhGias() {
+        return danhGias;
+    }
+
+    public void setDanhGias(ArrayList<DanhGia> danhGias) {
+        this.danhGias = danhGias;
+        notifyDataSetChanged();
+    }
+
     Firebase_Manager firebase_manager = new Firebase_Manager();
     Validate validate = new Validate();
     public DanhGiaSanPhamAdapter(Activity context, int resource, ArrayList<DanhGia> danhGias) {

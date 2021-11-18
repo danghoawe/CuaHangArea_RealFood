@@ -74,7 +74,7 @@ public class DangKyActivity extends AppCompatActivity {
                                     firebase_manager.Up2MatCMND(CMND_truoc,CMND_sau,uuid);
                                     kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
                                     kAlertDialog.setTitleText("Đăng ký tài khỏan thành công ");
-                                    kAlertDialog.setContentText("Vui lòng chuyển 20.000đ phí duy trì . Đến số tài khoản 123467088\nNH: Agribank \nChủ tài khoản: Admin");
+                                    kAlertDialog.setContentText("Vui lòng đợi Admin xét duyệt và kích hoạt tài khoản trong vòng 24h!");
 //                                    Dialog a = new NordanAlertDialog.Builder(DangKyActivity.this)
 //                                            .setAnimation(Animation.SIDE)
 //                                            .isCancellable(false)

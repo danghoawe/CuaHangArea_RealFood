@@ -316,12 +316,17 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
 
     private void LoadButton( TrangThaiDonHang trangThai) {
         Toast.makeText(this, trangThai+"", Toast.LENGTH_SHORT).show();
-        if (trangThai.equals(TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien)) {
+        if (trangThai == TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien) {
             binding.btnXacNhanCoc.setVisibility(View.VISIBLE);
             binding.btnHuyDonHang.setVisibility(View.VISIBLE);
+            binding.lnNew.setVisibility(View.VISIBLE);
+            binding.imgTick.setVisibility(View.GONE);
+
         } else {
             binding.btnXacNhanCoc.setVisibility(View.GONE);
             binding.btnHuyDonHang.setVisibility(View.GONE);
+            binding.lnNew.setVisibility(View.GONE);
+            binding.imgTick.setVisibility(View.VISIBLE);
         }
         if (trangThai.equals(TrangThaiDonHang.SHOP_DangChuanBihang) ) {
             binding.btnHoanTac1.setVisibility(View.VISIBLE);

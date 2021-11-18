@@ -77,8 +77,11 @@ public class MaGiamGiaAdapter extends RecyclerView.Adapter<MaGiamGiaAdapter.MyVi
         firebase_manager.mDatabase.child("SanPham").child(voucher.getSanPham().getIDSanPham()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull  DataSnapshot snapshot) {
-                SanPham sanPham = snapshot.getValue(SanPham.class);
-                holder.txtTenSanPham.setText(sanPham.getTenSanPham());
+                if (snapshot.exists())
+                {
+                    SanPham sanPham = snapshot.getValue(SanPham.class);
+                    holder.txtTenSanPham.setText(sanPham.getTenSanPham());
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

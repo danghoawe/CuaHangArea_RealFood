@@ -181,6 +181,10 @@ public class DS_SanPhamActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 break;
+            case R.id.mnRefesh:
+                firebase_manager.GetDanhSachDanhMuc(danhMucs,danhMucAdapter);
+
+                break;
 
         }
         return super.onOptionsItemSelected(item);

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,6 +53,7 @@ import com.nordan.dialog.Animation;
 import com.nordan.dialog.DialogType;
 import com.nordan.dialog.NordanAlertDialog;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -93,16 +95,17 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
     @Override
     public DonHangAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
-        LinearLayout cardView = (LinearLayout) layoutInflater.inflate(viewType, parent, false);
+        CardView cardView = (CardView) layoutInflater.inflate(viewType, parent, false);
         return new DonHangAdapter.MyViewHolder(cardView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DonHangAdapter.MyViewHolder holder, int position) {
         DonHang donHang = arrayList.get(position);
+        firebase_manager.SetColorOfStatus(donHang.getTrangThai(),holder.lnheader,holder.txtID);
         ArrayList<DonHangInfo>donHangInfos = new ArrayList<>();
         Shipper shipper;
-        holder.txtID.setText(donHang.getIDDonHang().substring(0, 9));
+        holder.txtID.setText(donHang.getIDDonHang().substring(0, 25));
         holder.txtTrangThaiDonHang.setText(firebase_manager.GetStringTrangThaiDonHang(donHang.getTrangThai()));
 
         if (donHang.getIDShipper().isEmpty()) {
@@ -127,9 +130,15 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                 }
             });
         }
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(0);
 
+
+        float parseFloat = Float.parseFloat(donHang.getTongTien()+"");
+        String price =format.format(parseFloat);
+        holder.txtTongTien.setText(price);
        // firebase_manager.SetColor(donHang.getTrangThai(),holder.txtTrangThaiDonHang);
-        holder.txtTongTien.setText(donHang.getTongTien() + "");
+
         holder.txtDiaChi.setText(donHang.getDiaChi() + "");
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
         String strDate= formatter.format(donHang.getNgayTao());
@@ -321,7 +330,6 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                                 }
                             });
 
-
                         }
                         else {
                             Toast.makeText(context, "Vui lòng không để trống!", Toast.LENGTH_SHORT).show();
@@ -337,10 +345,23 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
         if (trangThai == TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien) {
             holder.btnXacNhanCoc.setVisibility(View.VISIBLE);
             holder.btnHuyDonHang.setVisibility(View.VISIBLE);
+            holder.lnNew.setVisibility(View.VISIBLE);
+            holder.imgTick.setVisibility(View.GONE);
+
         } else {
             holder.btnXacNhanCoc.setVisibility(View.GONE);
             holder.btnHuyDonHang.setVisibility(View.GONE);
-
+            holder.lnNew.setVisibility(View.GONE);
+            holder.imgTick.setVisibility(View.VISIBLE);
+        }
+        if (trangThai == TrangThaiDonHang.Bep_DaHuyDonHang)
+        {
+            holder.btnXacNhanCoc.setVisibility(View.VISIBLE);
+            holder.btnHuyDonHang.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.btnXacNhanCoc.setVisibility(View.GONE);
+            holder.btnHuyDonHang.setVisibility(View.GONE);
         }
         if (trangThai == TrangThaiDonHang.SHOP_DangChuanBihang) {
             holder.btnHoantac.setVisibility(View.VISIBLE);
@@ -421,11 +442,11 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
     //Define RecylerVeiw Holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView txtTenShipper,txtDiaChiShipper,txtSoDtShipper,txtBaoCaoShipper,txtXemChiTiet,txtID, txtTrangThaiDonHang, txtTenKhach, txtDiaChi, txtSoDienThoai, txtTongTien, txtSanPham,txtTime;
-        ImageView imageView;
+        ImageView imageView,imgTick;
         RecyclerView rcvItemGiohang;
         ProgressBar progressBar;
         Button btnXacNhanCoc,btnHoantac,btnXacNhanTraTien,btnXacNhanHoanHang,btnHuyDonHang;
-        LinearLayout lnBaoCaoShipper,lnTTshipper;
+        LinearLayout lnBaoCaoShipper,lnTTshipper,lnNew,lnheader;
         public MyViewHolder(View itemView) {
             super(itemView);
             txtID = itemView.findViewById(R.id.tv_IDDonHang);
@@ -449,6 +470,9 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
             txtDiaChiShipper = itemView.findViewById(R.id.txtDiaChiShipper);
             txtSoDtShipper = itemView.findViewById(R.id.txtSoDienThoaiShipper);
             lnTTshipper = itemView.findViewById(R.id.lnTTShipper);
+            lnNew = itemView.findViewById(R.id.lnNew);
+            imgTick = itemView.findViewById(R.id.imgTick);
+            lnheader = itemView.findViewById(R.id.lnheader);
         }
     }
 }

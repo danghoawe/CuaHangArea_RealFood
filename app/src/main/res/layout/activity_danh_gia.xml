@@ -61,6 +61,20 @@
                     app:picker_textSize="15dp"
                     app:picker_visibleItemCount="2" />
             </FrameLayout>
+            <ImageView
+                android:id="@+id/btnSearch"
+                android:src="@drawable/zoomfrontgradient"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/btnRefesh"
+                android:src="@drawable/baseline_refresh_red_400_36dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

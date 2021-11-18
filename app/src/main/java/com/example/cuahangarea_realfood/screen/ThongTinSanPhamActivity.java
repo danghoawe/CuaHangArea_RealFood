@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
@@ -255,10 +256,11 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                                 }
                             });
                             sanPham = temp;
-                            String path = "SanPham/"+firebase_manager.auth.getUid()+"/"+uuid+"/"+images.get(0);
                             String uuid_ThongBao = UUID.randomUUID().toString().replace("-", "");
-                            ThongBao thongBao = new ThongBao(uuid_ThongBao, "Sản phẩm đã được thêm mới: "+sanPham.getTenSanPham(), "Thông báo", "", firebase_manager.auth.getUid(), path,TrangThaiThongBao.ChuaXem,new Date());
+                            ThongBao thongBao = new ThongBao(uuid_ThongBao, "Sản phẩm đã được thêm mới: "+sanPham.getTenSanPham(), "Thông báo", "", firebase_manager.auth.getUid(),"",TrangThaiThongBao.ChuaXem,new Date());
                             firebase_manager.Ghi_ThongBao(thongBao);
+
+
                         }
                         else {
                             String uuid = sanPham.getIDSanPham();

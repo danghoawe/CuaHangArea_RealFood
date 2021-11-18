@@ -26,6 +26,7 @@
         app:bb_inActiveTabColor="#B3B1B1"
         app:bb_activeTabColor="@color/white"
         android:paddingBottom="10dp"
+        app:bb_behavior="shifting"
         />
 </androidx.cardview.widget.CardView>
 

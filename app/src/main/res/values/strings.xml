@@ -43,4 +43,5 @@
         <item>Đơn hàng đã hoàn thành</item>
         <item>Đơn hàng đã trả hàng</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>

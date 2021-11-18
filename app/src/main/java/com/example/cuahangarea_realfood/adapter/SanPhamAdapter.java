@@ -70,11 +70,11 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.MyViewHo
         if (arrayList.size()>0)
         {
             SanPham sanPham = arrayList.get(position);
-
+            holder.txtTenSanPham.setText(sanPham.getTenSanPham());
             NumberFormat format = NumberFormat.getCurrencyInstance();
             format.setMaximumFractionDigits(0);
 
-            holder.txtTenSanPham.setText(sanPham.getTenSanPham());
+
             float parseFloat = Float.parseFloat(sanPham.getGia());
             String price =format.format(parseFloat);
             holder.txtGia.setText(price);
