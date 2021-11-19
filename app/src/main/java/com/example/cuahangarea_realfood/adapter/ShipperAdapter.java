@@ -84,9 +84,14 @@ public class ShipperAdapter extends ArrayAdapter implements ISpinnerSelectedView
 
                 if (task.isSuccessful())
                 {
-                    Glide.with(context)
-                            .load(task.getResult())
-                            .into(imgAvata);
+                    try {
+                        Glide.with(context)
+                                .load(task.getResult())
+                                .into(imgAvata);
+                    }catch (Exception e){
+
+                    }
+
                 }
 
             }

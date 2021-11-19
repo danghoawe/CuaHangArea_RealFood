@@ -63,7 +63,7 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
             String dataDonHang = intent.getStringExtra("donhang");
             Gson gson = new Gson();
             donHang = gson.fromJson(dataDonHang, DonHang.class);
-            Toast.makeText(this, "oke", Toast.LENGTH_SHORT).show();
+
             donHangInfos = new ArrayList<>();
             LoadButton(donHang.getTrangThai());
             LoadData();
@@ -315,7 +315,7 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
     }
 
     private void LoadButton( TrangThaiDonHang trangThai) {
-        Toast.makeText(this, trangThai+"", Toast.LENGTH_SHORT).show();
+
         if (trangThai == TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien) {
             binding.btnXacNhanCoc.setVisibility(View.VISIBLE);
             binding.btnHuyDonHang.setVisibility(View.VISIBLE);

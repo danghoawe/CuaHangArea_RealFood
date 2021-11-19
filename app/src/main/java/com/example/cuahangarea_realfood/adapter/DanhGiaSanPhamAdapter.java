@@ -105,22 +105,26 @@ public class DanhGiaSanPhamAdapter extends RecyclerView.Adapter<DanhGiaSanPhamAd
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SanPham sanPham = snapshot.getValue(SanPham.class);
-                holder.tvTenSanPham.setText(sanPham.getTenSanPham());
-                holder.tvGia.setText(sanPham.getGia()+" VND");
-               firebase_manager. storageRef.child("SanPham").child(firebase_manager.auth.getUid()).child(sanPham.getIDSanPham()).child(sanPham.getImages().get(0)).
-                        getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        try {
-                            Glide.with(context)
-                                    .load(uri.toString())
-                                    .into(holder.ivAnhSanPham);
-                        }catch (Exception e)
-                        {
-                            Log.d("link",uri.toString());
+                if (sanPham!=null)
+                {
+                    holder.tvTenSanPham.setText(sanPham.getTenSanPham());
+                    holder.tvGia.setText(sanPham.getGia()+" VND");
+                    firebase_manager. storageRef.child("SanPham").child(firebase_manager.auth.getUid()).child(sanPham.getIDSanPham()).child(sanPham.getImages().get(0)).
+                            getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            try {
+                                Glide.with(context)
+                                        .load(uri.toString())
+                                        .into(holder.ivAnhSanPham);
+                            }catch (Exception e)
+                            {
+                                Log.d("link",uri.toString());
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

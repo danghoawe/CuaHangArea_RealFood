@@ -342,6 +342,15 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
     }
 
     private void LoadButton(MyViewHolder holder, TrangThaiDonHang trangThai) {
+        if (trangThai == TrangThaiDonHang.Bep_DaHuyDonHang)
+        {
+            holder.btnXacNhanCoc.setVisibility(View.VISIBLE);
+            holder.btnHuyDonHang.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.btnXacNhanCoc.setVisibility(View.GONE);
+            holder.btnHuyDonHang.setVisibility(View.GONE);
+        }
         if (trangThai == TrangThaiDonHang.SHOP_ChoXacNhanChuyenTien) {
             holder.btnXacNhanCoc.setVisibility(View.VISIBLE);
             holder.btnHuyDonHang.setVisibility(View.VISIBLE);
@@ -354,15 +363,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
             holder.lnNew.setVisibility(View.GONE);
             holder.imgTick.setVisibility(View.VISIBLE);
         }
-        if (trangThai == TrangThaiDonHang.Bep_DaHuyDonHang)
-        {
-            holder.btnXacNhanCoc.setVisibility(View.VISIBLE);
-            holder.btnHuyDonHang.setVisibility(View.VISIBLE);
-        }
-        else {
-            holder.btnXacNhanCoc.setVisibility(View.GONE);
-            holder.btnHuyDonHang.setVisibility(View.GONE);
-        }
+
         if (trangThai == TrangThaiDonHang.SHOP_DangChuanBihang) {
             holder.btnHoantac.setVisibility(View.VISIBLE);
 

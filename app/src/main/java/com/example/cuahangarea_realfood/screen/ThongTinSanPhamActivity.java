@@ -49,6 +49,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog;
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
+import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
+
 public class ThongTinSanPhamActivity extends AppCompatActivity {
 
     SanPham sanPham;
@@ -176,37 +180,50 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
         btnXoaSanPham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new NordanAlertDialog.Builder(ThongTinSanPhamActivity.this)
-                        .setDialogType(DialogType.WARNING)
-                        .setAnimation(Animation.SLIDE)
-                        .isCancellable(true)
-                        .setTitle("Thông báo!")
-                        .setMessage("Bạn có muốn xóa?")
-                        .setPositiveBtnText("Yes")
-                        .setNegativeBtnText("No")
-                        .onPositiveClicked(() -> {
-                            //Xóa sản phẩm trong danh sách
-                            firebase_manager.mDatabase.child("SanPham").child(sanPham.getIDSanPham()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    finish();
+                BottomSheetMaterialDialog mBottomSheetDialog = new BottomSheetMaterialDialog.Builder(ThongTinSanPhamActivity.this)
+                        .setTitle("Thông báo?")
+                        .setMessage("Bạn có chắc chắn xóa sản phẩm này ?")
+                        .setCancelable(false).setAnimation(R.raw.delete)
+                        .setPositiveButton("Xóa", R.drawable.baseline_delete_black_24dp, new BottomSheetMaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                //Xóa sản phẩm trong danh sách
+                                firebase_manager.mDatabase.child("SanPham").child(sanPham.getIDSanPham()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        finish();
 
-                                    //Xóa thư mục hình ảnh
-                                    firebase_manager.storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).listAll()
-                                            .addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                                                @Override
-                                                public void onSuccess(ListResult listResult) {
-                                                    List<StorageReference> items = listResult.getItems();
-                                                    items.forEach(storageReference -> storageReference.delete());
-                                                    Toast.makeText(ThongTinSanPhamActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                                                }
-                                                                                                                                                                            }
-                                    );
-                                }
-                            });
+                                        //Xóa thư mục hình ảnh
+                                        firebase_manager.storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).listAll()
+                                                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                                                                          @Override
+                                                                          public void onSuccess(ListResult listResult) {
+                                                                              List<StorageReference> items = listResult.getItems();
+                                                                              items.forEach(storageReference -> storageReference.delete());
+                                                                          }
+                                                                      }
+                                                );
+                                    }
+                                });
 
+                            }
                         })
-                        .build().show();
+                        .setNegativeButton("Hủy", R.drawable.ic_baseline_close_24, new BottomSheetMaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                Toast.makeText(getApplicationContext(), "Cancelled!", Toast.LENGTH_SHORT).show();
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .build();
+
+                // Show Dialog
+                mBottomSheetDialog.show();
+
+
+                // Show Dialog
+
+
             }
         });
 

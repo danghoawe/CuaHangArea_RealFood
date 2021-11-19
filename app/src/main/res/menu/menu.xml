@@ -23,6 +23,5 @@
         android:id="@+id/mnRefesh"
         android:icon="@drawable/ic_baseline_refresh_24"
         android:title="Search"
-        app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />
 </menu>
