@@ -1,30 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/pullToRefesh"
+    android:layout_height="match_parent">
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screen.ThongKeActivity"
     android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:layout_gravity="center"
+            android:id="@+id/progessbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     <LinearLayout
+        android:id="@+id/lnLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <FrameLayout
+        <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ProgressBar
-                android:layout_gravity="center"
-                android:id="@+id/progessbar"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <android.widget.Button
+                android:textAllCaps="false"
+                android:text="Chọn ngày bắt đầu"
+                android:layout_weight="1"
+                android:id="@+id/btnNgayBatDau"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <com.anychart.AnyChartView
-                android:id="@+id/piechartThongKe"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/edittext_background_v1"
+                android:textSize="14dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="đến"/>
+            <android.widget.Button
+                android:textAllCaps="false"
+                android:text="Chọn ngày kết thúc"
+                android:layout_weight="1"
+                android:id="@+id/btnNgayKetThuc"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:layout_marginBottom="-25dp"
-                />
-        </FrameLayout>
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/edittext_background_v1"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"/>
+
         <LinearLayout
             android:gravity="center"
             android:layout_width="match_parent"
@@ -175,4 +212,6 @@
                 android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>
+    </FrameLayout>
 </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

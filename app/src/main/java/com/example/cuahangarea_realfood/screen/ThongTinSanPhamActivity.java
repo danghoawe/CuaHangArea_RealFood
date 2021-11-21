@@ -35,6 +35,7 @@ import com.google.gson.Gson;
 import com.nordan.dialog.Animation;
 import com.nordan.dialog.DialogType;
 import com.nordan.dialog.NordanAlertDialog;
+import com.tapadoo.alerter.Alerter;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -136,7 +137,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         uriImages.add(uri);
                         carousel.setData(list);
                         LoadData();
-                        Toast.makeText(ThongTinSanPhamActivity.this,  images.size()+"", Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -180,48 +181,34 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
         btnXoaSanPham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetMaterialDialog mBottomSheetDialog = new BottomSheetMaterialDialog.Builder(ThongTinSanPhamActivity.this)
-                        .setTitle("Thông báo?")
-                        .setMessage("Bạn có chắc chắn xóa sản phẩm này ?")
-                        .setCancelable(false).setAnimation(R.raw.delete)
-                        .setPositiveButton("Xóa", R.drawable.baseline_delete_black_24dp, new BottomSheetMaterialDialog.OnClickListener() {
+                KAlertDialog kAlertDialog = new KAlertDialog(ThongTinSanPhamActivity.this,KAlertDialog.WARNING_TYPE);
+                kAlertDialog.setContentText("Bạn có chắc chắn xóa sản phẩm này?");
+                kAlertDialog.setConfirmText("Có").setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                    @Override
+                    public void onClick(KAlertDialog kAlertDialog) {
+                        kAlertDialog.changeAlertType(KAlertDialog.PROGRESS_TYPE);
+                        firebase_manager.mDatabase.child("SanPham").child(sanPham.getIDSanPham()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int which) {
-                                //Xóa sản phẩm trong danh sách
-                                firebase_manager.mDatabase.child("SanPham").child(sanPham.getIDSanPham()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        finish();
+                            public void onSuccess(Void unused) {
+                                kAlertDialog.dismiss();
 
-                                        //Xóa thư mục hình ảnh
-                                        firebase_manager.storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).listAll()
-                                                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                                                                          @Override
-                                                                          public void onSuccess(ListResult listResult) {
-                                                                              List<StorageReference> items = listResult.getItems();
-                                                                              items.forEach(storageReference -> storageReference.delete());
-                                                                          }
-                                                                      }
-                                                );
-                                    }
-                                });
-
+                                //Xóa thư mục hình ảnh
+                                firebase_manager.storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).listAll()
+                                        .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                                                                  @Override
+                                                                  public void onSuccess(ListResult listResult) {
+                                                                      List<StorageReference> items = listResult.getItems();
+                                                                      items.forEach(storageReference -> storageReference.delete());
+                                                                  }
+                                                              }
+                                        );
+                                finish();
                             }
-                        })
-                        .setNegativeButton("Hủy", R.drawable.ic_baseline_close_24, new BottomSheetMaterialDialog.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int which) {
-                                Toast.makeText(getApplicationContext(), "Cancelled!", Toast.LENGTH_SHORT).show();
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .build();
-
-                // Show Dialog
-                mBottomSheetDialog.show();
-
-
-                // Show Dialog
+                        });
+                    }
+                })
+                .setTitleText("Thông báo").setCancelText("Không");
+                kAlertDialog.show();
 
 
             }
@@ -306,7 +293,11 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         kAlertDialog.setContentText("Vui lòng chọn ảnh" );
                     }
                 } else {
-                    Toast.makeText(ThongTinSanPhamActivity.this, "Vui lòng nhập đúng định dạng", Toast.LENGTH_SHORT).show();
+                    Alerter.create(ThongTinSanPhamActivity.this)
+                            .setTitle("Lỗi")
+                            .setText("Vui lòng nhập đúng định dạng")
+                            .setBackgroundColorRes(R.color.error_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                            .show();
                 }
             }
         });

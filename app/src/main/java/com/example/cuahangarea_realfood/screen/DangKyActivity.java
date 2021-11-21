@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.tapadoo.alerter.Alerter;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -32,9 +33,9 @@ import com.vansuita.pickimage.listeners.IPickResult;
 import java.util.Date;
 
 public class DangKyActivity extends AppCompatActivity {
-    EditText edtEmail,edtMatKhau,edtHoTen,edtTenCuaHang,edtDiaChi,edtSoDienThoai,edtReMatKhau,edtIDcard;
+    EditText edtEmail, edtMatKhau, edtHoTen, edtTenCuaHang, edtDiaChi, edtSoDienThoai, edtReMatKhau, edtIDcard;
     Button btnDangKy;
-    ImageView imgCMND_Truoc,imgCMND_Sau;
+    ImageView imgCMND_Truoc, imgCMND_Sau;
     FirebaseAuth auth;
     TextView txtDangNhap;
     KAlertDialog kAlertDialog;
@@ -42,7 +43,8 @@ public class DangKyActivity extends AppCompatActivity {
     Validate validate = new Validate();
     Uri CMND_truoc;
     Uri CMND_sau;
-    Firebase_Manager firebase_manager ;
+    Firebase_Manager firebase_manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,19 +61,18 @@ public class DangKyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (Validated_Form())
-                {
-                    KAlertDialog kAlertDialog = new KAlertDialog(DangKyActivity.this,KAlertDialog.PROGRESS_TYPE).setContentText("Loading");
+                if (Validated_Form()) {
+                    KAlertDialog kAlertDialog = new KAlertDialog(DangKyActivity.this, KAlertDialog.PROGRESS_TYPE).setContentText("Loading");
                     kAlertDialog.show();
-                    auth.createUserWithEmailAndPassword(edtEmail.getText().toString(),edtMatKhau.getText().toString()).
+                    auth.createUserWithEmailAndPassword(edtEmail.getText().toString(), edtMatKhau.getText().toString()).
                             addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     String uuid = authResult.getUser().getUid();
                                     CuaHang cuaHang = new CuaHang(uuid, edtTenCuaHang.getText().toString()
-                                            , edtHoTen.getText().toString(), "", edtIDcard.getText().toString(), edtSoDienThoai.getText().toString(), "", "", (float) 0.0, edtEmail.getText().toString(), TrangThaiCuaHang.ChuaKichHoat,edtDiaChi.getText().toString(),null,null,new Date());
+                                            , edtHoTen.getText().toString(), "", edtIDcard.getText().toString(), edtSoDienThoai.getText().toString(), "", "", (float) 0.0, edtEmail.getText().toString(), TrangThaiCuaHang.ChuaKichHoat, edtDiaChi.getText().toString(), null, null, new Date());
                                     firebase_manager.Ghi_CuaHang(cuaHang);
-                                    firebase_manager.Up2MatCMND(CMND_truoc,CMND_sau,uuid);
+                                    firebase_manager.Up2MatCMND(CMND_truoc, CMND_sau, uuid);
                                     kAlertDialog.changeAlertType(KAlertDialog.SUCCESS_TYPE);
                                     kAlertDialog.setTitleText("Đăng ký tài khỏan thành công ");
                                     kAlertDialog.setContentText("Vui lòng đợi Admin xét duyệt và kích hoạt tài khoản trong vòng 24h!");
@@ -144,33 +145,36 @@ public class DangKyActivity extends AppCompatActivity {
             }
         });
     }
+
     private boolean Validated_Form() {
         boolean result = false;
         if (!validate.isBlank(edtEmail) && validate.isEmail(edtEmail)
-                &&!validate.isBlank(edtHoTen)&&!validate.isBlank(edtIDcard)&&validate.isCMND(edtIDcard)&&!validate.isBlank(edtTenCuaHang)&&!validate.moreThan50Char(edtTenCuaHang)
-                &&!validate.isBlank(edtDiaChi)&&validate.isPhone(edtSoDienThoai)
-                &&!validate.isBlank(edtMatKhau) && !validate.lessThan6Char(edtMatKhau)
-                &&!validate.isBlank(edtReMatKhau) && !validate.lessThan6Char(edtReMatKhau)
-                ) {
-            edtReMatKhau .setError(null);
-            if (edtReMatKhau.getText().toString().equals( edtMatKhau.getText().toString()))
-            {
+                && !validate.isBlank(edtHoTen) && !validate.isBlank(edtIDcard) && validate.isCMND(edtIDcard) && !validate.isBlank(edtTenCuaHang) && !validate.moreThan50Char(edtTenCuaHang)
+                && !validate.isBlank(edtDiaChi) && validate.isPhone(edtSoDienThoai)
+                && !validate.isBlank(edtMatKhau) && !validate.lessThan6Char(edtMatKhau)
+                && !validate.isBlank(edtReMatKhau) && !validate.lessThan6Char(edtReMatKhau)
+        ) {
+            edtReMatKhau.setError(null);
+            if (edtReMatKhau.getText().toString().equals(edtMatKhau.getText().toString())) {
                 result = true;
 
-                if (CMND_sau== null||CMND_truoc == null)
-                {
-                    Toast.makeText(this, "Vui lòng tải lên 2 mặt CMND/CCCD để xác thưc", Toast.LENGTH_SHORT).show();
+                if (CMND_sau == null || CMND_truoc == null) {
+                    Alerter.create(DangKyActivity.this)
+                            .setTitle("Lỗi")
+                            .setText("Vui lòng tải lên 2 mặt CMND/CCCD để xác thưc")
+                            .setBackgroundColorRes(R.color.error_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                            .show();
                     result = false;
                 }
-            }
-           else {
-               result = false;
-               edtReMatKhau .setError("Mật khẩu không trùng khớp");
+            } else {
+                result = false;
+                edtReMatKhau.setError("Mật khẩu không trùng khớp");
             }
         }
 
         return result;
     }
+
     private void setControl() {
         edtEmail = findViewById(R.id.edtEmail);
         edtMatKhau = findViewById(R.id.edtMatKhau);
@@ -188,18 +192,24 @@ public class DangKyActivity extends AppCompatActivity {
         edtIDcard = findViewById(R.id.edtIDCard);
         viewGroup = findViewById(R.id.linear1);
     }
+
     private void clearForm(ViewGroup group) {
         for (int i = 0, count = group.getChildCount(); i < count; ++i) {
             View view = group.getChildAt(i);
             if (view instanceof EditText) {
-                ((EditText)view).setText("");
+                ((EditText) view).setText("");
             }
-            if (view instanceof ImageView)
-            {
-                ((ImageView)view).setImageResource(R.drawable.baseline_photo_camera_red_500_48dp);
+            if (view instanceof ImageView) {
+                if (view.getId() == R.id.imgCMND_Truoc)
+                {
+                    ((ImageView) view).setImageResource(R.drawable.idtruoc);
+                }
+                else {
+                    ((ImageView) view).setImageResource(R.drawable.idsau);
+                }
             }
-            if(view instanceof ViewGroup && (((ViewGroup)view).getChildCount() > 0))
-                clearForm((ViewGroup)view);
+            if (view instanceof ViewGroup && (((ViewGroup) view).getChildCount() > 0))
+                clearForm((ViewGroup) view);
         }
     }
 }

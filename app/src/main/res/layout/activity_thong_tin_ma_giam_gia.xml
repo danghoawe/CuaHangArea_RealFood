@@ -101,7 +101,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:paddingLeft="20dp"
-        android:id="@+id/edtHanSuDung"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hạn sử dụng"
@@ -127,11 +127,18 @@
             app:picker_textSize="15dp"
             />
     </FrameLayout>
+
     <android.widget.Button
         android:id="@+id/btnLuuMaGiamGia"
         android:text="Lưu mã giảm giá"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Button_v2_Green"/>
-
+    <android.widget.Button
+        android:visibility="gone"
+        android:id="@+id/btnXoa"
+        android:text="Xóa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Button_v2_Red"/>
 </LinearLayout>

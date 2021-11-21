@@ -100,6 +100,7 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
         String strDate = formatter.format(donHang.getNgayTao());
         holder.txtTime.setText(strDate);
+        holder.txtGhiChu.setText(donHang.getGhiChu_KhachHang()+"");
         LoadButton(holder, donHang.getTrangThai());
         firebase_manager.mDatabase.child("KhachHang").child(donHang.getIDKhachHang()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -358,7 +359,7 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
 
     //Define RecylerVeiw Holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView txtXemChiTiet, txtID, txtTrangThaiDonHang, txtTenKhach, txtDiaChi, txtSoDienThoai, txtTongTien, txtSanPham, txtTime;
+        TextView txtXemChiTiet,txtGhiChu, txtID, txtTrangThaiDonHang, txtTenKhach, txtDiaChi, txtSoDienThoai, txtTongTien, txtSanPham, txtTime;
         ImageView imageView;
         RecyclerView rcvItemGiohang;
         ProgressBar progressBar;
@@ -389,6 +390,7 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
             btnGiaoHang = itemView.findViewById(R.id.btnGiaoHang);
             btnDaGiaoHangChoShipper = itemView.findViewById(R.id.btnDaGiaoHangChoShipper);
             lnXacNhangShipper = itemView.findViewById(R.id.lnXacNhangShipper);
+            txtGhiChu = itemView.findViewById(R.id.txtGhiChu);
         }
     }
 }

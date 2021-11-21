@@ -437,7 +437,7 @@
                android:id="@+id/btnGiaoHang"
                style="@style/Button_v2_Green"
                android:layout_weight="1"
-               android:text="Giao Hàng"
+               android:text="Chọn shipper giao hàng"
                android:textSize="16dp" />
        </LinearLayout>
        <LinearLayout

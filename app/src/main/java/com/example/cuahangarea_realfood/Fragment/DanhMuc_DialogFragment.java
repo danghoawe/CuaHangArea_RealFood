@@ -120,6 +120,7 @@ public class DanhMuc_DialogFragment extends DialogFragment {
                         {
                             KAlertDialog kAlertDialog = new KAlertDialog(getActivity(),KAlertDialog.PROGRESS_TYPE).setContentText("Loading");
                             kAlertDialog.show();
+                       
                             String uuid = UUID.randomUUID().toString().replace("-", "");
                             DanhMuc danhMuc = new DanhMuc(auth.getUid(), uuid, edtTenDanhMuc.getText().toString());
                             firebase_manager.UpImageDanhMuc(image, uuid).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

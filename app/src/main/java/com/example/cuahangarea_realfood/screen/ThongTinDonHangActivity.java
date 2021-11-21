@@ -36,6 +36,7 @@ import com.google.gson.Gson;
 import com.nordan.dialog.Animation;
 import com.nordan.dialog.DialogType;
 import com.nordan.dialog.NordanAlertDialog;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -84,7 +85,11 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                 firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
+                        Alerter.create(ThongTinDonHangActivity.this)
+                                .setTitle("Thông báo")
+                                .setText("Đơn hàng đã giao cho khu vực bếp")
+                                .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                .show();
                     }
                 });
             }
@@ -117,6 +122,11 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                 firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        Alerter.create(ThongTinDonHangActivity.this)
+                                .setTitle("Thông báo")
+                                .setText("Đã xác nhận hoàn hàng từ shipper")
+                                .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                .show();
                     }
                 });
             }
@@ -140,6 +150,11 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                             sanPham.setSoLuongBanDuoc(sanPham.getSoLuongBanDuoc()+1);
                             firebase_manager.Ghi_SanPham(sanPham);
                         }
+                        Alerter.create(ThongTinDonHangActivity.this)
+                                .setTitle("Thông báo")
+                                .setText("Đơn hàng đã hoành thành")
+                                .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                .show();
                     }
                 });
             }
@@ -163,7 +178,11 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                             firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-
+                                    Alerter.create(ThongTinDonHangActivity.this)
+                                            .setTitle("Thông báo")
+                                            .setText("Đã hủy :  "+donHang.getIDDonHang())
+                                            .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                            .show();
                                 }
                             });})
                         .setNegativeBtnText("Hủy")
@@ -231,16 +250,24 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                             donHang =temp;
                             LoadData();
                             LoadButton(donHang.getTrangThai());
-                            Toast.makeText(ThongTinDonHangActivity.this, "Đơn hàng đã được hủy vì lí do: "+dialog.getInputText(), Toast.LENGTH_LONG).show();
                             firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-
+                                    Alerter.create(ThongTinDonHangActivity.this)
+                                            .setTitle("Thông báo")
+                                            .setText("Đơn hàng đã được hủy vì lí do: "+dialog.getInputText())
+                                            .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                            .show();
                                 }
                             });
                         }
                         else {
-                            Toast.makeText(ThongTinDonHangActivity.this, "Vui lòng không để trống!", Toast.LENGTH_SHORT).show();
+                            Alerter.create(ThongTinDonHangActivity.this)
+                                    .setTitle("Lỗi")
+                                    .setText("Vui lòng không để trống! ")
+                                    .setBackgroundColorRes(R.color.error_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                    .show();
+
                         }
                     }
                 });
@@ -260,7 +287,11 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                 firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
+                        Alerter.create(ThongTinDonHangActivity.this)
+                                .setTitle("Thông báo")
+                                .setText("Đã gửi yêu cầu lấy hàng đến shipper")
+                                .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                .show();
                     }
                 });
             }
@@ -277,7 +308,11 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                 firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
+                        Alerter.create(ThongTinDonHangActivity.this)
+                                .setTitle("Thông báo")
+                                .setText("Đã giao hàng cho shipper")
+                                .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                .show();
                     }
                 });
             }

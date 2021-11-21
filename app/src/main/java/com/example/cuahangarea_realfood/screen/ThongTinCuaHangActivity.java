@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
+import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.databinding.ActivityThongTinCuaHangBinding;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.UploadTask;
+import com.tapadoo.alerter.Alerter;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -109,7 +111,11 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
             @Override
             public void onDateChanged(String displayed, Date date) {
                 if (date.compareTo(binding.dtpGioBatDau.getDate())<0){
-                    Toast.makeText(ThongTinCuaHangActivity.this, "Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc", Toast.LENGTH_SHORT).show();
+                    Alerter.create(ThongTinCuaHangActivity.this)
+                            .setTitle("Lỗi")
+                            .setText("Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc")
+                            .setBackgroundColorRes(R.color.error_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                            .show();
                     Date temp = binding.dtpGioBatDau.getDate();
                     temp.setHours(temp.getHours()+1);
 
@@ -122,7 +128,11 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
             @Override
             public void onDateChanged(String displayed, Date date) {
                 if (date.compareTo(binding.dtpGioKetThuc.getDate())>0){
-                    Toast.makeText(ThongTinCuaHangActivity.this, "Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc", Toast.LENGTH_SHORT).show();
+                   Alerter.create(ThongTinCuaHangActivity.this)
+                           .setTitle("Lỗi")
+                           .setText("Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc")
+                           .setBackgroundColorRes(R.color.error_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                           .show();
                     Date temp = binding.dtpGioKetThuc.getDate();
                     temp.setHours(temp.getHours()-1);
 

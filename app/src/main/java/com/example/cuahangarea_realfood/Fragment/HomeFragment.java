@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.developer.kalert.KAlertDialog;
+import com.example.cuahangarea_realfood.model.DanhGia;
 import com.example.cuahangarea_realfood.screen.DanhGiaActivity;
 import com.example.cuahangarea_realfood.screen.ThongKeActivity;
 import com.example.cuahangarea_realfood.screen.BepActivity;
@@ -70,8 +73,25 @@ public class HomeFragment extends Fragment {
         binding.cardViewDanhSachSamPham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DS_SanPhamActivity.class);
-                startActivity(intent);
+                firebase_manager.mDatabase.child("TaiKhoanNganHang").orderByChild("idTaiKhoan").equalTo(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                        if (snapshot.exists())
+                        {
+                            Intent intent = new Intent(getActivity(), DS_SanPhamActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            new KAlertDialog(getContext(),KAlertDialog.WARNING_TYPE).setContentText("Bạn vui lòng thêm thông tin tài khoản ngân hàng trước khi đăng bán sản phẩm !").show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull  DatabaseError error) {
+
+                    }
+                });
+
             }
         });
 
@@ -82,13 +102,7 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        binding.btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ThongTinCuaHangActivity.class);
-                startActivity(intent);
-            }
-        });
+
         binding.cardViewDanhSachDonHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +154,22 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
-
+        firebase_manager.mDatabase.child("DanhGia").orderByChild("idcuaHang").equalTo(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int tong = 0;
+                for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
+                    DanhGia danhGia = snapshot.getValue(DanhGia.class);
+                    tong+=danhGia.getRating();
+                }
+                if (tong!=0)
+                binding.tvStar.setText(tong/dataSnapshot.getChildrenCount()+"");
+                binding.tvLuotDanhGia.setText(dataSnapshot.getChildrenCount()+" lượt đánh giá");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         firebase_manager.storageRef.child("CuaHang").child(firebase_manager.auth.getUid()).child("Avatar").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -152,6 +181,7 @@ public class HomeFragment extends Fragment {
                 avatar =  uri;
             }
         });
+
         firebase_manager.storageRef.child("CuaHang").child(firebase_manager.auth.getUid()).child("WallPaper").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

@@ -34,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 ;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
     RecyclerView rcDanhMuc,rcSanPham;
     SetOnLongClick setOnLongClick;
     SearchView search;
+
     SetOnClick setOnClick ;
     @Override
     protected void onResume() {
@@ -132,6 +134,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
         rcDanhMuc = findViewById(R.id.rcDanhMuc);
         rcSanPham = findViewById(R.id.rcSanPham);
         btnThemSanPham = findViewById(R.id.btnThemSanPham);
+
     }
 
     @SuppressLint("RestrictedApi")

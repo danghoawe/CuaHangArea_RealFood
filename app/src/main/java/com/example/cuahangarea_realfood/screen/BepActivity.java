@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
@@ -35,7 +36,7 @@ public class BepActivity extends AppCompatActivity {
     Firebase_Manager firebase_manager = new Firebase_Manager();
     RecyclerView rcDonHang;
     Spinner spLoaiDonHang;
-
+    ProgressBar progressBar;
     @Override
     protected void onResume() {
         //GetSanPham();
@@ -59,7 +60,7 @@ public class BepActivity extends AppCompatActivity {
         gridLayoutManager = new GridLayoutManager(this, 2);
         rcDonHang.setLayoutManager(linearLayoutManager);
         rcDonHang.setAdapter(donHang_bepAdapter);
-        firebase_manager.GetDonHang_Bep(donHangs, donHang_bepAdapter);
+        firebase_manager.GetDonHang_Bep(donHangs, donHang_bepAdapter,progressBar);
         setEvent();
     }
 
@@ -101,6 +102,7 @@ public class BepActivity extends AppCompatActivity {
     private void setControl() {
         rcDonHang = findViewById(R.id.rcDonHang);
         spLoaiDonHang = findViewById(R.id.spLoaiDonHang);
+        progressBar = findViewById(R.id.progessbar);
     }
 
     @SuppressLint("RestrictedApi")

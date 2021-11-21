@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -45,7 +46,7 @@ public class DanhSachDonHangActivity extends AppCompatActivity {
     Firebase_Manager firebase_manager = new Firebase_Manager();
     RecyclerView rcDonHang;
     Spinner spTrangThaiDonHang;
-
+    ProgressBar progressBar;
     @Override
     protected void onResume() {
         //GetSanPham();
@@ -69,7 +70,7 @@ public class DanhSachDonHangActivity extends AppCompatActivity {
         gridLayoutManager = new GridLayoutManager(this, 2);
         rcDonHang.setLayoutManager(linearLayoutManager);
         rcDonHang.setAdapter(donHangAdapter);
-        firebase_manager.GetDonHang(donHangs, donHangAdapter);
+        firebase_manager.GetDonHang(donHangs, donHangAdapter,progressBar);
 //          GetDanhSachDanhMuc();
 //        GetSanPham();
         setEvent();
@@ -148,6 +149,7 @@ public class DanhSachDonHangActivity extends AppCompatActivity {
     private void setControl() {
         rcDonHang = findViewById(R.id.rcDonHang);
         spTrangThaiDonHang = findViewById(R.id.spTrangThaiDonHang);
+        progressBar = findViewById(R.id.progessbar);
     }
 
     @SuppressLint("RestrictedApi")

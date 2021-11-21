@@ -18,6 +18,7 @@ import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,7 +51,12 @@ public class DanhGiaActivity extends AppCompatActivity {
             @Override
             public void onDateChanged(String displayed, Date date) {
                 if (date.compareTo(binding.dtpGioBatDau.getDate())<0){
-                    Toast.makeText(DanhGiaActivity.this, "Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc", Toast.LENGTH_SHORT).show();
+                    Alerter.create(DanhGiaActivity.this)
+                            .setTitle("Lỗi")
+                            .setText("Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc")
+                            .setBackgroundColorRes(R.color.error_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                            .show();
+
                     Date temp = binding.dtpGioBatDau.getDate();
                     temp.setDate(temp.getDate()+1);
 
@@ -63,7 +69,11 @@ public class DanhGiaActivity extends AppCompatActivity {
             @Override
             public void onDateChanged(String displayed, Date date) {
                 if (date.compareTo(binding.dtpGioKetThuc.getDate())>0){
-                    Toast.makeText(DanhGiaActivity.this, "Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc", Toast.LENGTH_SHORT).show();
+                    Alerter.create(DanhGiaActivity.this)
+                            .setTitle("Lỗi")
+                            .setText("Bạn vui lòng chọn thời gian bắt đầu bé hơn thời gian kết thúc")
+                            .setBackgroundColorRes(R.color.error_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                            .show();
                     Date temp = binding.dtpGioKetThuc.getDate();
                     temp.setDate(temp.getDate()-1);
                     binding.dtpGioBatDau.setDefaultDate(temp);

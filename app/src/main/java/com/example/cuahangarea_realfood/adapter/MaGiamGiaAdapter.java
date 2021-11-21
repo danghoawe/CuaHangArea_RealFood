@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -21,6 +23,7 @@ import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.SetOnLongClick;
 import com.example.cuahangarea_realfood.model.DanhMuc;
+import com.example.cuahangarea_realfood.model.DonHang;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.Voucher;
 import com.example.cuahangarea_realfood.screen.ThongTinMaGiamGiaActivity;
@@ -37,10 +40,11 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 
-public class MaGiamGiaAdapter extends RecyclerView.Adapter<MaGiamGiaAdapter.MyViewHolder> {
+public class MaGiamGiaAdapter extends RecyclerView.Adapter<MaGiamGiaAdapter.MyViewHolder> implements Filterable {
     private Activity context;
     private int resource;
     private ArrayList<Voucher> arrayList;
+    private ArrayList<Voucher> source;
     public SetOnLongClick setOnLongClick;
     Firebase_Manager firebase_manager = new Firebase_Manager();
     public SetOnLongClick getSetOnLongClick() {
@@ -56,6 +60,7 @@ public class MaGiamGiaAdapter extends RecyclerView.Adapter<MaGiamGiaAdapter.MyVi
         this.context = context;
         this.resource = resource;
         this.arrayList = arrayList;
+        source =arrayList;
     }
 
 
@@ -152,4 +157,34 @@ public class MaGiamGiaAdapter extends RecyclerView.Adapter<MaGiamGiaAdapter.MyVi
 
         }
     }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSearch = constraint.toString();
+                if (strSearch.isEmpty()) {
+                    arrayList = source;
+                } else {
+                    ArrayList<Voucher> list = new ArrayList<>();
+                    for (Voucher voucher: source) {
+                        if (voucher.getMaGiamGia().toString().equals(strSearch)||voucher.getSanPham().getTenSanPham().contains(strSearch)) {
+                            list.add(voucher);
+                        }
+                    }
+                    arrayList = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = arrayList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                arrayList = (ArrayList<Voucher>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 }

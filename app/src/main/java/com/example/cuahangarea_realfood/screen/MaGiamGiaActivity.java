@@ -81,37 +81,18 @@ public class MaGiamGiaActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                maGiamGiaAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-
+                maGiamGiaAdapter.getFilter().filter(query);
                 return true;
 
             }
 
         });
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Context context = this;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DanhMuc_DialogFragment danhMuc_dialogFragment = new DanhMuc_DialogFragment(null);
-        switch (item.getItemId()) {
-            case R.id.mnThemDanhMuc:
-
-                if (getFragmentManager() != null) {
-                    danhMuc_dialogFragment.onActivityResult(1, 1, null);
-                    danhMuc_dialogFragment.show(fragmentManager, "DS_SanPhamActivity");
-                }
-                break;
-
-
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -107,6 +107,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
         Shipper shipper;
         holder.txtID.setText(donHang.getIDDonHang().substring(0, 25));
         holder.txtTrangThaiDonHang.setText(firebase_manager.GetStringTrangThaiDonHang(donHang.getTrangThai()));
+        holder.txtGhiChu.setText(donHang.getGhiChu_KhachHang()+"");
 
         if (donHang.getIDShipper().isEmpty()) {
             holder.lnTTshipper.setVisibility(View.GONE);
@@ -442,7 +443,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
 
     //Define RecylerVeiw Holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTenShipper,txtDiaChiShipper,txtSoDtShipper,txtBaoCaoShipper,txtXemChiTiet,txtID, txtTrangThaiDonHang, txtTenKhach, txtDiaChi, txtSoDienThoai, txtTongTien, txtSanPham,txtTime;
+        TextView txtTenShipper,txtGhiChu,txtDiaChiShipper,txtSoDtShipper,txtBaoCaoShipper,txtXemChiTiet,txtID, txtTrangThaiDonHang, txtTenKhach, txtDiaChi, txtSoDienThoai, txtTongTien, txtSanPham,txtTime;
         ImageView imageView,imgTick;
         RecyclerView rcvItemGiohang;
         ProgressBar progressBar;
@@ -474,6 +475,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
             lnNew = itemView.findViewById(R.id.lnNew);
             imgTick = itemView.findViewById(R.id.imgTick);
             lnheader = itemView.findViewById(R.id.lnheader);
+            txtGhiChu = itemView.findViewById(R.id.txtGhiChu);
         }
     }
 }

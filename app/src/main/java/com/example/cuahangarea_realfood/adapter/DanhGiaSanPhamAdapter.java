@@ -24,12 +24,14 @@ import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.DanhGia;
 import com.example.cuahangarea_realfood.model.KhachHang;
 import com.example.cuahangarea_realfood.model.SanPham;
+import com.example.cuahangarea_realfood.screen.ThongTinDonHangActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.tapadoo.alerter.Alerter;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -69,6 +71,7 @@ public class DanhGiaSanPhamAdapter extends RecyclerView.Adapter<DanhGiaSanPhamAd
     @Override
     public void onBindViewHolder(@NonNull DanhGiaSanPhamAdapter.MyViewHolder holder, int position) {
         DanhGia danhGia = danhGias.get(position);
+
         if (danhGia == null) {
             return;
         }
@@ -134,7 +137,13 @@ public class DanhGiaSanPhamAdapter extends RecyclerView.Adapter<DanhGiaSanPhamAd
         firebase_manager.storageRef.child("KhachHang").child(danhGia.getIDKhachHang()).child("AvatarKhachHang").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri.toString()).into(holder.ivAvatar);
+                try {
+                    Glide.with(context).load(uri.toString()).into(holder.ivAvatar);
+                }catch (Exception e)
+                {
+
+                }
+
             }
         });
         holder.imageSend.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +159,11 @@ public class DanhGiaSanPhamAdapter extends RecyclerView.Adapter<DanhGiaSanPhamAd
                     firebase_manager.mDatabase.child("DanhGia").child(temp.getIDDanhGia()).setValue(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull  Task<Void> task) {
-                            Toast.makeText(context, "Bạn đã gửi đánh giá đến khách hàng", Toast.LENGTH_SHORT).show();
+                            Alerter.create(context)
+                                    .setTitle("Thông báo")
+                                    .setText("Bạn đã trả lời đánh giá của: KH"+danhGia.getIDKhachHang() +" về sản phẩm #"+ danhGia.getIDSanPham() )
+                                    .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                    .show();
                         }
                     }) ;
                 }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -185,7 +186,11 @@ public class Firebase_Manager {
             }
         });
     }
-    public void GetDonHang(ArrayList arrayList, DonHangAdapter donHangAdapter) {
+    public void GetDonHang(ArrayList arrayList, DonHangAdapter donHangAdapter, ProgressBar progressBar) {
+        if (progressBar!=null)
+        {
+            progressBar.setVisibility(View.VISIBLE);
+        }
         mDatabase.child("DonHang").orderByChild("ngayTao").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -195,11 +200,17 @@ public class Firebase_Manager {
                     if (donHang.getIDCuaHang().equals(auth.getUid()))
                     {
                         arrayList.add(donHang);
-                        if (donHangAdapter!=null)
-                        {
-                            donHangAdapter.notifyDataSetChanged();
-                        }
+
                     }
+                }
+                if (donHangAdapter!=null)
+                {
+                    donHangAdapter.notifyDataSetChanged();
+                }
+
+                if (progressBar!=null)
+                {
+                    progressBar.setVisibility(View.GONE);
                 }
                 Collections.sort(arrayList, new Comparator<DonHang>() {
                     @Override
@@ -230,6 +241,7 @@ public class Firebase_Manager {
                         return o2.getNgayDanhGia().compareTo(o1.getNgayDanhGia());
                     }
                 });
+
                 danhGiaSanPhamAdapter.notifyDataSetChanged();
             }
             @Override
@@ -237,7 +249,11 @@ public class Firebase_Manager {
             }
         });
     }
-    public void GetDonHang_Bep(ArrayList arrayList, DonHang_BepAdapter donHangAdapter) {
+    public void GetDonHang_Bep(ArrayList arrayList, DonHang_BepAdapter donHangAdapter, ProgressBar progressBar) {
+        if (progressBar!=null)
+        {
+            progressBar.setVisibility(View.VISIBLE);
+        }
         mDatabase.child("DonHang").orderByChild("trangThai").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -257,11 +273,16 @@ public class Firebase_Manager {
                         {
                             arrayList.add(donHang);
                         }
-                        if (donHangAdapter!=null)
-                        {
-                            donHangAdapter.notifyDataSetChanged();
-                        }
+
                     }
+                }
+                if (donHangAdapter!=null)
+                {
+                    donHangAdapter.notifyDataSetChanged();
+                }
+                if (progressBar!=null)
+                {
+                    progressBar.setVisibility(View.GONE);
                 }
                 Collections.sort(arrayList, new Comparator<DonHang>() {
                     @Override

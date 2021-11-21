@@ -1,6 +1,7 @@
 package com.example.cuahangarea_realfood.Fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -55,6 +56,20 @@ public class SettingFragment extends Fragment {
                 getActivity().finish();
             }
         });
+        binding.txtDichVuVaChinhSach.setOnClickListener(onClickListener);
+        binding.txtRiengTu.setOnClickListener(onClickListener);
+        binding.txtTroGiup.setOnClickListener(onClickListener);
         return binding.getRoot();
+    }
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            openWebURL("https://mason.gmu.edu/~rhanson/policymarkets.html");
+        }
+    };
+    public void openWebURL( String inURL ) {
+        Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse( inURL ) );
+
+        startActivity( browse );
     }
 }
