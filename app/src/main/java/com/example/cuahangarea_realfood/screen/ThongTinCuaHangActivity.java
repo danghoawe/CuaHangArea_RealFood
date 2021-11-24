@@ -2,6 +2,8 @@ package com.example.cuahangarea_realfood.screen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
-import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.databinding.ActivityThongTinCuaHangBinding;
 import com.example.cuahangarea_realfood.model.CuaHang;
@@ -29,13 +30,14 @@ import com.vansuita.pickimage.listeners.IPickCancel;
 import com.vansuita.pickimage.listeners.IPickResult;
 
 import java.util.Date;
-
 public class ThongTinCuaHangActivity extends AppCompatActivity {
     ActivityThongTinCuaHangBinding binding;
     Firebase_Manager firebase_manager= new Firebase_Manager();
     CuaHang cuaHang;
     Uri uriAvatar,uriWallpaper;
     Validate validate = new Validate();
+    int LAUNCH_SECOND_ACTIVITY = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,21 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
         LoadData();
         setEvent();
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("result");
+                binding.edtDiaChi.setText(result);
+                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // Write your code if there's no result
+            }
+        }
+    }
     private void setEvent() {
         binding.btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +103,16 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
             }
         });
 
+       binding.txtGoToMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+//                        Uri.parse("http://maps.google.com/maps?daddr=11.4198,107.5782"));
+//                startActivity(intent);
+                Intent intent = new Intent(ThongTinCuaHangActivity.this, MapsActivity.class);
+                startActivityForResult(intent,LAUNCH_SECOND_ACTIVITY);
+            }
+        });
 
         binding.btnEditAvatar.setOnClickListener(new View.OnClickListener() {
             @Override

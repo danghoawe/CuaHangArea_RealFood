@@ -60,6 +60,18 @@
             style="@style/Edittext_v1"
             android:hint="@string/diaChi"
             />
+        <TextView
+            android:textSize="16dp"
+            android:id="@+id/txtGoToMaps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:autoLink="all"
+            android:gravity="right"
+            android:linksClickable="false"
+            android:selectAllOnFocus="false"
+            android:text="Go to map ?"
+            android:textColor="@color/color_link" />
         <EditText
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/baseline_phone_black_24dp"

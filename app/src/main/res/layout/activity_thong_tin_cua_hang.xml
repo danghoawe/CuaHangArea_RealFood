@@ -144,13 +144,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Địa Chỉ"
+                    app:endIconDrawable="@drawable/ic_user_black"
                     >
                     <EditText
+                        android:singleLine="false"
                         android:id="@+id/edtDiaChi"
-
+                        android:drawableRight="@drawable/ic_baseline_map_24"
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
+                        android:minLines="3"
+                        android:layout_height="wrap_content"
                         android:layout_margin="10dp" />
+                    <TextView
+                        android:textSize="16dp"
+                        android:id="@+id/txtGoToMaps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:autoLink="all"
+                        android:gravity="right"
+                        android:linksClickable="false"
+                        android:selectAllOnFocus="false"
+                        android:text="Go to map ?"
+                        android:textColor="@color/color_link" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

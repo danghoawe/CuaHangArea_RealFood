@@ -41,7 +41,9 @@ dependencies {
     implementation 'dev.shreyaspatil.MaterialDialog:MaterialDialog:2.2.2'
 
     implementation 'com.github.tapadoo:alerter:7.2.4'
-
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
+    implementation 'com.google.android.libraries.places:places:2.5.0'
 
     // Lottie Animation Library
     implementation 'com.airbnb.android:lottie:3.3.6'

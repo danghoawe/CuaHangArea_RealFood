@@ -3,6 +3,8 @@ package com.example.cuahangarea_realfood.screen;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -33,11 +35,13 @@ import com.vansuita.pickimage.listeners.IPickResult;
 import java.util.Date;
 
 public class DangKyActivity extends AppCompatActivity {
+    int LAUNCH_SECOND_ACTIVITY = 1;
     EditText edtEmail, edtMatKhau, edtHoTen, edtTenCuaHang, edtDiaChi, edtSoDienThoai, edtReMatKhau, edtIDcard;
     Button btnDangKy;
+
     ImageView imgCMND_Truoc, imgCMND_Sau;
     FirebaseAuth auth;
-    TextView txtDangNhap;
+    TextView txtDangNhap,txtGoToMap;
     KAlertDialog kAlertDialog;
     ViewGroup viewGroup;
     Validate validate = new Validate();
@@ -144,8 +148,29 @@ public class DangKyActivity extends AppCompatActivity {
                         }).show(DangKyActivity.this);
             }
         });
+        txtGoToMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DangKyActivity.this, MapsActivity.class);
+                startActivityForResult(intent,LAUNCH_SECOND_ACTIVITY);
+            }
+        });
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("result");
+                edtDiaChi.setText(result);
+                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // Write your code if there's no result
+            }
+        }
+    }
     private boolean Validated_Form() {
         boolean result = false;
         if (!validate.isBlank(edtEmail) && validate.isEmail(edtEmail)
@@ -191,6 +216,7 @@ public class DangKyActivity extends AppCompatActivity {
         txtDangNhap = findViewById(R.id.txtDangNhap);
         edtIDcard = findViewById(R.id.edtIDCard);
         viewGroup = findViewById(R.id.linear1);
+        txtGoToMap = findViewById(R.id.txtGoToMaps);
     }
 
     private void clearForm(ViewGroup group) {
