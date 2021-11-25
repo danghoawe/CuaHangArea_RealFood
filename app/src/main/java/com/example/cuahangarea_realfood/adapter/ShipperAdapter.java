@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.model.NganHang;
 import com.example.cuahangarea_realfood.model.Shipper;
+import com.example.cuahangarea_realfood.screen.ThongTinDonHangActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -68,15 +70,17 @@ public class ShipperAdapter extends ArrayAdapter implements ISpinnerSelectedView
         convertView = LayoutInflater.from(context).inflate(R.layout.item_shipper,null);
 
         Shipper shipper = shippers.get(position);
-
         TextView txtTen = convertView.findViewById(R.id.txtTenShipper);
+        TextView txtTrangThai = convertView.findViewById(R.id.txtTrangThaiHoatDong);
         ImageView imgAvata = convertView.findViewById(R.id.imgAvatar);
         TextView txtKhuVucHoatDong = convertView.findViewById(R.id.txtKhuVucHoatDong);
         TextView txtSoDienThoai = convertView.findViewById(R.id.txtSoDienThoai);
 
-        txtSoDienThoai.setText(shipper.getSoDienThoai());
         txtTen .setText(shipper.getHoVaTen());
-        txtKhuVucHoatDong .setText(shipper.getKhuVucHoatDong());
+        txtKhuVucHoatDong .setText(shipper.getDiaChi());
+        txtTrangThai.setText(shipper.getTrangThaiHoatDong());
+        txtSoDienThoai.setText(shipper.getSoDienThoai());
+
 
         firebase_manager.storageRef.child("Shipper").child(shipper.getiDShipper()).child("avatar").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
@@ -143,15 +147,17 @@ public class ShipperAdapter extends ArrayAdapter implements ISpinnerSelectedView
 
         Shipper shipper = shippers.get(position);
 
+
         TextView txtTen = convertView.findViewById(R.id.txtTenShipper);
+        TextView txtTrangThai = convertView.findViewById(R.id.txtTrangThaiHoatDong);
         ImageView imgAvata = convertView.findViewById(R.id.imgAvatar);
         TextView txtKhuVucHoatDong = convertView.findViewById(R.id.txtKhuVucHoatDong);
         TextView txtSoDienThoai = convertView.findViewById(R.id.txtSoDienThoai);
 
-        txtSoDienThoai.setText(shipper.getSoDienThoai());
         txtTen .setText(shipper.getHoVaTen());
-        txtKhuVucHoatDong .setText(shipper.getKhuVucHoatDong());
-
+        txtKhuVucHoatDong .setText(shipper.getDiaChi());
+        txtTrangThai.setText(shipper.getTrangThaiHoatDong());
+        txtSoDienThoai.setText(shipper.getSoDienThoai());
         firebase_manager.storageRef.child("Shipper").child(shipper.getiDShipper()).child("avatar").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull  Task<Uri> task) {

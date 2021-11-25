@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.TrangThai.LoaiThongBao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.DanhMuc;
@@ -262,6 +263,8 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                             sanPham = temp;
                             String uuid_ThongBao = UUID.randomUUID().toString().replace("-", "");
                             ThongBao thongBao = new ThongBao(uuid_ThongBao, "Sản phẩm đã được thêm mới: "+sanPham.getTenSanPham(), "Thông báo", "", firebase_manager.auth.getUid(),"",TrangThaiThongBao.ChuaXem,new Date());
+                            thongBao.setLoaiThongBao(LoaiThongBao.THEM_SANPHAM);
+                            thongBao.setSanPham(temp);
                             firebase_manager.Ghi_ThongBao(thongBao);
 
 

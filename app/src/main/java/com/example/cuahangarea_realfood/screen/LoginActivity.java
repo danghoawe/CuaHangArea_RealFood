@@ -19,9 +19,11 @@ import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -88,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         if(dataSnapshot.exists())
                                         {
+                                           
                                             CuaHang temp = dataSnapshot.getValue(CuaHang.class);
 
                                             if (temp.getTrangThaiCuaHang()== TrangThaiCuaHang.ChuaKichHoat)

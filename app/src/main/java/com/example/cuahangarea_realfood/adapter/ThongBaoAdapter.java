@@ -1,6 +1,7 @@
 package com.example.cuahangarea_realfood.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
@@ -22,12 +23,16 @@ import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.SetOnLongClick;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
 import com.example.cuahangarea_realfood.model.DanhMuc;
+import com.example.cuahangarea_realfood.model.DonHang;
 import com.example.cuahangarea_realfood.model.ThongBao;
+import com.example.cuahangarea_realfood.screen.ThongTinDonHangActivity;
+import com.example.cuahangarea_realfood.screen.ThongTinSanPhamActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -97,6 +102,34 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
             holder.txtThoiGian.setText(strDates);
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (thongBao.getLoaiThongBao()!=null)
+                {
+                    switch (thongBao.getLoaiThongBao())
+                    {
+                        case THEM_SANPHAM:
+                            Intent intent = new Intent(context, ThongTinSanPhamActivity.class);
+                            Gson gson = new Gson();
+                            String data = gson.toJson(thongBao.getSanPham());
+                            intent.putExtra("sanPham", data);
+                            firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).child(thongBao.getIDThongBao()).child("trangThaiThongBao").setValue(TrangThaiThongBao.DaXem);
+                            context.startActivity(intent);
+                            break;
+                        case DONHANG_MOI:
+
+                            Intent intent2 = new Intent(context, ThongTinDonHangActivity.class);
+                            Gson gson2 = new Gson();
+                            String data2= gson2.toJson(thongBao.getDonHang());
+                            intent2.putExtra("donhang", data2);
+                            firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).child(thongBao.getIDThongBao()).child("trangThaiThongBao").setValue(TrangThaiThongBao.DaXem);
+                            context.startActivity(intent2);
+                            break;
+                    }
+                }
+            }
+        });
 
     }
 
