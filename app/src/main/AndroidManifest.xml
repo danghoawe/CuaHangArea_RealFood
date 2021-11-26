@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.cuahangarea_realfood">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -19,7 +18,9 @@
         android:theme="@style/Theme.CuaHangArea_RealFood"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-
+        <activity android:name=".ThongTinShipper"
+            android:label="Danh sách shipper"
+            android:parentActivityName=".DanhSachShipperActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,8 +34,12 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".DanhSachShipperActivity"
+            android:label="Thông tin chi tiết"
+            android:parentActivityName=".screen.Home" />
+        <activity
             android:name=".screen.MapsActivity"
-            android:label="Bản đồ"></activity>
+            android:label="Bản đồ" />
         <activity
             android:name=".screen.DanhGiaActivity"
             android:label="Phản hồi từ khách hàng"

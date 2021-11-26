@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.StorePassword;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.CuaHang;
@@ -30,19 +31,19 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     EditText edtEmail, edtMatKhau;
-    TextView txtDangKy,txtQuenMatKhau;
+    TextView txtDangKy, txtQuenMatKhau;
     Button btnDangNhap;
     FirebaseAuth auth;
     Firebase_Manager firebase_manager = new Firebase_Manager();
     Validate validate = new Validate();
+    StorePassword storePassword = new StorePassword(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser()!=null)
-        {
+        if (auth.getCurrentUser() != null) {
             Intent intent = new Intent(LoginActivity.this, Home.class);
             startActivity(intent);
         }
@@ -82,25 +83,22 @@ public class LoginActivity extends AppCompatActivity {
 
                     auth.signInWithEmailAndPassword(edtEmail.getText().toString(), edtMatKhau.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onComplete(@NonNull  Task<AuthResult> task) {
-                            if (task.isSuccessful())
-                            {
-                                firebase_manager. mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                firebase_manager.mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if(dataSnapshot.exists())
-                                        {
-                                           
+                                        if (dataSnapshot.exists()) {
+
                                             CuaHang temp = dataSnapshot.getValue(CuaHang.class);
 
-                                            if (temp.getTrangThaiCuaHang()== TrangThaiCuaHang.ChuaKichHoat)
-                                            {
+                                            if (temp.getTrangThaiCuaHang() == TrangThaiCuaHang.ChuaKichHoat) {
                                                 kAlertDialog.setTitleText("Thông báo");
                                                 kAlertDialog.setContentText("Vui lòng đợi Admin xét duyệt và kích hoạt tài khoản trong vòng 24h!");
                                                 kAlertDialog.changeAlertType(KAlertDialog.WARNING_TYPE);
                                                 firebase_manager.auth.signOut();
-                                            }
-                                            else {
+                                            } else {
+                                                storePassword.insertProduct(edtEmail.getText().toString(),edtMatKhau.getText().toString());
                                                 Intent intent = new Intent(LoginActivity.this, Home.class);
                                                 kAlertDialog.dismiss();
                                                 startActivity(intent);
@@ -108,13 +106,13 @@ public class LoginActivity extends AppCompatActivity {
                                             }
                                         }
                                     }
+
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
                                     }
                                 });
 
-                            }
-                            else {
+                            } else {
                                 kAlertDialog.setTitleText("Sai tài khoản hoặc mật khẩu");
                                 kAlertDialog.changeAlertType(KAlertDialog.WARNING_TYPE);
                             }
@@ -129,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean Validated_Form() {
         boolean result = false;
         if (!validate.isBlank(edtEmail) && validate.isEmail(edtEmail)
-                &&!validate.isBlank(edtMatKhau)
+                && !validate.isBlank(edtMatKhau)
                 && !validate.lessThan6Char(edtMatKhau)) {
             result = true;
         } else {

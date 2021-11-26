@@ -27,6 +27,7 @@ import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.SetOnLongClick;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiBaoCao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
 import com.example.cuahangarea_realfood.model.BaoCaoShipper;
@@ -232,6 +233,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
             public void onClick(View v) {
                 DonHang temp = donHang;
                 temp.setTrangThai(TrangThaiDonHang.Shipper_DaTraHang);
+                temp.setNgayGiaoHang(new Date());
                 arrayList.set(position, temp);
                 notifyDataSetChanged();
                 firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -249,6 +251,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
             public void onClick(View v) {
                 DonHang temp = donHang;
                 temp.setTrangThai(TrangThaiDonHang.Shipper_DaChuyenTien);
+                temp.setNgayGiaoHang(new Date());
                 arrayList.set(position, temp);
                 notifyDataSetChanged();
                 firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -320,7 +323,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                         if (dialog.getInputText()!=null)
                         {
                             String uuid = UUID.randomUUID().toString().replace("-", "");
-                            BaoCaoShipper baoCaoShipper = new BaoCaoShipper(uuid,firebase_manager.auth.getUid(),donHang.getIDShipper(),dialog.getInputText(),"Thông báo",new Date());
+                            BaoCaoShipper baoCaoShipper = new BaoCaoShipper(uuid,firebase_manager.auth.getUid(),donHang.getIDShipper(),dialog.getInputText(),"Thông báo",new Date(), TrangThaiBaoCao.ChuaXem);
                             Toast.makeText(context, "Bạn đã báo cáo shipper  vì lí do: "+dialog.getInputText(), Toast.LENGTH_LONG).show();
                             firebase_manager.mDatabase.child("BaoCao_CuaHang_Shipper").child(uuid).setValue(baoCaoShipper);
                             firebase_manager.storageRef.child("CuaHang").child(firebase_manager.auth.getUid()).child("Avatar").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

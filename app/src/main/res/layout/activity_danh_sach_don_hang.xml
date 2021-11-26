@@ -14,12 +14,17 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Spinner
+                android:padding="8dp"
+
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/edittext_background_v1"
                 android:id="@+id/spTrangThaiDonHang"
-                android:entries="@array/trangthaidonhang_dsDonhang"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:entries="@array/trangthaidonhang_dsDonhang" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcDonHang"
                 android:layout_width="match_parent"

@@ -22,7 +22,13 @@
         <item>Đang giao shipper</item>
         <item>Đang chờ shipper lấy hàng</item>
     </string-array>
-
+    <string-array name="trangthaihoatdong_Shipper">
+        <item>All</item>
+        <item>Đang hoạt động</item>
+        <item>Offline</item>
+        <item>Đang giao hàng </item>
+        <item>Bi khóa </item>
+    </string-array>
     <string-array name="trangthaidonhang_dsDonhang">
         <item>All</item>
         <item>Chờ xác nhận cọc</item>

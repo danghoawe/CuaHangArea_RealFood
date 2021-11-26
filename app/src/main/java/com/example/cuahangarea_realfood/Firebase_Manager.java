@@ -15,12 +15,14 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiShipper;
 import com.example.cuahangarea_realfood.adapter.DanhGiaSanPhamAdapter;
 import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHangAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHang_BepAdapter;
 import com.example.cuahangarea_realfood.adapter.MaGiamGiaAdapter;
 import com.example.cuahangarea_realfood.adapter.SanPhamAdapter;
+import com.example.cuahangarea_realfood.adapter.ShipperAdapter;
 import com.example.cuahangarea_realfood.model.CuaHang;
 import com.example.cuahangarea_realfood.model.DanhGia;
 import com.example.cuahangarea_realfood.model.DanhMuc;
@@ -28,6 +30,7 @@ import com.example.cuahangarea_realfood.model.DonHang;
 import com.example.cuahangarea_realfood.model.KhachHang;
 import com.example.cuahangarea_realfood.model.LoaiSanPham;
 import com.example.cuahangarea_realfood.model.SanPham;
+import com.example.cuahangarea_realfood.model.Shipper;
 import com.example.cuahangarea_realfood.model.TaiKhoanNganHang;
 import com.example.cuahangarea_realfood.model.ThongBao;
 import com.example.cuahangarea_realfood.model.Voucher;
@@ -58,7 +61,9 @@ public class Firebase_Manager {
         storageRef = FirebaseStorage.getInstance().getReference();
         auth= FirebaseAuth.getInstance();
     }
-
+    public Task<Void> Ghi_Shipper (Shipper shipper){
+        return mDatabase.child("Shipper").child(shipper.getiDShipper()).setValue(shipper);
+    }
     public Task<Void> Ghi_ThongBao(ThongBao thongBao)
     {
         return  mDatabase.child("ThongBao").child(auth.getUid()).child(thongBao.getIDThongBao()).setValue(thongBao);
@@ -356,6 +361,27 @@ public class Firebase_Manager {
             }
         });
     }
+    public void GetDanhSachShipper(ArrayList<Shipper>shippers, ShipperAdapter shipperAdapter) {
+        mDatabase.child("Shipper").orderByChild("idCuaHang").equalTo(auth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                shippers.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Shipper s = postSnapshot.getValue(Shipper.class);
+                    shippers.add(s);
+                    if (shipperAdapter!=null)
+                    {
+                        shipperAdapter.notifyDataSetChanged();
+                    }
+
+                }
+                Log.d("shipper",shippers.size()+"");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
     public Task<Void> Ghi_SanPham(SanPham sanPham)
     {
        return mDatabase.child("SanPham").child((sanPham.getIDSanPham())).setValue(sanPham);
@@ -407,6 +433,11 @@ public class Firebase_Manager {
         return  danhMucs;
     }
 
+    public void Up2MatCMND_Shipper(Uri truoc, Uri sau, String iDShipper)
+    {
+        storageRef.child("Shipper").child(iDShipper).child("CMND_MatTruoc").putFile(truoc);
+        storageRef.child("Shipper").child(iDShipper).child("CMND_MatSau").putFile(sau);
+    }
     public void Up2MatCMND(Uri truoc, Uri sau, String IDCuaHang)
     {
         storageRef.child("CuaHang").child(IDCuaHang).child("CMND_MatTruoc").putFile(truoc);
@@ -416,6 +447,10 @@ public class Firebase_Manager {
     {
         return   storageRef.child("CuaHang").child(auth.getUid()).child("Avatar").putFile(Avatar);
 
+    }
+    public UploadTask UpAvatarShipper(Uri avatar, String shipper)
+    {
+        return storageRef.child("Shipper").child(shipper).child("avatar").putFile(avatar);
     }
     public UploadTask UpWallPaper(Uri WallPaper)
     {
@@ -514,6 +549,27 @@ public class Firebase_Manager {
         }
         return res;
     }
+
+    public String GetStringTrangThaiShipper(TrangThaiShipper trangThaiShipper){
+        String res ="";
+        if (trangThaiShipper == TrangThaiShipper.KhongHoatDong)
+        {
+            res ="Offline";
+        }
+        if (trangThaiShipper == TrangThaiShipper.DangHoatDong)
+        {
+            res ="Đang hoạt động";
+        }
+        if (trangThaiShipper == TrangThaiShipper.DangGiaoHang)
+        {
+            res ="Đang giao hàng";
+        }if (trangThaiShipper == TrangThaiShipper.BiKhoa)
+        {
+            res ="Bị khóa";
+        }
+        return res;
+    }
+
     public void SetColorOfStatus(TrangThaiDonHang trangThaiDonHang, View view,TextView textView){
         String res ="";
         textView.setTextColor(Color.WHITE);
@@ -543,32 +599,19 @@ public class Firebase_Manager {
             view.setBackgroundColor(Color.parseColor("#05E6C6"));
         }
     }
-    public void SetColor(TrangThaiDonHang trangThaiDonHang,View lnView, TextView textView){
+    public void SetColor(TrangThaiShipper trangThai, TextView textView){
         textView.setTextColor(Color.WHITE);
-        if (trangThaiDonHang == TrangThaiDonHang.SHOP_HuyDonHang||trangThaiDonHang == TrangThaiDonHang.Shipper_DaTraHang||
-                trangThaiDonHang == TrangThaiDonHang.Shipper_GiaoKhongThanhCong)
+        if (trangThai == TrangThaiShipper.KhongHoatDong||trangThai==TrangThaiShipper.BiKhoa)
         {
-            lnView.setBackgroundColor(Color.RED);
+            textView.setTextColor(Color.parseColor("#F0290E"));
         }
-
-
-        if (trangThaiDonHang == TrangThaiDonHang.SHOP_DangChuanBihang||trangThaiDonHang == TrangThaiDonHang.SHOP_DaChuanBiXong
-        ||trangThaiDonHang == TrangThaiDonHang.SHOP_DangGiaoShipper||trangThaiDonHang == TrangThaiDonHang.SHOP_ChoShipperLayHang
-        ||trangThaiDonHang == TrangThaiDonHang.SHOP_ChoXacNhanGiaoHangChoShipper||trangThaiDonHang == TrangThaiDonHang.ChoShopXacNhan_Tien
-        ||trangThaiDonHang == TrangThaiDonHang.ChoShopXacNhan_TraHang||trangThaiDonHang == TrangThaiDonHang.Shipper_DaLayHang
-        ||trangThaiDonHang == TrangThaiDonHang.Shipper_KhongNhanGiaoHang||trangThaiDonHang == TrangThaiDonHang.Shipper_DangGiaoHang||trangThaiDonHang == TrangThaiDonHang.Shipper_KhongNhanGiaoHang)
+        if (trangThai== TrangThaiShipper.DangHoatDong)
         {
-            lnView.setBackgroundColor(Color.parseColor("#FFFFC107"));
-
+            textView.setTextColor(Color.parseColor("#4CAF50"));
         }
-        if (trangThaiDonHang == TrangThaiDonHang.Shipper_GiaoThanhCong||trangThaiDonHang == TrangThaiDonHang.ChoShopXacNhan_Tien||trangThaiDonHang == TrangThaiDonHang.Shipper_DaChuyenTien)
+        if (trangThai== TrangThaiShipper.DangGiaoHang)
         {
-            lnView.setBackgroundColor(Color.BLUE);
-
+            textView.setTextColor(Color.parseColor("#F0290E"));
         }
-
-
-
-
     }
 }

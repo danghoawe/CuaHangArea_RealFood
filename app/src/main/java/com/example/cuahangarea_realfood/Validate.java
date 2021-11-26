@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class Validate {
     Pattern pattern_email = Pattern.compile("^.+@.+\\..+$");
     Pattern pattern_cmnd = Pattern.compile("[0-9]{9}");
-    Pattern pattern_phone = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})\\b");
+    Pattern pattern_phone = Pattern.compile("(84|0[3|5|7|8|9|012])+([0-9]{8})\\b");
     Pattern pattern_number = Pattern.compile("^(0|[1-9][0-9]*)$");
 
     public boolean isBlank(EditText editText){

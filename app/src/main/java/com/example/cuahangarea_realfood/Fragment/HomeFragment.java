@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
+import com.example.cuahangarea_realfood.DanhSachShipperActivity;
+import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.model.DanhGia;
 import com.example.cuahangarea_realfood.screen.DanhGiaActivity;
 import com.example.cuahangarea_realfood.screen.ThongKeActivity;
@@ -25,10 +27,13 @@ import com.example.cuahangarea_realfood.screen.DS_SanPhamActivity;
 import com.example.cuahangarea_realfood.screen.ThongTinCuaHangActivity;
 import com.example.cuahangarea_realfood.databinding.FragmentHomeBinding;
 import com.example.cuahangarea_realfood.model.CuaHang;
+import com.example.cuahangarea_realfood.screen.ThongTinDonHangActivity;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.tapadoo.alerter.Alerter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,11 +42,12 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class HomeFragment extends Fragment {
 
-    CardView danhSachSanPham,maGiamGia,danhSachDonHang,phanHoiKhachHang,khuVucBep,DoanhThu;
+    CardView danhSachSanPham, maGiamGia, danhSachDonHang, phanHoiKhachHang, khuVucBep, DoanhThu;
     FragmentHomeBinding binding;
-    String txtTenCuaHang ;
-    Uri avatar,wallPaper;
+    String txtTenCuaHang;
+    Uri avatar, wallPaper;
     Firebase_Manager firebase_manager = new Firebase_Manager();
+
     public HomeFragment() {
     }
 
@@ -73,25 +79,9 @@ public class HomeFragment extends Fragment {
         binding.cardViewDanhSachSamPham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebase_manager.mDatabase.child("TaiKhoanNganHang").orderByChild("idTaiKhoan").equalTo(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull  DataSnapshot snapshot) {
-                        if (snapshot.exists())
-                        {
-                            Intent intent = new Intent(getActivity(), DS_SanPhamActivity.class);
-                            startActivity(intent);
-                        }
-                        else {
-                            new KAlertDialog(getContext(),KAlertDialog.WARNING_TYPE).setContentText("Bạn vui lòng thêm thông tin tài khoản ngân hàng trước khi đăng bán sản phẩm !").show();
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull  DatabaseError error) {
-
-                    }
-                });
-
+                Intent intent = new Intent(getActivity(), DS_SanPhamActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -131,24 +121,29 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        return  binding.getRoot();
+        binding.cardViewDanhSachShipper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DanhSachShipperActivity.class);
+                startActivity(intent);
+            }
+        });
+        return binding.getRoot();
     }
 
 
-
     private void Loaddata() {
-        if (txtTenCuaHang!=null)
-        {
+        if (txtTenCuaHang != null) {
             binding.txtTenCuaHang.setText(txtTenCuaHang);
-        }
-        else {
-            firebase_manager. mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+        } else {
+            firebase_manager.mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     CuaHang temp = dataSnapshot.getValue(CuaHang.class);
                     binding.txtTenCuaHang.setText(temp.getTenCuaHang());
-                    txtTenCuaHang =  temp.getTenCuaHang();
+                    txtTenCuaHang = temp.getTenCuaHang();
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
@@ -158,14 +153,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int tong = 0;
-                for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     DanhGia danhGia = snapshot.getValue(DanhGia.class);
-                    tong+=danhGia.getRating();
+                    tong += danhGia.getRating();
                 }
-                if (tong!=0)
-                binding.tvStar.setText(tong/dataSnapshot.getChildrenCount()+"");
-                binding.tvLuotDanhGia.setText(dataSnapshot.getChildrenCount()+" lượt đánh giá");
+                if (tong != 0)
+                    binding.tvStar.setText(tong / dataSnapshot.getChildrenCount() + "");
+                binding.tvLuotDanhGia.setText(dataSnapshot.getChildrenCount() + " lượt đánh giá");
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -178,7 +174,17 @@ public class HomeFragment extends Fragment {
                         .load(uri.toString())
                         .into(binding.profileImage);
                 binding.progessbarAvatar.setVisibility(View.GONE);
-                avatar =  uri;
+                avatar = uri;
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                binding.progessbarAvatar.setVisibility(View.GONE);
+                Alerter.create(getActivity())
+                        .setTitle("Thông báo")
+                        .setText("Vui lòng cập nhật ảnh đại diện và ảnh Ảnh bìa")
+                        .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                        .show();
             }
         });
 
@@ -190,6 +196,16 @@ public class HomeFragment extends Fragment {
                         .into(binding.imagebackground);
                 binding.progessbarWallPaper.setVisibility(View.GONE);
 
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                binding.progessbarWallPaper.setVisibility(View.GONE);
+                Alerter.create(getActivity())
+                        .setTitle("Thông báo")
+                        .setText("Vui lòng cập nhật Ảnh bìa và ảnh đại diện")
+                        .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                        .show();
             }
         });
     }

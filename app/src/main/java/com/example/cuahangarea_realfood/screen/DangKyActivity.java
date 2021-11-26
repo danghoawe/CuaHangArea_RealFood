@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.StorePassword;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiCuaHang;
 import com.example.cuahangarea_realfood.Validate;
 import com.example.cuahangarea_realfood.model.CuaHang;
@@ -48,7 +49,7 @@ public class DangKyActivity extends AppCompatActivity {
     Uri CMND_truoc;
     Uri CMND_sau;
     Firebase_Manager firebase_manager;
-
+    StorePassword storePassword = new StorePassword(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +91,7 @@ public class DangKyActivity extends AppCompatActivity {
 //                                            .onPositiveClicked(() -> {/* Do something here */})
 //                                            .build();
 //                                    a.show();
-
+                                    storePassword.insertProduct(edtEmail.getText().toString(),edtMatKhau.getText().toString());
                                     clearForm(viewGroup);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -196,7 +197,6 @@ public class DangKyActivity extends AppCompatActivity {
                 edtReMatKhau.setError("Mật khẩu không trùng khớp");
             }
         }
-
         return result;
     }
 

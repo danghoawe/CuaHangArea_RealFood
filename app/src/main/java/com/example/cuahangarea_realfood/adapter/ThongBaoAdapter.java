@@ -76,15 +76,15 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
 
         holder.txtTieuDe.setText(thongBao.getTieuDe());
         holder.txtNoiDung.setText(thongBao.getNoiDung());
-        Log.d("Noti", thongBao.getNoiDung());
+
         if (thongBao.getTrangThaiThongBao() == TrangThaiThongBao.DaXem) {
             holder.linearLayout.setBackgroundColor(Color.WHITE);
         }
-        if (!thongBao.getImage().isEmpty()) {
+        if (thongBao.getImage()!=null) {
             Glide.with(context)
                     .load(thongBao.getImage())
                     .into(holder.imageView);
-            holder.progressBar.setVisibility(View.GONE);
+            holder  .progressBar.setVisibility(View.GONE);
         }
         else {
             holder.imageView.setImageResource(R.drawable.tickfrontcolor);

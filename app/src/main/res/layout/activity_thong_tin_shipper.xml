@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/linear1"
+>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/picturefrontpremium"
+                    app:civ_border_color="@color/transparent"
+                    app:civ_border_width="2dp" />
+                <ImageButton
+                    android:id="@+id/btnEditAvatar"
+                    android:layout_gravity="bottom|right"
+                    android:background="@color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:src="@drawable/camera"/>
+            </FrameLayout>
+            <EditText
+                android:id="@+id/edtEmail"
+                style="@style/Edittext_v1"
+                android:drawableLeft="@drawable/baseline_email_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="@string/taiikhon" />
+
+            <EditText android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/baseline_supervised_user_circle_black_24dp"
+                android:id="@+id/edtHoten"
+                style="@style/Edittext_v1"
+                android:hint="@string/hoten"
+                />
+            <android.widget.Button android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/baseline_credit_card_black_24dp"
+                android:id="@+id/btnNgaySinh"
+                style="@style/Edittext_v1"
+                android:hint="Ngày sinh"
+                />
+
+            <EditText
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/baseline_location_on_black_24dp"
+                android:id="@+id/edtDiaChi"
+                style="@style/Edittext_v1"
+                android:hint="@string/diaChi"
+                />
+            <TextView
+
+                android:textSize="16dp"
+                android:id="@+id/txtGoToMaps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:autoLink="all"
+                android:gravity="right"
+                android:linksClickable="false"
+                android:selectAllOnFocus="false"
+                android:text="Go to map ?"
+                android:textColor="@color/color_link" />
+
+            <EditText
+                android:id="@+id/edtSoDT"
+                style="@style/Edittext_v1"
+                android:drawableLeft="@drawable/baseline_phone_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="@string/sdt" />
+
+            <EditText
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/baseline_password_black_24dp"
+                android:id="@+id/edtMatKhau"
+                style="@style/Edittext_v1"
+                android:hint="@string/matkhau"
+                />
+
+            <EditText
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/baseline_password_black_24dp"
+                android:id="@+id/edtNhapLaiMatKhau"
+                style="@style/Edittext_v1"
+                android:hint="@string/rematkhau"
+                />
+            <EditText
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/ic_baseline_sports_motorsports_24"
+                android:id="@+id/edtBienSo"
+                style="@style/Edittext_v1"
+                android:hint="Biển số xe"
+                />
+            <TextView
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Xác thực tài khoản"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tải lên 2 mặt CCCD/CMND để đội ngũ kỹ thuật viên xét duyệt!"/>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mặt trước"/>
+                    <ImageView
+                        android:layout_margin="10dp"
+
+                        android:id="@+id/imgCMND_Truoc"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:src="@drawable/idtruoc"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mặt sau"/>
+                    <ImageView
+                        android:layout_margin="10dp"
+                        android:id="@+id/imgCMND_Sau"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:src="@drawable/idsau"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+            <android.widget.Button
+                android:id="@+id/btnDangKy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_background_blue"
+                android:text="Lưu thông tin"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+\
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

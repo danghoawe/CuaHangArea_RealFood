@@ -130,7 +130,6 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
             //Load hình ảnh và truyền vào carousel dựa vào properties Images của sản phẩm
             for (int i =0 ; i <sanPham.getImages().size();i++)
             {
-
                 firebase_manager.storageRef.child("SanPham").child(sanPham.getIDCuaHang()).child(sanPham.getIDSanPham()).child(sanPham.getImages().get(i)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -138,11 +137,8 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         uriImages.add(uri);
                         carousel.setData(list);
                         LoadData();
-
                     }
                 });
-
-
             }
         }
 

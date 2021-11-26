@@ -1,14 +1,23 @@
 package com.example.cuahangarea_realfood.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,164 +25,174 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+
+import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
-import com.example.cuahangarea_realfood.model.NganHang;
+import com.example.cuahangarea_realfood.ThongTinShipper;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiShipper;
 import com.example.cuahangarea_realfood.model.Shipper;
-import com.example.cuahangarea_realfood.screen.ThongTinDonHangActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import gr.escsoft.michaelprimez.searchablespinner.interfaces.ISpinnerSelectedView;
-
-public class ShipperAdapter extends ArrayAdapter implements ISpinnerSelectedView {
+public class ShipperAdapter extends ArrayAdapter implements Filterable {
     Firebase_Manager firebase_manager = new Firebase_Manager();
-    ArrayList<Shipper>shippers;
-    ArrayList<Shipper>source;
-
     Context context;
     int resource;
-    public ShipperAdapter(@NonNull Context context, int resource, @NonNull  ArrayList<Shipper>shippers) {
-        super(context, resource, shippers);
-        this.context =context;
+    ArrayList<Shipper> data;
+    ArrayList<Shipper> data1;
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+    public ShipperAdapter(@NonNull Context context, int resource, ArrayList<Shipper> data) {
+        super(context, resource, data);
+        this.context = context;
         this.resource = resource;
-        this.shippers = shippers;
-        this.source = shippers;
+        this.data = data;
+        this.data1 = data;
+    }
+
+
+
+    @Override
+    public int getCount() {
+        return data.size();
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return initVeiw(position, convertView, parent);
-
-    }
-    @Nullable
-    @Override
-    public Shipper getItem(int position) {
-        return shippers.get(position);
-    }
-
-    @Override
-    public int getCount() {
-        return shippers.size();
-    }
+        convertView = LayoutInflater.from(context).inflate(resource, null);
+        TextView tvHoten = convertView.findViewById(R.id.tv_hovaten);
+        TextView tvTrangthai = convertView.findViewById(R.id.tv_trangthai);
+        ImageButton btnmore = convertView.findViewById(R.id.btnMore);
 
 
-    @Override
-    public View getDropDownView(int position, @Nullable  View convertView, @NonNull  ViewGroup parent) {
-        return initVeiw(position, convertView, parent);
-    }
-    private View initVeiw(int position,   View convertView,   ViewGroup parent)
-    {
-        convertView = LayoutInflater.from(context).inflate(R.layout.item_shipper,null);
-
-        Shipper shipper = shippers.get(position);
-        TextView txtTen = convertView.findViewById(R.id.txtTenShipper);
-        TextView txtTrangThai = convertView.findViewById(R.id.txtTrangThaiHoatDong);
-        ImageView imgAvata = convertView.findViewById(R.id.imgAvatar);
-        TextView txtKhuVucHoatDong = convertView.findViewById(R.id.txtKhuVucHoatDong);
-        TextView txtSoDienThoai = convertView.findViewById(R.id.txtSoDienThoai);
-
-        txtTen .setText(shipper.getHoVaTen());
-        txtKhuVucHoatDong .setText(shipper.getDiaChi());
-        txtTrangThai.setText(shipper.getTrangThaiHoatDong());
-        txtSoDienThoai.setText(shipper.getSoDienThoai());
-
-
-        firebase_manager.storageRef.child("Shipper").child(shipper.getiDShipper()).child("avatar").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+        TextView tvSdt = convertView.findViewById(R.id.tv_sdt);
+        TextView tvMaxe = convertView.findViewById(R.id.tv_maxe);
+        TextView tvDiaChi = convertView.findViewById(R.id.tvDiaChi);
+        ImageView ivImage = convertView.findViewById(R.id.image_profile);
+        Shipper shipper = data.get(position);
+        tvHoten.setText(shipper.getHoVaTen());
+        firebase_manager.SetColor( data.get(position).getTrangThaiShipper(),tvTrangthai);
+        tvTrangthai.setText(firebase_manager.GetStringTrangThaiShipper(shipper.getTrangThaiShipper()));
+        tvDiaChi.setText(shipper.getDiaChi());
+        tvSdt.setText(shipper.getSoDienThoai());
+        tvMaxe.setText(shipper.getMaSoXe());
+        storageReference.child("Shipper").child(shipper.getiDShipper()).child("avatar").getDownloadUrl(  ).addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onComplete(@NonNull  Task<Uri> task) {
+            public void onSuccess(Uri uri) {
+                Glide.with(context)
+                        .load(uri.toString())
+                        .into(ivImage);
+            }
+        });
 
-                if (task.isSuccessful())
-                {
-                    try {
-                        Glide.with(context)
-                                .load(task.getResult())
-                                .into(imgAvata);
-                    }catch (Exception e){
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ThongTinShipper.class);
+                Gson gson = new Gson();
+                String data = gson.toJson(shipper);
+                intent.putExtra("Shipper", data);
+                getContext().startActivity(intent);
+            }
+        });
+        btnmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(context, btnmore);
+                popup.inflate(R.menu.popupmenu_shipper);
 
+                Menu menu = popup.getMenu();
+                // com.android.internal.view.menu.MenuBuilder
+                Log.i("LOG_TAG", "Menu class: " + menu.getClass().getName());
+
+                // Register Menu Item Click event.
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId())
+                        {
+                            case R.id.mn_delete:
+                            {
+                                new KAlertDialog(context,KAlertDialog.WARNING_TYPE).setContentText("Bạn có chắc xóa shipper này ?")
+                                        .setConfirmText("Có").setCancelText("Không").setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                                    @Override
+                                    public void onClick(KAlertDialog kAlertDialog) {
+                                        firebase_manager.mDatabase.child("Shipper").child(shipper.getiDShipper()).removeValue();
+                                        kAlertDialog.dismiss();
+                                    }
+                                }).show();
+                                break;
+                            }
+                            case R.id.mn_lockOrUnlock:
+                            {
+                                if (shipper.getTrangThaiShipper()== TrangThaiShipper.BiKhoa)
+                                {
+                                    Alerter.create((Activity) context)
+                                            .setTitle("Thông báo")
+                                            .setText("Trạng thái shipper đã được cập nhật")
+                                            .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                            .show();
+                                    firebase_manager.mDatabase.child("Shipper").child(shipper.getiDShipper()).child("trangThaiShipper").setValue(TrangThaiShipper.KhongHoatDong);
+                                }
+                                else {
+                                    Alerter.create((Activity) context)
+                                            .setTitle("Thông báo")
+                                            .setText("Trạng thái shipper đã được cập nhật")
+                                            .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                            .show();
+                                    firebase_manager.mDatabase.child("Shipper").child(shipper.getiDShipper()).child("trangThaiShipper").setValue(TrangThaiShipper.BiKhoa);
+                                }
+                                break;
+                            }
+                        }
+                        return true;
                     }
+                });
 
-                }
-
+                // Show the PopupMenu.
+                popup.show();
             }
         });
         return convertView;
     }
 
-
-
+    @NonNull
     @Override
     public Filter getFilter() {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                String strSearch = constraint.toString();
-                if (strSearch.isEmpty()) {
-                    shippers = source;
-                } else {
-                    ArrayList<Shipper> list = new ArrayList<>();
-                    for (Shipper shipper : source) {
-                        if (shipper.getHoVaTen().toLowerCase().contains(strSearch.toLowerCase())) {
+                String keyWord = constraint.toString();
+                if(keyWord.isEmpty()){
+                    data = data1;
+                }else {
+                    List<Shipper> list = new ArrayList<>();
+                    for (Shipper shipper : data1){
+                        if(shipper.getHoVaTen().toLowerCase().contains(keyWord.toLowerCase())||shipper.getTrangThaiShipper().toString().equals(keyWord)){
                             list.add(shipper);
                         }
                     }
-                    shippers = list;
+                    data = (ArrayList<Shipper>) list;
                 }
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = shippers;
-                return filterResults;
+                filterResults.values = data;
+                return filterResults    ;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                shippers = (ArrayList<Shipper>) results.values;
+                data = (ArrayList<Shipper>) results.values;
                 notifyDataSetChanged();
             }
         };
     }
-
-
-    @Override
-    public View getNoSelectionView() {
-        return null;
-    }
-
-    @Override
-    public View getSelectedView(int position) {
-        View convertView = LayoutInflater.from(context).inflate(R.layout.item_shipper,null);
-
-        Shipper shipper = shippers.get(position);
-
-
-        TextView txtTen = convertView.findViewById(R.id.txtTenShipper);
-        TextView txtTrangThai = convertView.findViewById(R.id.txtTrangThaiHoatDong);
-        ImageView imgAvata = convertView.findViewById(R.id.imgAvatar);
-        TextView txtKhuVucHoatDong = convertView.findViewById(R.id.txtKhuVucHoatDong);
-        TextView txtSoDienThoai = convertView.findViewById(R.id.txtSoDienThoai);
-
-        txtTen .setText(shipper.getHoVaTen());
-        txtKhuVucHoatDong .setText(shipper.getDiaChi());
-        txtTrangThai.setText(shipper.getTrangThaiHoatDong());
-        txtSoDienThoai.setText(shipper.getSoDienThoai());
-        firebase_manager.storageRef.child("Shipper").child(shipper.getiDShipper()).child("avatar").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull  Task<Uri> task) {
-                try {
-                    Glide.with(context)
-                            .load(task.getResult())
-                            .into(imgAvata);
-                }catch (Exception e)
-                {
-                    Log.d("Image: ","Not found");
-                }
-
-            }
-        });
-        return convertView;
-
-    }
-
 }

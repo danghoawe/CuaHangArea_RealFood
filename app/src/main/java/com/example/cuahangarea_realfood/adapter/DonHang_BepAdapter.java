@@ -1,13 +1,11 @@
 package com.example.cuahangarea_realfood.adapter;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -44,12 +42,8 @@ import java.util.ArrayList;
 
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 import karpuzoglu.enes.com.fastdialog.Animations;
-import karpuzoglu.enes.com.fastdialog.DismissListener;
 import karpuzoglu.enes.com.fastdialog.FastDialog;
-import karpuzoglu.enes.com.fastdialog.FastDialogBuilder;
-import karpuzoglu.enes.com.fastdialog.Positions;
 import karpuzoglu.enes.com.fastdialog.PositiveClick;
-import karpuzoglu.enes.com.fastdialog.Type;
 
 public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.MyViewHolder> implements Filterable {
     private Activity context;
@@ -58,7 +52,7 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
     ArrayList<DonHang> source;
     public SetOnLongClick setOnLongClick;
     ArrayList<Shipper>shippers = new ArrayList<>();
-    ShipperAdapter shipperAdapter ;
+    ShipperSpinnerAdapter shipperSpinnerAdapter;
 
     Firebase_Manager firebase_manager = new Firebase_Manager();
     public SetOnLongClick getSetOnLongClick() {
@@ -299,8 +293,8 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
                     Shipper shipper = dataSnapshot.getValue(Shipper.class);
                     shippers.add(shipper);
                 }
-                shipperAdapter = new ShipperAdapter(context,R.layout.item_shipper,shippers);
-                holder.spDSShipper.setAdapter(shipperAdapter);
+                shipperSpinnerAdapter = new ShipperSpinnerAdapter(context,R.layout.item_shipper,shippers);
+                holder.spDSShipper.setAdapter(shipperSpinnerAdapter);
             }
         });
     }

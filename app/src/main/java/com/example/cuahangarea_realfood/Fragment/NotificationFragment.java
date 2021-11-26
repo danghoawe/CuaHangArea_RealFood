@@ -18,17 +18,15 @@ import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
 import com.example.cuahangarea_realfood.adapter.ThongBaoAdapter;
 import com.example.cuahangarea_realfood.databinding.FragmentNotificationBinding;
 import com.example.cuahangarea_realfood.model.DanhMuc;
-import com.example.cuahangarea_realfood.model.DonHang;
 import com.example.cuahangarea_realfood.model.ThongBao;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 
 public class NotificationFragment extends Fragment {
@@ -68,7 +66,7 @@ public class NotificationFragment extends Fragment {
         }
     }
     private void LoadData() {
-        firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).orderByChild("date").addValueEventListener(new ValueEventListener() {
+        firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).orderByChild("trangThaiThongBao").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
@@ -79,16 +77,18 @@ public class NotificationFragment extends Fragment {
                         thongBaos.add(thongBao);
                         thongBaoAdapter.notifyDataSetChanged();
                     }
-                    Collections.sort(thongBaos, new Comparator<ThongBao>() {
-                        @Override
-                        public int compare(ThongBao o1, ThongBao o2) {
-                            return o2.getDate().compareTo(o1.getDate());
-                        }
-                    });
                     binding.rcNotification.setLayoutManager(linearLayoutManager);
                     binding.rcNotification.setAdapter(thongBaoAdapter);
                     binding.pdLoad.setVisibility(View.GONE);
                     LoadAlert();
+                }
+                else {
+                    binding.pdLoad.setVisibility(View.GONE);
+                    Alerter.create(getActivity())
+                            .setTitle("Thông báo")
+                            .setText("Bạn chưa có thông báo nào :((")
+                            .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                            .show();
                 }
             }
             @Override
@@ -108,7 +108,6 @@ public class NotificationFragment extends Fragment {
                     }
                     thongBaoAdapter.notifyDataSetChanged();
                 });
-
                 binding.pdLoad.setVisibility(View.GONE);
             }
         });

@@ -26,13 +26,14 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
         <EditText
-            android:drawablePadding="10dp"
-            android:drawableLeft="@drawable/baseline_email_black_24dp"
             android:id="@+id/edtEmail"
             style="@style/Edittext_v1"
-            android:hint="@string/taiikhon"
-            />
+            android:drawableLeft="@drawable/baseline_email_black_24dp"
+            android:drawablePadding="10dp"
+            android:hint="@string/taiikhon" />
+
         <EditText android:drawablePadding="10dp"
             android:drawableLeft="@drawable/baseline_supervised_user_circle_black_24dp"
             android:id="@+id/edtHoten"

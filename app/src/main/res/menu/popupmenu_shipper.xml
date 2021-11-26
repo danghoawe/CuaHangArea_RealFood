@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mn_lockOrUnlock"
+        android:icon="@drawable/lockfrontcolor"
+        android:title="Khóa/Mở khóa" />
+
+    <item
+        android:id="@+id/mn_Info"
+        android:icon="@drawable/pencilfrontpremium"
+        android:title="Thông tin chi tiết" />
+    <item
+        android:id="@+id/mn_delete"
+        android:icon="@drawable/trashcanfrontcolor"
+        android:title="Xóa" />
+</menu>

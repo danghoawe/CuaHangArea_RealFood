@@ -13,12 +13,10 @@ import android.widget.Toast;
 
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiBaoCao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
-import com.example.cuahangarea_realfood.adapter.DonHangAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHangInfoAdapter;
-import com.example.cuahangarea_realfood.adapter.DonHang_BepAdapter;
-import com.example.cuahangarea_realfood.adapter.ShipperAdapter;
-import com.example.cuahangarea_realfood.databinding.ActivityThongTinCuaHangBinding;
+import com.example.cuahangarea_realfood.adapter.ShipperSpinnerAdapter;
 import com.example.cuahangarea_realfood.databinding.ActivityThongTinDonHangBinding;
 import com.example.cuahangarea_realfood.model.BaoCaoShipper;
 import com.example.cuahangarea_realfood.model.DonHang;
@@ -26,7 +24,6 @@ import com.example.cuahangarea_realfood.model.DonHangInfo;
 import com.example.cuahangarea_realfood.model.KhachHang;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.Shipper;
-import com.example.cuahangarea_realfood.model.Voucher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -51,7 +48,7 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
     ArrayList<DonHangInfo> donHangInfos;
     DonHang donHang;
     ArrayList<Shipper>shippers = new ArrayList<>();
-    ShipperAdapter shipperAdapter ;
+    ShipperSpinnerAdapter shipperSpinnerAdapter;
     Firebase_Manager firebase_manager = new Firebase_Manager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,6 +271,7 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
         binding.btnGiaoHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -335,7 +333,7 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                         if (dialog.getInputText()!=null)
                         {
                             String uuid = UUID.randomUUID().toString().replace("-", "");
-                            BaoCaoShipper baoCaoShipper = new BaoCaoShipper(uuid,firebase_manager.auth.getUid(),donHang.getIDShipper(),dialog.getInputText(),"Thông báo",new Date());
+                            BaoCaoShipper baoCaoShipper = new BaoCaoShipper(uuid,firebase_manager.auth.getUid(),donHang.getIDShipper(),dialog.getInputText(),"Thông báo",new Date(), TrangThaiBaoCao.ChuaXem);
                             Toast.makeText(ThongTinDonHangActivity.this, "Bạn đã báo cáo shipper  vì lí do: "+dialog.getInputText(), Toast.LENGTH_LONG).show();
                             firebase_manager.mDatabase.child("BaoCao_CuaHang_Shipper").child(uuid).setValue(baoCaoShipper);
                         }
@@ -434,8 +432,8 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                     Shipper shipper = dataSnapshot.getValue(Shipper.class);
                     shippers.add(shipper);
                 }
-                shipperAdapter = new ShipperAdapter(ThongTinDonHangActivity.this,R.layout.item_shipper,shippers);
-                binding.spDSShipper.setAdapter(shipperAdapter);
+                shipperSpinnerAdapter = new ShipperSpinnerAdapter(ThongTinDonHangActivity.this,R.layout.item_shipper,shippers);
+                binding.spDSShipper.setAdapter(shipperSpinnerAdapter);
             }
         });
     }

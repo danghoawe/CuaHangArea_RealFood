@@ -1,12 +1,12 @@
 package com.example.cuahangarea_realfood.model;
 
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiShipper;
+
 public class Shipper {
-    String iDShipper, eMail, matKhau, hoVaTen, diaChi, khuVucHoatDong, ngaySinh, maSoXe, trangThaiHoatDong, soDienThoai;
+    String iDShipper, eMail, matKhau, hoVaTen, diaChi, khuVucHoatDong, ngaySinh, maSoXe, soDienThoai, loaiShipper,idCuaHang;
+    TrangThaiShipper trangThaiShipper;
 
-    public Shipper() {
-    }
-
-    public Shipper(String iDShipper, String eMail, String matKhau, String hoVaTen, String diaChi, String khuVucHoatDong, String ngaySinh, String maSoXe, String trangThaiHoatDong, String soDienThoai) {
+    public Shipper(String iDShipper, String eMail, String matKhau, String hoVaTen, String diaChi, String khuVucHoatDong, String ngaySinh, String maSoXe, String soDienThoai, String loaiShipper, String idCuaHang, TrangThaiShipper trangThaiShipper) {
         this.iDShipper = iDShipper;
         this.eMail = eMail;
         this.matKhau = matKhau;
@@ -15,8 +15,13 @@ public class Shipper {
         this.khuVucHoatDong = khuVucHoatDong;
         this.ngaySinh = ngaySinh;
         this.maSoXe = maSoXe;
-        this.trangThaiHoatDong = trangThaiHoatDong;
         this.soDienThoai = soDienThoai;
+        this.loaiShipper = loaiShipper;
+        this.idCuaHang = idCuaHang;
+        this.trangThaiShipper = trangThaiShipper;
+    }
+
+    public Shipper() {
     }
 
     public String getiDShipper() {
@@ -83,19 +88,35 @@ public class Shipper {
         this.maSoXe = maSoXe;
     }
 
-    public String getTrangThaiHoatDong() {
-        return trangThaiHoatDong;
-    }
-
-    public void setTrangThaiHoatDong(String trangThaiHoatDong) {
-        this.trangThaiHoatDong = trangThaiHoatDong;
-    }
-
     public String getSoDienThoai() {
         return soDienThoai;
     }
 
     public void setSoDienThoai(String soDienThoai) {
         this.soDienThoai = soDienThoai;
+    }
+
+    public String getLoaiShipper() {
+        return loaiShipper;
+    }
+
+    public void setLoaiShipper(String loaiShipper) {
+        this.loaiShipper = loaiShipper;
+    }
+
+    public String getIdCuaHang() {
+        return idCuaHang;
+    }
+
+    public void setIdCuaHang(String idCuaHang) {
+        this.idCuaHang = idCuaHang;
+    }
+
+    public TrangThaiShipper getTrangThaiShipper() {
+        return trangThaiShipper;
+    }
+
+    public void setTrangThaiShipper(TrangThaiShipper trangThaiShipper) {
+        this.trangThaiShipper = trangThaiShipper;
     }
 }

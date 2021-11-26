@@ -1,21 +1,25 @@
 package com.example.cuahangarea_realfood.model;
 
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiBaoCao;
+
 import java.util.Date;
 
 public class BaoCaoShipper {
     String idBaoCao,idCuaHang,idShipper,noiDung,tieuDe;
     Date ngayBaoCao;
+    TrangThaiBaoCao trangThaiBaoCao;
 
-    public BaoCaoShipper(String idBaoCao, String idCuaHang, String idShipper, String noiDung, String tieuDe, Date ngayBaoCao) {
+    public BaoCaoShipper() {
+    }
+
+    public BaoCaoShipper(String idBaoCao, String idCuaHang, String idShipper, String noiDung, String tieuDe, Date ngayBaoCao, TrangThaiBaoCao trangThaiBaoCao) {
         this.idBaoCao = idBaoCao;
         this.idCuaHang = idCuaHang;
         this.idShipper = idShipper;
         this.noiDung = noiDung;
         this.tieuDe = tieuDe;
         this.ngayBaoCao = ngayBaoCao;
-    }
-
-    public BaoCaoShipper() {
+        this.trangThaiBaoCao = trangThaiBaoCao;
     }
 
     public String getIdBaoCao() {
@@ -64,5 +68,13 @@ public class BaoCaoShipper {
 
     public void setNgayBaoCao(Date ngayBaoCao) {
         this.ngayBaoCao = ngayBaoCao;
+    }
+
+    public TrangThaiBaoCao getTrangThaiBaoCao() {
+        return trangThaiBaoCao;
+    }
+
+    public void setTrangThaiBaoCao(TrangThaiBaoCao trangThaiBaoCao) {
+        this.trangThaiBaoCao = trangThaiBaoCao;
     }
 }

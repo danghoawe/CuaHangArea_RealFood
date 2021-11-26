@@ -62,7 +62,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!Places.isInitialized()) {
-            Places.initialize(MapsActivity.this, "AIzaSyDLsO6NCyMoywwvhuFDP2MCU9ue1dWMy0g");
+                Places.initialize(MapsActivity.this, "AIzaSyDLsO6NCyMoywwvhuFDP2MCU9ue1dWMy0g");
             PlacesClient placesClient = Places.createClient(MapsActivity.this);
         }
         //Init FusedLocationProviderClient to get last GPS
