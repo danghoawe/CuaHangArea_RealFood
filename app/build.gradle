@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.5.0'
 
     // Lottie Animation Library
-    implementation 'com.airbnb.android:lottie:3.3.6'
+
     implementation 'com.google.android.gms:play-services-maps:18.0.0'
     implementation project(path: ':library')
     def work_version = "2.5.0"

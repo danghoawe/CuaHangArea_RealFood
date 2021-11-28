@@ -72,7 +72,6 @@ public class ShipperAdapter extends ArrayAdapter implements Filterable {
         TextView tvTrangthai = convertView.findViewById(R.id.tv_trangthai);
         ImageButton btnmore = convertView.findViewById(R.id.btnMore);
 
-
         TextView tvSdt = convertView.findViewById(R.id.tv_sdt);
         TextView tvMaxe = convertView.findViewById(R.id.tv_maxe);
         TextView tvDiaChi = convertView.findViewById(R.id.tvDiaChi);
@@ -87,9 +86,15 @@ public class ShipperAdapter extends ArrayAdapter implements Filterable {
         storageReference.child("Shipper").child(shipper.getiDShipper()).child("avatar").getDownloadUrl(  ).addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(context)
-                        .load(uri.toString())
-                        .into(ivImage);
+                try {
+                    Glide.with(context)
+                            .load(uri.toString())
+                            .into(ivImage);
+                }catch (Exception e)
+                {
+
+                }
+
             }
         });
 

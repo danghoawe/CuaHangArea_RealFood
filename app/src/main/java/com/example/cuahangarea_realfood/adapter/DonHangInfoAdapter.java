@@ -62,7 +62,7 @@ public class DonHangInfoAdapter extends RecyclerView.Adapter<DonHangInfoAdapter.
     public void onBindViewHolder(@NonNull DonHangInfoAdapter.MyViewHolder holder, int position) {
         DonHangInfo donHangInfo = donHangInfos.get(position);
         holder.tvTenSanPham.setText(donHangInfo.getSanPham().getTenSanPham());
-        String gia = String.valueOf(Integer.valueOf(donHangInfo.getSanPham().getGia()));
+        String gia = donHangInfo.getSanPham().getGia();
         holder.tvGia.setText(gia);
         holder.tvSoLuong.setText("X "+ donHangInfo.getSoLuong());
         firebase_manager.storageRef.child("SanPham").child(donHangInfo.getSanPham().getIDCuaHang()).child(donHangInfo.getSanPham().getIDSanPham()).child(donHangInfo.getSanPham().getImages().get(0)).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {

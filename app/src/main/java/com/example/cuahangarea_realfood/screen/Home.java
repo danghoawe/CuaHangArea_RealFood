@@ -24,11 +24,12 @@ import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 public class Home extends AppCompatActivity {
-FrameLayout frameLayout;
-BottomBar bottomBar ;
-StorePassword storePassword = new StorePassword(this);
-Firebase_Manager firebase_manager = new Firebase_Manager();
-public static Fragment fragment;
+    FrameLayout frameLayout;
+    BottomBar bottomBar;
+    StorePassword storePassword = new StorePassword(this);
+    Firebase_Manager firebase_manager = new Firebase_Manager();
+    public static Fragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,20 +38,21 @@ public static Fragment fragment;
         this.getSupportActionBar().hide();
         setControl();
         setEvent();
-        Toast.makeText(this, storePassword.getPassword()+"", Toast.LENGTH_SHORT).show(); ;
         BottomBarTab nearby = bottomBar.getTabWithId(R.id.tab_notification);
         firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid())
                 .orderByChild("trangThaiThongBao").equalTo("ChuaXem")
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                nearby.setBadgeCount((int) dataSnapshot.getChildrenCount());
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        nearby.setBadgeCount((int) dataSnapshot.getChildrenCount());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
+
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -64,8 +66,7 @@ public static Fragment fragment;
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                switch (tabId)
-                {
+                switch (tabId) {
                     case R.id.tab_home:
                         HomeFragment homeFragment = new HomeFragment();
                         loadFragment(homeFragment);
@@ -88,21 +89,36 @@ public static Fragment fragment;
     }
 
     private void setControl() {
-         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-         frameLayout = findViewById(R.id.fragment);
+        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        frameLayout = findViewById(R.id.fragment);
     }
+
+    int i = 0;
+
     @Override
     public void onBackPressed() {
-
-            int fragments = getSupportFragmentManager().getBackStackEntryCount();
-            if (fragments == 1) {
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            if (i != 0) {
                 finish();
-            } else if (getFragmentManager().getBackStackEntryCount() > 1) {
-                getFragmentManager().popBackStack();
+                firebase_manager.auth.signOut();
             } else {
-                super.onBackPressed();
+                Toast.makeText(this, "Nhấn lần nữa để đăng xuất!", Toast.LENGTH_SHORT).show();
+                i++;
             }
+        } else if (getFragmentManager().getBackStackEntryCount() > 1) {
+            getFragmentManager().popBackStack();
+        } else {
+            if (i != 0) {
+                super.onBackPressed();
+                firebase_manager.auth.signOut();
+            } else {
+                Toast.makeText(this, "Nhấn lần nữa để đăng xuất!", Toast.LENGTH_SHORT).show();
+                i++;
+            }
+        }
 
     }
+
 
 }

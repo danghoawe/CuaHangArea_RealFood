@@ -108,8 +108,10 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
         Shipper shipper;
         holder.txtID.setText(donHang.getIDDonHang().substring(0, 25));
         holder.txtTrangThaiDonHang.setText(firebase_manager.GetStringTrangThaiDonHang(donHang.getTrangThai()));
-        holder.txtGhiChu.setText(donHang.getGhiChu_KhachHang()+"");
-
+        if (donHang.getGhiChu_KhachHang()!=null)
+        {
+            holder.txtGhiChu.setText(donHang.getGhiChu_KhachHang()+"");
+        }
         if (donHang.getIDShipper().isEmpty()) {
             holder.lnTTshipper.setVisibility(View.GONE);
         } else {
@@ -140,8 +142,9 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
         String price =format.format(parseFloat);
         holder.txtTongTien.setText(price);
        // firebase_manager.SetColor(donHang.getTrangThai(),holder.txtTrangThaiDonHang);
+        holder.txtSoDienThoai.setText(donHang.getSoDienThoai());
+        holder.txtDiaChi.setText(donHang.getDiaChi());
 
-        holder.txtDiaChi.setText(donHang.getDiaChi() + "");
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
         String strDate= formatter.format(donHang.getNgayTao());
         holder.txtTime.setText(strDate);

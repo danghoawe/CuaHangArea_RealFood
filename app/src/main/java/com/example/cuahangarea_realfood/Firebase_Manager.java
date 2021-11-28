@@ -611,7 +611,7 @@ public class Firebase_Manager {
         }
         if (trangThai== TrangThaiShipper.DangGiaoHang)
         {
-            textView.setTextColor(Color.parseColor("#F0290E"));
+            textView.setTextColor(Color.parseColor("#E8DF3C"));
         }
     }
 }

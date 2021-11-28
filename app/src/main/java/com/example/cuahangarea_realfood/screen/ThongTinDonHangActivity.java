@@ -16,6 +16,7 @@ import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiBaoCao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.adapter.DonHangInfoAdapter;
+import com.example.cuahangarea_realfood.adapter.DonHang_BepAdapter;
 import com.example.cuahangarea_realfood.adapter.ShipperSpinnerAdapter;
 import com.example.cuahangarea_realfood.databinding.ActivityThongTinDonHangBinding;
 import com.example.cuahangarea_realfood.model.BaoCaoShipper;
@@ -25,6 +26,7 @@ import com.example.cuahangarea_realfood.model.KhachHang;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.Shipper;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -336,6 +338,7 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                             BaoCaoShipper baoCaoShipper = new BaoCaoShipper(uuid,firebase_manager.auth.getUid(),donHang.getIDShipper(),dialog.getInputText(),"Thông báo",new Date(), TrangThaiBaoCao.ChuaXem);
                             Toast.makeText(ThongTinDonHangActivity.this, "Bạn đã báo cáo shipper  vì lí do: "+dialog.getInputText(), Toast.LENGTH_LONG).show();
                             firebase_manager.mDatabase.child("BaoCao_CuaHang_Shipper").child(uuid).setValue(baoCaoShipper);
+                            dialog.dismiss();
                         }
                         else {
                             Toast.makeText(ThongTinDonHangActivity.this, "Vui lòng không để trống!", Toast.LENGTH_SHORT).show();
@@ -343,6 +346,18 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
+            }
+        });
+        binding.radHeThong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadShipper();
+            }
+        });
+        binding.radCuaHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadShipper();
             }
         });
     }
@@ -423,19 +438,41 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
     }
 
     private void LoadShipper() {
-        firebase_manager.mDatabase.child("Shipper").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                shippers.clear();
-                for (DataSnapshot dataSnapshot: task.getResult().getChildren()
-                ) {
-                    Shipper shipper = dataSnapshot.getValue(Shipper.class);
-                    shippers.add(shipper);
+        if (binding.radHeThong.isChecked())
+        {
+            firebase_manager.mDatabase.child("Shipper").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                    shippers.clear();
+                    for (DataSnapshot dataSnapshot: task.getResult().getChildren()
+                    ) {
+                        Shipper shipper = dataSnapshot.getValue(Shipper.class);
+                        shippers.add(shipper);
+                    }
+                    shipperSpinnerAdapter = new ShipperSpinnerAdapter(ThongTinDonHangActivity.this,R.layout.item_shipper,shippers);
+                    binding.spDSShipper.setAdapter(shipperSpinnerAdapter);
                 }
-                shipperSpinnerAdapter = new ShipperSpinnerAdapter(ThongTinDonHangActivity.this,R.layout.item_shipper,shippers);
-                binding.spDSShipper.setAdapter(shipperSpinnerAdapter);
-            }
-        });
+            });
+        }
+        else {
+            firebase_manager.mDatabase.child("Shipper").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot) {
+                    shippers.clear();
+                    for (DataSnapshot snapshot: dataSnapshot.getChildren()
+                    ) {
+                        Shipper shipper = snapshot.getValue(Shipper.class);
+                        if(shipper.getIdCuaHang().equals(firebase_manager.auth.getUid()))
+                        {
+                            shippers.add(shipper);
+                        }
+                    }
+                    shipperSpinnerAdapter = new ShipperSpinnerAdapter(ThongTinDonHangActivity.this,R.layout.item_shipper,shippers);
+                    binding.spDSShipper.setAdapter(shipperSpinnerAdapter);
+                }
+            });
+        }
+
     }
     private void LoadData() {
         if (donHang.getIDShipper().isEmpty()) {
@@ -469,13 +506,14 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        binding.txtSoDienThoai.setText(donHang.getSoDienThoai());
+        binding.txtDiaChi.setText(donHang.getDiaChi());
         firebase_manager.mDatabase.child("KhachHang").child(donHang.getIDKhachHang()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 KhachHang khachHang = snapshot.getValue(KhachHang.class);
                 binding.txtTenKhach.setText(khachHang.getTenKhachHang());
-                binding.txtSoDienThoai.setText(khachHang.getSoDienThoai());
-                binding.txtDiaChi.setText(khachHang.getDiaChi());
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

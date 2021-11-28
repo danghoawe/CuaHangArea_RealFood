@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -139,6 +140,7 @@ public class DanhGiaSanPhamAdapter extends RecyclerView.Adapter<DanhGiaSanPhamAd
             public void onSuccess(Uri uri) {
                 try {
                     Glide.with(context).load(uri.toString()).into(holder.ivAvatar);
+                    holder.progressBar.setVisibility(View.GONE);
                 }catch (Exception e)
                 {
 
@@ -187,6 +189,7 @@ public class DanhGiaSanPhamAdapter extends RecyclerView.Adapter<DanhGiaSanPhamAd
         ImageView ivAvatar,ivAnhSanPham,imageSend;
         EditText edtTraLoi;
         LinearLayout lnTraLoi,lnSend;
+        ProgressBar progressBar;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTenKhachHang = itemView.findViewById(R.id.tvTenKhachHang);
@@ -203,6 +206,7 @@ public class DanhGiaSanPhamAdapter extends RecyclerView.Adapter<DanhGiaSanPhamAd
             lnTraLoi = itemView.findViewById(R.id.lnTraloi);
             tvTraLoi = itemView.findViewById(R.id.tvShopTraLoi);
             tvThoiGianTraLoi = itemView.findViewById(R.id.tvThoiGianShopTraLoi);
+            progressBar = itemView.findViewById(R.id.progessbar);
         }
     }
 }

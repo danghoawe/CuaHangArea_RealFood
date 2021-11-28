@@ -185,7 +185,7 @@ public class DS_SanPhamActivity extends AppCompatActivity {
 
                 break;
             case R.id.mnRefesh:
-                firebase_manager.GetDanhSachDanhMuc(danhMucs,danhMucAdapter);
+                sanPhamAdapter.getFilter().filter("");
 
                 break;
 
