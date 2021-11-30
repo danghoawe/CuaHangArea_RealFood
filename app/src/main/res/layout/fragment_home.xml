@@ -93,48 +93,48 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_marginBottom="6dp"
                         android:text="___________"
                         android:textStyle="bold" />
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#B6B6B6"/>
                     <LinearLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
+                        android:gravity="center">
                         <TextView
+                            android:layout_gravity="center"
                             android:layout_weight="1"
                             android:id="@+id/tvLuotDanhGia"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="6dp"
-
+                            android:textStyle="bold"
                             android:gravity="center"
                             android:text=" O lượt đánh giá"
                             android:textSize="14dp" />
                         <LinearLayout
-                            android:gravity="center"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                            <TextView
-                                android:layout_gravity="center"
-                                android:id="@+id/tvStar"
-                                android:layout_width="wrap_content"
+                            <com.willy.ratingbar.ScaleRatingBar
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/simpleRatingBar"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-
-                                android:gravity="center"
-                                android:text="5"
-                                android:textSize="16dp" />
-
-                            <ImageView
-                                android:layout_marginLeft="5dp"
-                                android:id="@+id/image"
-                                android:layout_width="15dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:background="@color/transparent"
-                                android:src="@drawable/starfrontpremium" />
+                                app:srb_numStars="5"
+                                app:srb_minimumStars="1"
+                                app:srb_rating="2"
+                                app:srb_starWidth="12dp"
+                                app:srb_starHeight="12dp"
+                                app:srb_stepSize="0.5"
+                                app:srb_clickable="false"
+                                app:srb_scrollable="false"
+                                app:srb_clearRatingEnabled="false"
+                                />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

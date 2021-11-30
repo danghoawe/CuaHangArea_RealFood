@@ -18,9 +18,9 @@
         android:theme="@style/Theme.CuaHangArea_RealFood"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".ThongTinShipper"
+        <activity android:name=".screen.ThongTinShipperActivity"
             android:label="Danh sách shipper"
-            android:parentActivityName=".DanhSachShipperActivity"></activity>
+            android:parentActivityName=".screen.DanhSachShipperActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -34,7 +34,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".DanhSachShipperActivity"
+            android:name=".screen.DanhSachShipperActivity"
             android:label="Thông tin chi tiết"
             android:parentActivityName=".screen.Home" />
         <activity

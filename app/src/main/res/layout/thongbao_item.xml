@@ -64,7 +64,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#616161"/>
+            android:background="#B6B6B6"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

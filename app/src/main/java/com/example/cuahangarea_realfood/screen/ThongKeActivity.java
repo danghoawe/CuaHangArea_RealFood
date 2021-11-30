@@ -8,6 +8,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -30,6 +31,7 @@ import com.example.cuahangarea_realfood.PieChartFragment;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.model.DonHang;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -58,7 +60,6 @@ public class ThongKeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_ke);
-
         txtTongSoDonHang = findViewById(R.id.txtTongDonHang);
         txtChoChuyenCoc = findViewById(R.id.txtChoChuyenCoc);
         txtDaGiaoThanhCong = findViewById(R.id.txtDaGiaoThanhCong);
@@ -86,24 +87,20 @@ public class ThongKeActivity extends AppCompatActivity {
     }
 
     private void LoadData() {
-
-
-        firebase_manager.mDatabase.child("DonHang").orderByChild("idcuaHang").equalTo(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
+        firebase_manager.mDatabase.child("DonHang").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onSuccess(DataSnapshot dataSnapshot) {
                 donHangs.clear();
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                Log.d("data",dataSnapshot.toString());
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     DonHang donHang = postSnapshot.getValue(DonHang.class);
-                    donHangs.add(donHang);
+                    if (donHang.getIDCuaHang().equals(firebase_manager.auth.getUid()))
+                    {
+                        donHangs.add(donHang);
+                    }
                 }
                 display = donHangs;
                 GetThongKe_DonHang(donHangs);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
@@ -125,7 +122,6 @@ public class ThongKeActivity extends AppCompatActivity {
                             btnNgayKetThuc.setText(formatter.format(date));
                             display = (ArrayList<DonHang>) donHangs.stream().filter(donHang -> donHang.getNgayTao().compareTo(date) < 0).collect(Collectors.toList());
                             display = (ArrayList<DonHang>) display.stream().filter(donHang -> donHang.getNgayTao().compareTo(dateBatDau) >0).collect(Collectors.toList());
-
                             GetThongKe_DonHang(display);
                             LoadPieChart();
                         }

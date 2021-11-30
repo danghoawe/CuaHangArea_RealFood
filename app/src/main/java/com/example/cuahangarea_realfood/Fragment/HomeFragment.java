@@ -13,8 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.developer.kalert.KAlertDialog;
-import com.example.cuahangarea_realfood.DanhSachShipperActivity;
+import com.example.cuahangarea_realfood.screen.DanhSachShipperActivity;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.model.DanhGia;
 import com.example.cuahangarea_realfood.screen.DanhGiaActivity;
@@ -24,10 +23,8 @@ import com.example.cuahangarea_realfood.screen.DanhSachDonHangActivity;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.screen.MaGiamGiaActivity;
 import com.example.cuahangarea_realfood.screen.DS_SanPhamActivity;
-import com.example.cuahangarea_realfood.screen.ThongTinCuaHangActivity;
 import com.example.cuahangarea_realfood.databinding.FragmentHomeBinding;
 import com.example.cuahangarea_realfood.model.CuaHang;
-import com.example.cuahangarea_realfood.screen.ThongTinDonHangActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -133,22 +130,19 @@ public class HomeFragment extends Fragment {
 
 
     private void Loaddata() {
-        if (txtTenCuaHang != null) {
-            binding.txtTenCuaHang.setText(txtTenCuaHang);
-        } else {
+
             firebase_manager.mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     CuaHang temp = dataSnapshot.getValue(CuaHang.class);
                     binding.txtTenCuaHang.setText(temp.getTenCuaHang());
-                    txtTenCuaHang = temp.getTenCuaHang();
-                }
+                    txtTenCuaHang = temp.getTenCuaHang();            }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
-        }
+
         firebase_manager.mDatabase.child("DanhGia").orderByChild("idcuaHang").equalTo(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -158,7 +152,7 @@ public class HomeFragment extends Fragment {
                     tong += danhGia.getRating();
                 }
                 if (tong != 0)
-                    binding.tvStar.setText(tong / dataSnapshot.getChildrenCount() + "");
+                    binding.simpleRatingBar.setRating(tong / dataSnapshot.getChildrenCount());
                 binding.tvLuotDanhGia.setText(dataSnapshot.getChildrenCount() + " lượt đánh giá");
             }
 

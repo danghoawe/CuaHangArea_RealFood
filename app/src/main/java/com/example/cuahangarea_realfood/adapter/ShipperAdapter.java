@@ -11,15 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +26,7 @@ import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
-import com.example.cuahangarea_realfood.ThongTinShipper;
+import com.example.cuahangarea_realfood.screen.ThongTinShipperActivity;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiShipper;
 import com.example.cuahangarea_realfood.model.Shipper;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -101,7 +98,7 @@ public class ShipperAdapter extends ArrayAdapter implements Filterable {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ThongTinShipper.class);
+                Intent intent = new Intent(getContext(), ThongTinShipperActivity.class);
                 Gson gson = new Gson();
                 String data = gson.toJson(shipper);
                 intent.putExtra("Shipper", data);

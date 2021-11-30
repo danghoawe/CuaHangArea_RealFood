@@ -56,7 +56,7 @@ public class ThongTinCuaHangActivity extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
                 String result=data.getStringExtra("result");
                 binding.edtDiaChi.setText(result);
-                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 // Write your code if there's no result

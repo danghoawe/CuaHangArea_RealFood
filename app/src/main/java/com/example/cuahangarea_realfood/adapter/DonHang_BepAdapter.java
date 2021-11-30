@@ -91,11 +91,13 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
         {
             return;
         }
+
         DonHang donHang = arrayList.get(position);
-        holder.txtID.setText(donHang.getIDDonHang().substring(0, 9));
+        holder.txtID.setText(donHang.getIDDonHang().substring(0, 25));
         holder.txtTrangThaiDonHang.setText(firebase_manager.GetStringTrangThaiDonHang(donHang.getTrangThai()));
         holder.txtTongTien.setText(donHang.getTongTien() + "");
         holder.txtDiaChi.setText(donHang.getDiaChi() + "");
+        firebase_manager.SetColorOfStatus(donHang.getTrangThai(),holder.lnHeader, holder.txtID);
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
         String strDate = formatter.format(donHang.getNgayTao());
         holder.txtTime.setText(strDate);
@@ -232,34 +234,45 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
         holder.btnGiaoHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               TrangThaiShipper trangThaiShipper = shippers.get(holder.spDSShipper.getSelectedPosition()).getTrangThaiShipper();
-                if (trangThaiShipper!=TrangThaiShipper.BiKhoa||trangThaiShipper!=TrangThaiShipper.KhongHoatDong){
-                    DonHang temp = donHang;
-                    temp.setTrangThai(TrangThaiDonHang.SHOP_DangGiaoShipper);
-                    temp.setIDShipper(shippers.get(holder.spDSShipper.getSelectedPosition()).getiDShipper());
-                    arrayList.set(position, temp);
-                    notifyDataSetChanged();
-                    Alerter.create(context)
-                            .setTitle("Thông báo")
-                            .setText("Vui lòng chờ shipper đến lấy hàng")
-                            .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
-                            .show();
+                if (holder.spDSShipper.getSelectedItem()!=null)
+                {
+                    TrangThaiShipper trangThaiShipper = shippers.get(holder.spDSShipper.getSelectedPosition()).getTrangThaiShipper();
+                    if (trangThaiShipper!=TrangThaiShipper.BiKhoa&&trangThaiShipper!=TrangThaiShipper.KhongHoatDong){
+                        DonHang temp = donHang;
+                        temp.setTrangThai(TrangThaiDonHang.SHOP_DangGiaoShipper);
+                        temp.setIDShipper(shippers.get(holder.spDSShipper.getSelectedPosition()).getiDShipper());
+                        arrayList.set(position, temp);
+                        notifyDataSetChanged();
+                        Alerter.create(context)
+                                .setTitle("Thông báo")
+                                .setText("Vui lòng chờ shipper đến lấy hàng")
+                                .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                .show();
 
-                    firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            notifyDataSetChanged();
-                            LoadButton(holder, temp.getTrangThai());
-                        }
-                    });
+                        firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                notifyDataSetChanged();
+                                LoadButton(holder, temp.getTrangThai());
+                            }
+                        });
+                    }
+                    else {
+                        Alerter.create(context)
+                                .setTitle("Thông báo")
+                                .setText("Shipper không khả dụng!")
+                                .setBackgroundColorRes(R.color.error) // or setBackgroundColorInt(Color.CYAN)
+                                .show();
+                    }
                 }
                 else {
                     Alerter.create(context)
-                            .setTitle("Thông báo")
-                            .setText("Shipper không khả dụng!")
+                            .setTitle("Lỗi")
+                            .setText("Vui lòng chọn shipper")
                             .setBackgroundColorRes(R.color.error) // or setBackgroundColorInt(Color.CYAN)
                             .show();
                 }
+
 
             }
         });
@@ -345,8 +358,6 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
         } else {
             holder.lnXacNhangShipper.setVisibility(View.GONE);
         }
-
-
     }
 
     private void LoadShipper(MyViewHolder holder) {
@@ -446,7 +457,7 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
         RecyclerView rcvItemGiohang;
         ProgressBar progressBar;
         Button btnDaChuanBiXOng, btnHoantac, btnHuy,btnDatThoiGian,btnGiaoHang,btnDaGiaoHangChoShipper;
-        LinearLayout lnHuyLiDo,lnDatThoiGian,lnShipper,lnXacNhangShipper;
+        LinearLayout lnHuyLiDo,lnDatThoiGian,lnShipper,lnXacNhangShipper,lnHeader;
         SingleDateAndTimePicker dateAndTimePicker;
         SearchableSpinner spDSShipper;
         RadioButton radHeThong,radCuaHang;
@@ -477,6 +488,7 @@ public class DonHang_BepAdapter extends RecyclerView.Adapter<DonHang_BepAdapter.
             txtGhiChu = itemView.findViewById(R.id.txtGhiChu);
             radCuaHang = itemView.findViewById(R.id.radCuaHang);
             radHeThong = itemView.findViewById(R.id.radHeThong);
+            lnHeader = itemView.findViewById(R.id.lnHeader);
         }
     }
 }
