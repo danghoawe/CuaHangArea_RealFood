@@ -8,7 +8,7 @@
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
@@ -18,9 +18,19 @@
         android:theme="@style/Theme.CuaHangArea_RealFood"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".screen.ThongTinShipperActivity"
+        <activity android:name=".DanhSachHoaDonActivity"
+            android:label="Hóa đơn"
+            android:parentActivityName=".screen.Home"></activity>
+        <activity android:name=".screen.GuiThongBaoActivity"
+            android:label="Hỗ trợ"
+            android:parentActivityName=".screen.Home"></activity>
+        <activity android:name=".screen.ThongTinThanhToanActivity"
+            android:label="Thông tin thanh toán"
+            android:parentActivityName=".DanhSachHoaDonActivity"></activity>
+        <activity
+            android:name=".screen.ThongTinShipperActivity"
             android:label="Danh sách shipper"
-            android:parentActivityName=".screen.DanhSachShipperActivity"></activity>
+            android:parentActivityName=".screen.DanhSachShipperActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

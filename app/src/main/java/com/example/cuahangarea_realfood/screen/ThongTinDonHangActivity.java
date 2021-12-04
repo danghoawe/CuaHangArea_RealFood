@@ -138,7 +138,7 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DonHang temp = donHang;
                 temp.setTrangThai(TrangThaiDonHang.Shipper_DaChuyenTien);
-
+                temp.setNgayGiaoHang(new Date());
                 firebase_manager.Ghi_DonHang(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -517,56 +517,57 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
     }
 
     private void LoadData() {
-        if (donHang.getIDShipper().isEmpty()) {
-            binding.lnTTShipper.setVisibility(View.GONE);
-        } else {
-            binding.lnTTShipper.setVisibility(View.VISIBLE);
-            firebase_manager.mDatabase.child("Shipper").child(donHang.getIDShipper()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Shipper temp = snapshot.getValue(Shipper.class);
-                    if (temp != null) {
-                        binding.txtTenShipper.setText(temp.getHoVaTen());
-                        binding.txtDiaChiShipper.setText(temp.getSoDienThoai());
-                        binding.txtSoDienThoaiShipper.setText(temp.getDiaChi());
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-        }
         firebase_manager.mDatabase.child("DonHang").child(donHang.getIDDonHang()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 DonHang temp = snapshot.getValue(DonHang.class);
                 donHang = temp;
+                binding.txtSoDienThoai.setText(donHang.getSoDienThoai());
+                binding.txtDiaChi.setText(donHang.getDiaChi());
+                binding.tvIDDonHang.setText(donHang.getIDDonHang().substring(0,25));
+                binding.txtTrangThaiDonHang.setText(firebase_manager.GetStringTrangThaiDonHang(donHang.getTrangThai()));
+                String gia = String.valueOf(donHang.getTongTien());
+                binding.txtTongTien.setText(gia);
                 LoadButton(donHang.getTrangThai());
+                if (donHang.getIDShipper().isEmpty()) {
+                    binding.lnTTShipper.setVisibility(View.GONE);
+                } else {
+                    binding.lnTTShipper.setVisibility(View.VISIBLE);
+                    firebase_manager.mDatabase.child("Shipper").child(donHang.getIDShipper()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Shipper temp = snapshot.getValue(Shipper.class);
+                            if (temp != null) {
+                                binding.txtTenShipper.setText(temp.getHoVaTen());
+                                binding.txtDiaChiShipper.setText(temp.getSoDienThoai());
+                                binding.txtSoDienThoaiShipper.setText(temp.getDiaChi());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        binding.txtSoDienThoai.setText(donHang.getSoDienThoai());
-        binding.txtDiaChi.setText(donHang.getDiaChi());
+
         firebase_manager.mDatabase.child("KhachHang").child(donHang.getIDKhachHang()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 KhachHang khachHang = snapshot.getValue(KhachHang.class);
                 binding.txtTenKhach.setText(khachHang.getTenKhachHang());
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        binding.tvIDDonHang.setText(donHang.getIDDonHang().substring(0,25));
-        binding.txtTrangThaiDonHang.setText(firebase_manager.GetStringTrangThaiDonHang(donHang.getTrangThai()));
-        String gia = String.valueOf(donHang.getTongTien());
-        binding.txtTongTien.setText(gia);
+
         DonHangInfoAdapter donHangAdapter = new DonHangInfoAdapter(this, R.layout.donhang_item_sanpham, donHangInfos);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);

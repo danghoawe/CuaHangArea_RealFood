@@ -14,8 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.example.cuahangarea_realfood.TrangThai.LoaiThongBao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiShipper;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiThanhToan;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
 import com.example.cuahangarea_realfood.adapter.DanhGiaSanPhamAdapter;
 import com.example.cuahangarea_realfood.adapter.DanhMucAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHangAdapter;
@@ -51,6 +54,8 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.UUID;
 
 public class Firebase_Manager {
     public  DatabaseReference mDatabase ;
@@ -60,6 +65,36 @@ public class Firebase_Manager {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         storageRef = FirebaseStorage.getInstance().getReference();
         auth= FirebaseAuth.getInstance();
+    }
+    public Task<Void> Ghi_ThongBao_random(String IDUser, String title, String noiDung, LoaiThongBao normal)
+    {
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        ThongBao thongBao = new ThongBao(uuid,noiDung,title,"",IDUser,"", TrangThaiThongBao.ChuaXem,new Date());
+        thongBao.setLoaiThongBao(normal);
+        return  mDatabase.child("ThongBao").child(IDUser).child(uuid).setValue(thongBao);
+    }
+    public String GetStringTrangThaiHoaDon(TrangThaiThanhToan trangThaiThanhToan){
+        String res = "";
+        if(trangThaiThanhToan == TrangThaiThanhToan.ChoXacNhan){
+            res = "Chờ shop xác nhận";
+        }
+        if(trangThaiThanhToan == TrangThaiThanhToan.DaXacNhan){
+            res = "Đã xác nhận";
+        }
+        return res;
+    }
+    public void SetColorTrangThaiHoaDonr(TrangThaiThanhToan trangThai, TextView textView){
+
+        if (trangThai == TrangThaiThanhToan.ChoXacNhan)
+        {
+
+            textView.setTextColor(Color.parseColor("#F0BE00"));
+        }
+        if (trangThai==  TrangThaiThanhToan.DaXacNhan)
+        {
+
+            textView.setTextColor(Color.parseColor("#00D772"));
+        }
     }
     public Task<Void> Ghi_Shipper (Shipper shipper){
         return mDatabase.child("Shipper").child(shipper.getiDShipper()).setValue(shipper);

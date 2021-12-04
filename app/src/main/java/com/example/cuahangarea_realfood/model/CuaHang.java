@@ -19,6 +19,15 @@ public class CuaHang {
     String DiaChi;
     Date timeStart,timeEnd;
     Date createdDate;
+    Date ngayThanhToan;
+
+    public Date getNgayThanhToan() {
+        return ngayThanhToan;
+    }
+
+    public void setNgayThanhToan(Date ngayThanhToan) {
+        this.ngayThanhToan = ngayThanhToan;
+    }
 
     public CuaHang() {
     }

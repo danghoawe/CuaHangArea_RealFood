@@ -31,6 +31,7 @@ import com.example.cuahangarea_realfood.TrangThai.TrangThaiBaoCao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
 import com.example.cuahangarea_realfood.model.BaoCaoShipper;
+import com.example.cuahangarea_realfood.model.CuaHang;
 import com.example.cuahangarea_realfood.model.DanhMuc;
 import com.example.cuahangarea_realfood.model.DonHang;
 import com.example.cuahangarea_realfood.model.DonHangInfo;
@@ -53,6 +54,7 @@ import com.google.gson.Gson;
 import com.nordan.dialog.Animation;
 import com.nordan.dialog.DialogType;
 import com.nordan.dialog.NordanAlertDialog;
+import com.tapadoo.alerter.Alerter;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -294,7 +296,11 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                                 public void onComplete(@NonNull Task<Void> task) {
                                     notifyDataSetChanged();
                                     LoadButton(holder, temp.getTrangThai());
-                                    Toast.makeText(context, "Hủy thành công", Toast.LENGTH_SHORT).show();
+                                    Alerter.create(context)
+                                            .setTitle("Thông báo")
+                                            .setText("Bạn đã hủy đơn hàng")
+                                            .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                            .show();
 
                                 }
                             });})
@@ -327,19 +333,43 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                         {
                             String uuid = UUID.randomUUID().toString().replace("-", "");
                             BaoCaoShipper baoCaoShipper = new BaoCaoShipper(uuid,firebase_manager.auth.getUid(),donHang.getIDShipper(),dialog.getInputText(),"Thông báo",new Date(), TrangThaiBaoCao.ChuaXem);
-                            Toast.makeText(context, "Bạn đã báo cáo shipper  vì lí do: "+dialog.getInputText(), Toast.LENGTH_LONG).show();
+
                             firebase_manager.mDatabase.child("BaoCao_CuaHang_Shipper").child(uuid).setValue(baoCaoShipper);
                             firebase_manager.storageRef.child("CuaHang").child(firebase_manager.auth.getUid()).child("Avatar").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    ThongBao thongBao = new ThongBao(uuid,"Cửa hàng "+ firebase_manager.auth.getUid()+" đã báo cáo về Shipper"+ donHang.getIDShipper() + " vì : "+ dialog.getInputText(),"thông báo","","admin",uri.toString(), TrangThaiThongBao.ChuaXem,new Date());
-                                    firebase_manager.mDatabase.child("ThongBao").child("admin").child(uuid).setValue(thongBao);
+                                    firebase_manager.mDatabase.child("CuaHang").child(firebase_manager.auth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DataSnapshot dataSnapshot) {
+                                            CuaHang cuaHang = dataSnapshot.getValue(CuaHang.class);
+                                            firebase_manager.mDatabase.child("Shipper").child(donHang.getIDShipper()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DataSnapshot dataSnapshot) {
+                                                    Shipper shipper1 = dataSnapshot.getValue(Shipper.class);
+
+                                                    ThongBao thongBao = new ThongBao(uuid,"Cửa hàng "+ cuaHang.getTenCuaHang()+" đã báo cáo về shipper "+ shipper1.getHoVaTen()+ " vì : "+ dialog.getInputText(),"thông báo","","admin",uri.toString(), TrangThaiThongBao.ChuaXem,new Date());
+                                                    firebase_manager.mDatabase.child("ThongBao").child("admin").child(uuid).setValue(thongBao);
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                        }
+                                    });
                                 }
                             });
+                            Alerter.create(context)
+                                    .setTitle("Thông báo")
+                                    .setText("Bạn đã báo cáo shipper  vì lí do: "+dialog.getInputText())
+                                    .setBackgroundColorRes(R.color.success_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                    .show();
 
                         }
                         else {
-                            Toast.makeText(context, "Vui lòng không để trống!", Toast.LENGTH_SHORT).show();
+
+                            Alerter.create(context)
+                                    .setTitle("Thông báo")
+                                    .setText("Vui lòng không để trống!")
+                                    .setBackgroundColorRes(R.color.error_stroke_color) // or setBackgroundColorInt(Color.CYAN)
+                                    .show();
                         }
                     }
                 });

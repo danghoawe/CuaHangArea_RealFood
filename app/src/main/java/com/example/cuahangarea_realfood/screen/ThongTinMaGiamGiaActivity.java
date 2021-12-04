@@ -20,6 +20,7 @@ import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.Validate;
+import com.example.cuahangarea_realfood.adapter.SanPhamSpinnerAdapter;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.Voucher;
 import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
@@ -49,7 +50,7 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
     TextInputLayout tiplGiamTheoPhanTram, tiplGiamTheoGia,tiplHanSuaDung;
     Spinner spSanPham;
     SingleDateAndTimePicker dateAndTimePicker;
-    ArrayAdapter adapter;
+    SanPhamSpinnerAdapter adapter;
     List<String> namesSanPham = new ArrayList<>();
     ArrayList<SanPham> dSSanPham = new ArrayList<>();
     Firebase_Manager firebase_manager;
@@ -129,8 +130,7 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
                 arrayList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     SanPham sanPham = postSnapshot.getValue(SanPham.class);
-                    arrayList.add(sanPham.getTenSanPham());
-                    dSSanPham.add(sanPham);
+                    arrayList.add(sanPham);
                 }
                 sanPhamAdapter.notifyDataSetChanged();
                 LoadData();
@@ -145,11 +145,11 @@ public class ThongTinMaGiamGiaActivity extends AppCompatActivity {
 
     private void setEvent() {
 
-        adapter = new ArrayAdapter(ThongTinMaGiamGiaActivity.this, android.R.layout.simple_expandable_list_item_1, namesSanPham);
+        adapter = new SanPhamSpinnerAdapter(ThongTinMaGiamGiaActivity.this,R.layout.sanpham_item , dSSanPham);
         Date date = dateAndTimePicker.getDate();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = formatter.format(date);
-        GetSanPham_V2((ArrayList) namesSanPham, adapter);
+        GetSanPham_V2(dSSanPham, adapter);
         spSanPham.setAdapter(adapter);
         btnLuuMaGiamGia.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,7 @@
 package com.example.cuahangarea_realfood.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SanPham {
     String IDSanPham, TenSanPham, IDLoai, IDDanhMuc, Gia, ChiTietSanPham, IDCuaHang,size;
@@ -16,7 +17,7 @@ public class SanPham {
     }
 
     ArrayList<String> images;
-
+    Date ngayTao ;
     public ArrayList<String> getImages() {
         return images;
     }
@@ -29,11 +30,12 @@ public class SanPham {
     }
 
 
+
     public void setImages(ArrayList<String> images) {
         this.images = images;
     }
 
-    public SanPham(String IDSanPham, String tenSanPham, String IDLoai, String IDDanhMuc, String gia, String chiTietSanPham, String IDCuaHang, String size, Float rating, ArrayList<String> images) {
+    public SanPham(String IDSanPham, String tenSanPham, String IDLoai, String IDDanhMuc, String gia, String chiTietSanPham, String IDCuaHang, String size, Float rating, ArrayList<String> images,Date ngayTao) {
         this.IDSanPham = IDSanPham;
         TenSanPham = tenSanPham;
         this.IDLoai = IDLoai;
@@ -44,11 +46,16 @@ public class SanPham {
         this.size = size;
         Rating = rating;
         this.images = images;
+         this. ngayTao = ngayTao;
     }
 
+    public Date getNgayTao() {
+        return ngayTao;
+    }
 
-
-
+    public void setNgayTao(Date ngayTao) {
+        this.ngayTao = ngayTao;
+    }
 
     public SanPham( ) {
     }

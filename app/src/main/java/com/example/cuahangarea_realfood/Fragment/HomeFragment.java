@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.cuahangarea_realfood.DanhSachHoaDonActivity;
 import com.example.cuahangarea_realfood.screen.DanhSachShipperActivity;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.model.DanhGia;
@@ -122,6 +123,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DanhSachShipperActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.cardViewDanhSachHoaDon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DanhSachHoaDonActivity.class);
                 startActivity(intent);
             }
         });

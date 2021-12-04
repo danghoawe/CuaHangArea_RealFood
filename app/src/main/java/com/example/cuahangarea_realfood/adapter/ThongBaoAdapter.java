@@ -1,6 +1,8 @@
 package com.example.cuahangarea_realfood.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -18,6 +20,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.SetOnLongClick;
@@ -89,9 +92,12 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
         else {
             holder.imageView.setImageResource(R.drawable.tickfrontcolor);
             holder.progressBar.setVisibility(View.GONE);
-
         }
-
+        if (thongBao.getImage().isEmpty())
+        {
+            holder.imageView.setVisibility(View.GONE);
+            holder.progressBar.setVisibility(View.GONE);
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm dd/MM/yyyy");
         String strDate = formatter.format(thongBao.getDate());
         holder.txtThoiGian.setText(strDate);
@@ -125,6 +131,24 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
                             intent2.putExtra("donhang", data2);
                             firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).child(thongBao.getIDThongBao()).child("trangThaiThongBao").setValue(TrangThaiThongBao.DaXem);
                             context.startActivity(intent2);
+                            break;
+                        case NORMAL:
+                            AlertDialog.Builder b = new AlertDialog.Builder(context);
+
+                            b.setTitle("Thông báo");
+                            b.setMessage(thongBao.getNoiDung());
+
+                            b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            AlertDialog al = b.create();
+
+                            al.show();
+
+                            firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).child(thongBao.getIDThongBao()).child("trangThaiThongBao").setValue(TrangThaiThongBao.DaXem);
                             break;
                     }
                 }
