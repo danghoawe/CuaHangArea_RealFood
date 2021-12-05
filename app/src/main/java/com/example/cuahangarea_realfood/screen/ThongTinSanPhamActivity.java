@@ -268,7 +268,7 @@ public class ThongTinSanPhamActivity extends AppCompatActivity {
                         else {
                             String uuid = sanPham.getIDSanPham();
                             SanPham temp = new SanPham(uuid, edtTenSanPham.getText().toString(), listLoaiSanPham.get(spLoaiSanPham.getSelectedItemPosition()).getiDLoai(), listDanhMuc.get(spDanhMuc.getSelectedItemPosition()).getIDDanhMuc(), edtDonGia.getText().toString(), edtThongTinChiTiet.getText().toString(), firebase_manager.auth.getUid(),edtSize.getText().toString(), (float) 0.0, images ,sanPham.getNgayTao()  );
-
+                            
                             firebase_manager.Ghi_SanPham(temp).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
