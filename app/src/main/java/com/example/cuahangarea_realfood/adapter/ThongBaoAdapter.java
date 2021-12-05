@@ -120,7 +120,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
                             Gson gson = new Gson();
                             String data = gson.toJson(thongBao.getSanPham());
                             intent.putExtra("sanPham", data);
-                            firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).child(thongBao.getIDThongBao()).child("trangThaiThongBao").setValue(TrangThaiThongBao.DaXem);
+                            firebase_manager.mDatabase.child("ThongBao").child(thongBao.getIDUSer()).child(thongBao.getIDThongBao()).child("trangThaiThongBao").setValue(TrangThaiThongBao.DaXem);
                             context.startActivity(intent);
                             break;
                         case DONHANG_MOI:
@@ -129,7 +129,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.MyView
                             Gson gson2 = new Gson();
                             String data2= gson2.toJson(thongBao.getDonHang());
                             intent2.putExtra("donhang", data2);
-                            firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).child(thongBao.getIDThongBao()).child("trangThaiThongBao").setValue(TrangThaiThongBao.DaXem);
+                            firebase_manager.mDatabase.child("ThongBao").child(thongBao.getIDUSer()).child(thongBao.getIDThongBao()).child("trangThaiThongBao").setValue(TrangThaiThongBao.DaXem);
                             context.startActivity(intent2);
                             break;
                         case NORMAL:

@@ -13,9 +13,11 @@ import android.widget.Toast;
 
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
+import com.example.cuahangarea_realfood.TrangThai.LoaiThongBao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiBaoCao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiShipper;
+import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
 import com.example.cuahangarea_realfood.adapter.DonHangInfoAdapter;
 import com.example.cuahangarea_realfood.adapter.DonHang_BepAdapter;
 import com.example.cuahangarea_realfood.adapter.ShipperSpinnerAdapter;
@@ -26,6 +28,7 @@ import com.example.cuahangarea_realfood.model.DonHangInfo;
 import com.example.cuahangarea_realfood.model.KhachHang;
 import com.example.cuahangarea_realfood.model.SanPham;
 import com.example.cuahangarea_realfood.model.Shipper;
+import com.example.cuahangarea_realfood.model.ThongBao;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -300,6 +303,12 @@ public class ThongTinDonHangActivity extends AppCompatActivity {
                                         .show();
                             }
                         });
+                        String noiDung = "Bạn đã nhận được 1 đơn hàng mới : "+donHang.getIDDonHang()+"\nVui lòng kiểm tra và giao hàng cho khách!";
+                        String uuid = UUID.randomUUID().toString().replace("-", "");
+                        ThongBao thongBao = new ThongBao(uuid,noiDung,"Thông báo","",donHang.getIDShipper(),"", TrangThaiThongBao.ChuaXem,new Date());
+                        thongBao.setLoaiThongBao(LoaiThongBao.DonHangShipper);
+                        thongBao.setDonHang(donHang);
+                        firebase_manager.mDatabase.child("ThongBao").child(donHang.getIDShipper()).child(uuid).setValue(thongBao);
                     } else {
                         Alerter.create(ThongTinDonHangActivity.this)
                                 .setTitle("Thông báo")

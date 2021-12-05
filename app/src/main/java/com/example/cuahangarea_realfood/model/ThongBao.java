@@ -17,6 +17,17 @@ public class ThongBao {
     DonHang donHang;
     SanPham sanPham;
     Date date;
+    BaoCaoShipper baoCaoShipper;
+
+
+    public BaoCaoShipper getBaoCaoShipper() {
+        return baoCaoShipper;
+    }
+
+    public void setBaoCaoShipper(BaoCaoShipper baoCaoShipper) {
+        this.baoCaoShipper = baoCaoShipper;
+    }
+
     public LoaiThongBao getLoaiThongBao() {
         return loaiThongBao;
     }

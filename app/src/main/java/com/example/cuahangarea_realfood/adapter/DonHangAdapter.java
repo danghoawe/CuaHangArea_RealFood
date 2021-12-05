@@ -27,6 +27,7 @@ import com.developer.kalert.KAlertDialog;
 import com.example.cuahangarea_realfood.Firebase_Manager;
 import com.example.cuahangarea_realfood.R;
 import com.example.cuahangarea_realfood.SetOnLongClick;
+import com.example.cuahangarea_realfood.TrangThai.LoaiThongBao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiBaoCao;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiDonHang;
 import com.example.cuahangarea_realfood.TrangThai.TrangThaiThongBao;
@@ -347,7 +348,9 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
                                                 public void onSuccess(DataSnapshot dataSnapshot) {
                                                     Shipper shipper1 = dataSnapshot.getValue(Shipper.class);
 
-                                                    ThongBao thongBao = new ThongBao(uuid,"Cửa hàng "+ cuaHang.getTenCuaHang()+" đã báo cáo về shipper "+ shipper1.getHoVaTen()+ " vì : "+ dialog.getInputText(),"thông báo","","admin",uri.toString(), TrangThaiThongBao.ChuaXem,new Date());
+                                                    ThongBao thongBao = new ThongBao(uuid,"Cửa hàng "+ cuaHang.getTenCuaHang()+" đã báo cáo về shipper "+ shipper1.getHoVaTen()+ " vì : "+ dialog.getInputText(),"Thông báo","","admin",uri.toString(), TrangThaiThongBao.ChuaXem,new Date());
+                                                    thongBao.setBaoCaoShipper(baoCaoShipper);
+                                                    thongBao.setLoaiThongBao(LoaiThongBao.BaoCaoShipper);
                                                     firebase_manager.mDatabase.child("ThongBao").child("admin").child(uuid).setValue(thongBao);
                                                     dialog.dismiss();
                                                 }

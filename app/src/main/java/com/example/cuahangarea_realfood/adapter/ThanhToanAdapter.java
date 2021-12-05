@@ -185,7 +185,7 @@ public class ThanhToanAdapter extends RecyclerView.Adapter<ThanhToanAdapter.MyVi
                 }else {
                     List<ThanhToan> list = new ArrayList<>();
                     for (ThanhToan thanhToan : arrayList){
-                        if(thanhToan.getIdCuaHang().toLowerCase().contains(keyWord.toLowerCase())){
+                        if(thanhToan.getIdBill().toLowerCase().contains(keyWord.toLowerCase())){
                             list.add(thanhToan);
                         }
                     }

@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class NotificationFragment extends Fragment {
@@ -66,7 +67,7 @@ public class NotificationFragment extends Fragment {
         }
     }
     private void LoadData() {
-        firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).orderByChild("trangThaiThongBao").addValueEventListener(new ValueEventListener() {
+        firebase_manager.mDatabase.child("ThongBao").child(firebase_manager.auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
@@ -75,12 +76,14 @@ public class NotificationFragment extends Fragment {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         ThongBao thongBao = postSnapshot.getValue(ThongBao.class);
                         thongBaos.add(thongBao);
-                        thongBaoAdapter.notifyDataSetChanged();
+
                     }
                     binding.rcNotification.setLayoutManager(linearLayoutManager);
                     binding.rcNotification.setAdapter(thongBaoAdapter);
                     binding.pdLoad.setVisibility(View.GONE);
                     LoadAlert();
+                    Collections.sort(thongBaos,(o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+                    thongBaoAdapter.notifyDataSetChanged();
                 }
                 else {
                     binding.pdLoad.setVisibility(View.GONE);

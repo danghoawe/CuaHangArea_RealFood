@@ -29,7 +29,7 @@
             android:parentActivityName=".DanhSachHoaDonActivity"></activity>
         <activity
             android:name=".screen.ThongTinShipperActivity"
-            android:label="Danh sách shipper"
+            android:label="Thông tin chi tiết"
             android:parentActivityName=".screen.DanhSachShipperActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -45,7 +45,7 @@
 
         <activity
             android:name=".screen.DanhSachShipperActivity"
-            android:label="Thông tin chi tiết"
+            android:label="Danh Sách Shipper"
             android:parentActivityName=".screen.Home" />
         <activity
             android:name=".screen.MapsActivity"
