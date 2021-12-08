@@ -95,9 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.exists()) {
-
                                             CuaHang temp = dataSnapshot.getValue(CuaHang.class);
-
                                             if (temp.getTrangThaiCuaHang() == TrangThaiCuaHang.ChuaKichHoat) {
                                                 kAlertDialog.setTitleText("Thông báo");
                                                 kAlertDialog.setContentText("Vui lòng đợi Admin xét duyệt và kích hoạt tài khoản trong vòng 24h!");
@@ -112,12 +110,10 @@ public class LoginActivity extends AppCompatActivity {
                                             }
                                         }
                                     }
-
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
                                     }
                                 });
-
                             } else {
                                 kAlertDialog.setTitleText("Sai tài khoản hoặc mật khẩu");
                                 kAlertDialog.changeAlertType(KAlertDialog.WARNING_TYPE);

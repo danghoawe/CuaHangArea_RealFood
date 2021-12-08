@@ -162,7 +162,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             {
                                 Address address = addresses.get(0);
                                 mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                                mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title( addresses.get(0).getAddressLine(0)));
+                                mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
+                                        .title( addresses.get(0).getAddressLine(0)));
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
                                 str_address = addresses.get(0).getAddressLine(0);
                                 binding.searchBar.setQuery(address.getAddressLine(0),false);
